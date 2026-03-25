@@ -930,7 +930,7 @@
   </div>
 </div>
 
-<script>
+<script type="module">
   // ── CONFIG ────────────────────────────────────────────────────────────────
   const CM_ID = '6Myzztq28zM4385VxfGdeGxg1ygSWrnC6KwfT1KnNRsP';
   const RPC   = 'https://api.mainnet-beta.solana.com';
@@ -993,7 +993,7 @@
   function closeOv(id) { document.getElementById(id).classList.remove('show'); }
   function onOvClick(e, id) { if (e.target.id === id) closeOv(id); }
 
-  // ── MODULE LOADER (Promise-lock: safe against parallel calls) ────────────
+  // ── MODULE LOADER (lokaler vendor.js Bundle — kein CDN nötig) ───────────
   // Timeout wrapper: zeigt genau welches Paket hängt
   function timedImport(url, label, ms = 20000) {
     return Promise.race([
@@ -1005,40 +1005,30 @@
   async function initModules() {
     if (M.ready) return;
     if (_modulePromise) return _modulePromise;
-    dbg('Loading ESM modules…');
+    dbg('Loading vendor bundle…');
 
     _modulePromise = (async () => {
       try {
-        dbg('  1/5 umi-bundle-defaults…');
-        const bundlePkg  = await timedImport('https://esm.sh/@metaplex-foundation/umi-bundle-defaults@0.9.2?bundle&target=es2022', 'umi-bundle-defaults');
-        dbg('  2/5 umi…');
-        const umiPkg     = await timedImport('https://esm.sh/@metaplex-foundation/umi@0.9.2?bundle&target=es2022', 'umi');
-        dbg('  3/5 mpl-candy-machine…');
-        const cmPkg      = await timedImport('https://esm.sh/@metaplex-foundation/mpl-candy-machine@1.1.0?bundle&target=es2022', 'mpl-candy-machine');
-        dbg('  4/5 umi-signer-wallet-adapters…');
-        const adapterPkg = await timedImport('https://esm.sh/@metaplex-foundation/umi-signer-wallet-adapters@0.9.2?bundle&target=es2022', 'umi-signer-wallet-adapters');
-        dbg('  5/5 mpl-toolbox…');
-        const toolboxPkg = await timedImport('https://esm.sh/@metaplex-foundation/mpl-toolbox@0.9.2?bundle&target=es2022', 'mpl-toolbox');
-
-        M.createUmi             = bundlePkg.createUmi;
-        M.publicKey             = umiPkg.publicKey;
-        M.generateSigner        = umiPkg.generateSigner;
-        M.some                  = umiPkg.some;
-        M.none                  = umiPkg.none;
-        M.mplCandyMachine       = cmPkg.mplCandyMachine;
-        M.fetchCandyMachine     = cmPkg.fetchCandyMachine;
-        M.fetchCandyGuard       = cmPkg.fetchCandyGuard;
-        M.mintV2                = cmPkg.mintV2;
-        M.walletAdapterIdentity = adapterPkg.walletAdapterIdentity;
-        M.setComputeUnitLimit   = toolboxPkg.setComputeUnitLimit;
+        const pkg = await timedImport('./vendor.js', 'vendor.js', 30000);
+        M.createUmi             = pkg.createUmi;
+        M.publicKey             = pkg.publicKey;
+        M.generateSigner        = pkg.generateSigner;
+        M.some                  = pkg.some;
+        M.none                  = pkg.none;
+        M.mplCandyMachine       = pkg.mplCandyMachine;
+        M.fetchCandyMachine     = pkg.fetchCandyMachine;
+        M.fetchCandyGuard       = pkg.fetchCandyGuard;
+        M.mintV2                = pkg.mintV2;
+        M.walletAdapterIdentity = pkg.walletAdapterIdentity;
+        M.setComputeUnitLimit   = pkg.setComputeUnitLimit;
         M.ready = true;
-        dbg('✅ All modules loaded!');
+        dbg('✅ vendor.js loaded!');
         dbg('  createUmi:', typeof M.createUmi);
         dbg('  mintV2:', typeof M.mintV2);
         dbg('  some:', typeof M.some);
       } catch (e) {
         _modulePromise = null;
-        dbg('❌ Module load FAILED:', e?.message || e);
+        dbg('❌ vendor.js FAILED:', e?.message || e);
         dbg('   Stack:', e?.stack?.slice(0,400));
         throw e;
       }
