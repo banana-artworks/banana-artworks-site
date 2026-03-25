@@ -1,557 +1,439 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Banana Artworks Genesis — 101 Unique NFTs on Solana Mainnet">
-  <title>Banana Artworks Genesis | Solana NFT</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Cinzel+Decorative:wght@400;700;900&family=Share+Tech+Mono&family=Orbitron:wght@400;600;700;900&family=Caveat:wght@400;600;700&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --gold:         #D4A017;
-      --gold-bright:  #FFD700;
-      --gold-glow:    rgba(212,160,23,.4);
-      --gold-glow-hi: rgba(212,160,23,.7);
-      --cyan:         #00d4c8;
-      --cyan-dim:     #006660;
-      --cyan-glow:    rgba(0,212,200,.3);
-      --cyan-glow-hi: rgba(0,212,200,.6);
-      --teal-dark:    #020d0d;
-      --teal-panel:   rgba(0,28,26,.92);
-      --text-dim:     rgba(0,212,200,.5);
-      --font-hero:    'Cinzel Decorative','Cinzel',serif;
-      --font-body:    'Cinzel',serif;
-      --font-hud:     'Orbitron',sans-serif;
-      --font-mono:    'Share Tech Mono',monospace;
-      --font-brand:   'Bradley Hand ITC','Bradley Hand','Caveat',cursive;
-    }
-    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
-    html { scroll-behavior:smooth; }
-    .brand {
-      font-family: var(--font-brand) !important;
-      font-weight: 600;
-      text-transform: lowercase !important;
-      letter-spacing: .04em !important;
-    }
-    body {
-      background:var(--teal-dark);
-      color:var(--gold); font-family:var(--font-body);
-      overflow-x:hidden; min-height:100vh;
-    }
-    body::after {
-      content:''; position:fixed; inset:0; pointer-events:none; z-index:9999;
-      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='250' height='250'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-      opacity:.028; mix-blend-mode:overlay;
-    }
-    .scanline {
-      position:fixed; top:0; left:0; right:0; height:3px; z-index:9998; pointer-events:none;
-      background:linear-gradient(90deg,transparent,var(--cyan),rgba(0,212,200,.3),transparent);
-      animation:scan 12s linear infinite; opacity:.3;
-    }
-    @keyframes scan { 0%{transform:translateY(-3px)}100%{transform:translateY(100vh)} }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Banana Artworks Genesis — Design Mockup</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Cinzel+Decorative:wght@400;700;900&family=Orbitron:wght@400;600;700;900&family=Share+Tech+Mono&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --gold: #D4A017;
+  --gold-bright: #FFD700;
+  --gold-glow: rgba(212,160,23,.4);
+  --cyan: #00d4c8;
+  --cyan-dim: #006660;
+  --cyan-glow: rgba(0,212,200,.3);
+  --teal-dark: #020d0d;
+  --teal-panel: rgba(0,28,26,.92);
+  --text-body: rgba(220,230,228,.82);
+  --text-dim: rgba(0,212,200,.45);
+  --font-hero: 'Cinzel Decorative','Cinzel',serif;
+  --font-body: 'Cinzel',serif;
+  --font-hud: 'Orbitron',sans-serif;
+  --font-mono: 'Share Tech Mono',monospace;
+  --font-brand: 'Caveat',cursive;
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--teal-dark);color:var(--gold);font-family:var(--font-body);overflow-x:hidden;min-height:100vh;}
 
-    /* Circuit Grid */
-    .circuit-bg {
-      position:absolute; inset:0; pointer-events:none; overflow:hidden;
-    }
-    .circuit-bg::before {
-      content:''; position:absolute; inset:0;
-      background-image:
-        linear-gradient(rgba(0,212,200,.045) 1px,transparent 1px),
-        linear-gradient(90deg,rgba(0,212,200,.045) 1px,transparent 1px);
-      background-size:42px 42px;
-    }
-    .circuit-bg::after {
-      content:''; position:absolute; inset:0;
-      background-image:
-        linear-gradient(rgba(0,212,200,.08) 1px,transparent 1px),
-        linear-gradient(90deg,rgba(0,212,200,.08) 1px,transparent 1px);
-      background-size:210px 210px;
-    }
+/* ── SCANLINE ── */
+.scanline{position:fixed;top:0;left:0;right:0;height:2px;z-index:9998;pointer-events:none;
+  background:linear-gradient(90deg,transparent,var(--cyan),rgba(0,212,200,.2),transparent);
+  animation:scan 14s linear infinite;opacity:.25;}
+@keyframes scan{0%{transform:translateY(-2px)}100%{transform:translateY(100vh)}}
 
-    /* HUD Panel */
-    .hud {
-      position:relative; background:var(--teal-panel);
-      border:1px solid rgba(0,212,200,.3);
-      clip-path:polygon(0 0,calc(100% - 14px) 0,100% 14px,100% 100%,14px 100%,0 calc(100% - 14px));
-      padding:1.2rem 1.5rem;
-    }
-    .hud::before{content:'';position:absolute;top:4px;left:4px;width:7px;height:7px;background:var(--cyan);opacity:.65;}
-    .hud::after {content:'';position:absolute;bottom:4px;right:4px;width:7px;height:7px;background:var(--gold);opacity:.65;}
+/* ── TOPOGRAPHIC BG ── */
+.topo-bg{position:absolute;inset:0;pointer-events:none;overflow:hidden;opacity:.07;}
+.topo-bg svg{width:100%;height:100%;}
 
-    /* NAV */
-    nav {
-      position:fixed; top:0; left:0; right:0; z-index:300;
-      display:flex; align-items:center; justify-content:space-between;
-      padding:.85rem 2.5rem;
-      background:rgba(2,10,10,.96);
-      border-bottom:1px solid rgba(0,212,200,.18);
-      backdrop-filter:blur(20px);
-    }
-    .nav-logo {
-      font-family:var(--font-hud); font-size:.72rem; font-weight:700;
-      color:var(--gold); text-decoration:none; letter-spacing:.28em;
-      text-transform:uppercase; display:flex; align-items:center; gap:.7rem;
-    }
-    .nav-bar { width:22px; height:1px; background:var(--cyan); }
-    .nav-right { display:flex; align-items:center; gap:1.8rem; }
-    .nav-link {
-      font-family:var(--font-hud); font-size:.58rem; letter-spacing:.2em;
-      color:var(--text-dim); text-decoration:none; text-transform:uppercase; transition:color .2s;
-    }
-    .nav-link:hover { color:var(--cyan); }
-    .btn-wallet {
-      font-family:var(--font-hud); font-size:.6rem; font-weight:700;
-      letter-spacing:.2em; text-transform:uppercase;
-      color:#010a0a; background:var(--cyan);
-      border:none; cursor:pointer; padding:.55rem 1.4rem;
-      clip-path:polygon(0 0,calc(100% - 10px) 0,100% 10px,100% 100%,10px 100%,0 calc(100% - 10px));
-      transition:all .25s; box-shadow:0 0 18px var(--cyan-glow);
-    }
-    .btn-wallet:hover { background:var(--gold); box-shadow:0 0 28px var(--gold-glow); }
-    .btn-wallet.connected {
-      background:transparent; color:var(--cyan);
-      border:1px solid var(--cyan-dim); box-shadow:none;
-    }
-    .btn-wallet.connected:hover { border-color:var(--cyan); box-shadow:0 0 12px var(--cyan-glow); }
+/* ── CIRCUIT GRID ── */
+.circuit-bg{position:absolute;inset:0;pointer-events:none;overflow:hidden;}
+.circuit-bg::before{content:'';position:absolute;inset:0;
+  background-image:linear-gradient(rgba(0,212,200,.038) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(0,212,200,.038) 1px,transparent 1px);
+  background-size:40px 40px;}
+.circuit-bg::after{content:'';position:absolute;inset:0;
+  background-image:linear-gradient(rgba(0,212,200,.07) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(0,212,200,.07) 1px,transparent 1px);
+  background-size:200px 200px;}
 
-    /* HERO */
-    #hero {
-      position:relative; min-height:100vh;
-      display:flex; flex-direction:column; align-items:center; justify-content:center;
-      padding:6rem 2rem 5rem; overflow:hidden;
-    }
-    .hero-atmos {
-      position:absolute; inset:0; pointer-events:none;
-      background:
-        radial-gradient(ellipse 75% 75% at 50% 50%, rgba(0,80,72,.38) 0%, rgba(0,28,24,.18) 45%, transparent 70%),
-        radial-gradient(ellipse 100% 55% at 50% 100%, rgba(0,50,44,.42) 0%, transparent 55%);
-    }
-    .hero-vignette {
-      position:absolute; inset:0; pointer-events:none;
-      background:radial-gradient(ellipse 85% 85% at 50% 50%, transparent 38%, rgba(2,8,8,.92) 100%);
-    }
-    .brk { position:absolute; width:36px; height:36px; border-color:rgba(0,212,200,.38); }
-    .brk-tl{top:82px;left:22px;border-top:2px solid;border-left:2px solid;}
-    .brk-tr{top:82px;right:22px;border-top:2px solid;border-right:2px solid;}
-    .brk-bl{bottom:24px;left:22px;border-bottom:2px solid;border-left:2px solid;}
-    .brk-br{bottom:24px;right:22px;border-bottom:2px solid;border-right:2px solid;}
-    .hud-line{position:absolute;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(0,212,200,.18),rgba(0,212,200,.07),transparent);}
-    .hud-line-t{top:78px;} .hud-line-b{bottom:78px;}
+/* ── NAV ── */
+nav{position:sticky;top:0;left:0;right:0;z-index:300;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:.8rem 3rem;background:rgba(2,8,8,.97);
+  border-bottom:1px solid rgba(0,212,200,.15);backdrop-filter:blur(24px);}
+.nav-logo{font-family:var(--font-hud);font-size:.68rem;font-weight:700;
+  color:var(--gold);text-decoration:none;letter-spacing:.26em;
+  text-transform:uppercase;display:flex;align-items:center;gap:.75rem;}
+.nav-logo svg{flex-shrink:0;}
+.brand{font-family:var(--font-brand)!important;font-weight:700;
+  text-transform:lowercase!important;letter-spacing:.03em!important;font-size:1.05rem;}
+.nav-right{display:flex;align-items:center;gap:2.2rem;}
+.nav-link{font-family:var(--font-hud);font-size:.55rem;letter-spacing:.22em;
+  color:var(--text-dim);text-decoration:none;text-transform:uppercase;transition:color .2s;}
+.nav-link:hover{color:var(--cyan);}
+.btn-wallet-nav{font-family:var(--font-hud);font-size:.58rem;font-weight:700;
+  letter-spacing:.18em;text-transform:uppercase;
+  color:#010a0a;background:var(--cyan);border:none;cursor:pointer;padding:.5rem 1.3rem;
+  clip-path:polygon(0 0,calc(100% - 9px) 0,100% 9px,100% 100%,9px 100%,0 calc(100% - 9px));
+  transition:all .25s;box-shadow:0 0 16px var(--cyan-glow);}
+.btn-wallet-nav.connected{
+  background:transparent;color:var(--cyan);border:1px solid var(--cyan-dim);box-shadow:none;}
+.wallet-dot{width:6px;height:6px;border-radius:50%;background:#00ff88;
+  box-shadow:0 0 8px #00ff88;margin-right:.3rem;display:inline-block;
+  animation:pulse-dot 2s ease-in-out infinite;}
+@keyframes pulse-dot{0%,100%{opacity:1}50%{opacity:.4}}
 
-    /* SPHERE */
-    .sphere-wrap {
-      position:absolute;
-      width:min(72vw,640px); aspect-ratio:1;
-      top:50%; left:50%; transform:translate(-50%,-50%);
-      pointer-events:none;
-    }
-    .sphere-svg { width:100%; height:100%; }
+/* ── HERO ── */
+#hero{position:relative;min-height:100vh;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:6rem 2rem 5rem;overflow:hidden;}
+.hero-atmos{position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(ellipse 70% 70% at 50% 50%,rgba(0,80,72,.4) 0%,rgba(0,28,24,.2) 45%,transparent 70%),
+    radial-gradient(ellipse 100% 50% at 50% 100%,rgba(0,50,44,.45) 0%,transparent 55%);}
+.hero-vignette{position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(ellipse 85% 85% at 50% 50%,transparent 35%,rgba(2,6,6,.94) 100%);}
+.brk{position:absolute;width:40px;height:40px;border-color:rgba(0,212,200,.3);}
+.brk-tl{top:86px;left:24px;border-top:1.5px solid;border-left:1.5px solid;}
+.brk-tr{top:86px;right:24px;border-top:1.5px solid;border-right:1.5px solid;}
+.brk-bl{bottom:28px;left:24px;border-bottom:1.5px solid;border-left:1.5px solid;}
+.brk-br{bottom:28px;right:24px;border-bottom:1.5px solid;border-right:1.5px solid;}
+.hud-line{position:absolute;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(0,212,200,.15),rgba(0,212,200,.06),transparent);}
+.hud-line-t{top:82px;}.hud-line-b{bottom:82px;}
 
-    /* HERO CONTENT */
-    .hero-inner { position:relative; z-index:5; text-align:center; max-width:960px; }
-    .hero-eyebrow {
-      font-family:var(--font-hud); font-size:.57rem; letter-spacing:.55em; color:var(--cyan);
-      opacity:.7; margin-bottom:2rem; display:flex; align-items:center; justify-content:center; gap:.9rem;
-    }
-    .eye-dash { width:32px; height:1px; background:var(--cyan); opacity:.45; }
-    .hero-tag {
-      font-family:var(--font-hud); font-size:.52rem; letter-spacing:.42em;
-      color:rgba(212,160,23,.55); display:block; margin-bottom:.7rem;
-    }
-    .hero-title {
-      font-family:var(--font-hero);
-      font-size:clamp(3rem,10vw,8rem); font-weight:900; line-height:1.0;
-      background:linear-gradient(140deg, var(--gold-bright) 0%, var(--gold) 38%, #9a7310 100%);
-      -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
-      filter:drop-shadow(0 0 40px rgba(212,160,23,.38)) drop-shadow(0 0 80px rgba(212,160,23,.14));
-      margin-bottom:.5rem;
-    }
-    .hero-sub {
-      font-family:var(--font-hud); font-size:clamp(.68rem,2vw,1.05rem); font-weight:400;
-      letter-spacing:.7em; color:var(--cyan); opacity:.65; margin-bottom:3.5rem;
-    }
-    .accent-dual { display:flex; align-items:center; justify-content:center; gap:.8rem; margin-bottom:3rem; }
-    .accent-dual .ln { flex:1; max-width:260px; height:1px; background:linear-gradient(90deg,transparent,var(--cyan)); opacity:.4; }
-    .accent-dual .ln:last-child { transform:scaleX(-1); }
-    .accent-dual .dmd { width:8px; height:8px; border:1px solid var(--gold); transform:rotate(45deg); background:var(--gold); opacity:.75; }
+/* Sphere */
+.sphere-wrap{position:absolute;width:min(68vw,600px);aspect-ratio:1;
+  top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none;}
 
-    /* STATS */
-    .stats-row { display:flex; gap:1rem; justify-content:center; flex-wrap:wrap; margin-bottom:3rem; }
-    .stat-panel { min-width:128px; text-align:center; }
-    .stat-val {
-      font-family:var(--font-hud); font-size:2rem; font-weight:900;
-      color:var(--gold-bright); display:block;
-      text-shadow:0 0 22px var(--gold-glow-hi), 0 0 55px var(--gold-glow);
-    }
-    .stat-label {
-      font-family:var(--font-mono); font-size:.54rem; letter-spacing:.28em;
-      color:var(--text-dim); display:block; margin-top:.3rem; text-transform:uppercase;
-    }
-    .stat-sep { display:flex; align-items:center; color:rgba(0,212,200,.18); font-size:1.2rem; padding:0 .3rem; }
+/* Hero Content */
+.hero-inner{position:relative;z-index:5;text-align:center;max-width:980px;}
+.hero-eyebrow{font-family:var(--font-hud);font-size:.54rem;letter-spacing:.5em;color:var(--cyan);
+  opacity:.65;margin-bottom:2rem;display:flex;align-items:center;justify-content:center;gap:.9rem;}
+.eye-dash{width:28px;height:1px;background:var(--cyan);opacity:.4;}
+.hero-tag{font-family:var(--font-brand)!important;font-size:1.1rem;font-weight:700;
+  color:rgba(212,160,23,.6);display:block;margin-bottom:.7rem;letter-spacing:.02em!important;}
+.hero-title{font-family:var(--font-hero);
+  font-size:clamp(3rem,10vw,8rem);font-weight:900;line-height:1.0;
+  background:linear-gradient(140deg,var(--gold-bright) 0%,var(--gold) 38%,#9a7310 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  filter:drop-shadow(0 0 40px rgba(212,160,23,.4)) drop-shadow(0 0 80px rgba(212,160,23,.15));
+  margin-bottom:.5rem;}
+.hero-sub{font-family:var(--font-hud);font-size:clamp(.65rem,1.8vw,1rem);font-weight:400;
+  letter-spacing:.65em;color:var(--cyan);opacity:.6;margin-bottom:3rem;}
+.accent-dual{display:flex;align-items:center;justify-content:center;gap:.8rem;margin-bottom:2.8rem;}
+.accent-dual .ln{flex:1;max-width:240px;height:1px;background:linear-gradient(90deg,transparent,var(--cyan));opacity:.35;}
+.accent-dual .ln:last-child{transform:scaleX(-1);}
+.accent-dual .dmd{width:7px;height:7px;border:1px solid var(--gold);transform:rotate(45deg);background:var(--gold);opacity:.7;}
 
-    /* MINT BTN */
-    .btn-mint-wrap { position:relative; display:inline-block; }
-    .btn-mint-glow {
-      position:absolute; inset:-14px;
-      background:radial-gradient(ellipse,rgba(0,212,200,.14) 0%,transparent 70%);
-      animation:pg 3.2s ease-in-out infinite;
-    }
-    @keyframes pg { 0%,100%{opacity:.45;transform:scale(1)}50%{opacity:1;transform:scale(1.06)} }
-    .btn-mint {
-      position:relative;
-      font-family:var(--font-hud); font-size:.82rem; font-weight:900;
-      letter-spacing:.38em; text-transform:uppercase;
-      color:#020d0d; background:linear-gradient(135deg,var(--cyan) 0%,#00a89e 100%);
-      border:none; cursor:pointer; padding:1.2rem 4.2rem;
-      clip-path:polygon(0 0,calc(100% - 20px) 0,100% 20px,100% 100%,20px 100%,0 calc(100% - 20px));
-      transition:all .3s; box-shadow:0 0 30px var(--cyan-glow);
-    }
-    .btn-mint::before {
-      content:''; position:absolute; inset:0;
-      background:linear-gradient(135deg,rgba(255,255,255,.1) 0%,transparent 55%);
-    }
-    .btn-mint:hover {
-      background:linear-gradient(135deg,var(--gold-bright) 0%,var(--gold) 100%);
-      box-shadow:0 0 55px var(--gold-glow-hi); transform:translateY(-3px);
-    }
-    .btn-mint:disabled { opacity:.35; cursor:not-allowed; transform:none; }
-    .mint-meta { display:flex; align-items:center; gap:1.4rem; justify-content:center; margin-top:1.2rem; }
-    .mint-tag { font-family:var(--font-mono); font-size:.56rem; letter-spacing:.2em; color:rgba(0,212,200,.3); text-transform:uppercase; }
-    .mint-dot { width:4px; height:4px; border-radius:50%; background:rgba(0,212,200,.2); }
-    #mint-status { margin-top:1.2rem; font-family:var(--font-mono); font-size:.7rem; letter-spacing:.15em; min-height:1.1em; color:var(--cyan); }
-    #mint-status.error { color:#ff6b6b; }
+/* ── LED COUNTERS ── */
+.stats-row{display:flex;gap:.8rem;justify-content:center;flex-wrap:wrap;margin-bottom:3rem;}
+.stat-panel{min-width:130px;text-align:center;position:relative;
+  background:rgba(0,8,6,.9);border:1px solid rgba(0,212,200,.2);
+  clip-path:polygon(0 0,calc(100% - 10px) 0,100% 10px,100% 100%,10px 100%,0 calc(100% - 10px));
+  padding:1rem 1.4rem;}
+.stat-panel::before{content:'';position:absolute;top:3px;left:3px;width:5px;height:5px;background:var(--cyan);opacity:.5;}
+.stat-panel::after{content:'';position:absolute;bottom:3px;right:3px;width:5px;height:5px;background:var(--gold);opacity:.5;}
+/* LED number glow effect */
+.stat-val{font-family:var(--font-hud);font-size:2.2rem;font-weight:900;
+  color:var(--gold-bright);display:block;position:relative;
+  text-shadow:0 0 10px var(--gold-bright),0 0 25px var(--gold-glow),0 0 50px rgba(212,160,23,.25),0 0 80px rgba(212,160,23,.1);
+  animation:led-flicker 4s ease-in-out infinite;}
+@keyframes led-flicker{0%,97%,100%{opacity:1}98%{opacity:.85}99%{opacity:1}}
+.stat-label{font-family:var(--font-mono);font-size:.5rem;letter-spacing:.3em;
+  color:var(--text-dim);display:block;margin-top:.35rem;text-transform:uppercase;}
+.stat-sep{display:flex;align-items:center;color:rgba(0,212,200,.15);font-size:1rem;padding:0 .2rem;}
+/* LED scanline overlay on counter */
+.stat-panel .led-scan{position:absolute;inset:0;pointer-events:none;overflow:hidden;opacity:.04;}
+.stat-panel .led-scan::after{content:'';position:absolute;inset:0;
+  background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,.8) 2px,rgba(0,0,0,.8) 4px);}
 
-    /* WAVEFORM */
-    .waveform-wrap { position:relative; width:100%; height:90px; overflow:hidden; }
-    .waveform-svg  { position:absolute; width:100%; height:100%; }
+/* ── MINT BTN ── */
+.btn-mint-wrap{position:relative;display:inline-block;}
+.btn-mint-glow{position:absolute;inset:-16px;
+  background:radial-gradient(ellipse,rgba(0,212,200,.12) 0%,transparent 70%);
+  animation:pg 3.5s ease-in-out infinite;}
+@keyframes pg{0%,100%{opacity:.4;transform:scale(1)}50%{opacity:.9;transform:scale(1.05)}}
+.btn-mint{position:relative;font-family:var(--font-hud);font-size:.8rem;font-weight:900;
+  letter-spacing:.36em;text-transform:uppercase;color:#020d0d;
+  background:linear-gradient(135deg,var(--cyan) 0%,#00a89e 100%);
+  border:none;cursor:pointer;padding:1.2rem 4rem;
+  clip-path:polygon(0 0,calc(100% - 18px) 0,100% 18px,100% 100%,18px 100%,0 calc(100% - 18px));
+  transition:all .3s;box-shadow:0 0 28px var(--cyan-glow);}
+.btn-mint::before{content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(255,255,255,.12) 0%,transparent 55%);}
+.btn-mint:hover{background:linear-gradient(135deg,var(--gold-bright) 0%,var(--gold) 100%);
+  box-shadow:0 0 52px var(--gold-glow);transform:translateY(-2px);}
+.btn-mint:disabled{opacity:.3;cursor:not-allowed;transform:none;}
+.mint-meta{display:flex;align-items:center;gap:1.2rem;justify-content:center;margin-top:1.1rem;}
+.mint-tag{font-family:var(--font-mono);font-size:.52rem;letter-spacing:.18em;color:rgba(0,212,200,.28);text-transform:uppercase;}
+.mint-dot{width:3px;height:3px;border-radius:50%;background:rgba(0,212,200,.18);}
+#mint-status{margin-top:1.1rem;font-family:var(--font-mono);font-size:.68rem;letter-spacing:.14em;min-height:1em;color:var(--cyan);}
+#mint-status.error{color:#ff6b6b;}
 
-    /* SECTIONS */
-    section { position:relative; padding:6rem 2rem; }
-    .container { max-width:1200px; margin:0 auto; }
-    .section-head { text-align:center; margin-bottom:4.5rem; }
-    .section-eyebrow {
-      font-family:var(--font-hud); font-size:.57rem; letter-spacing:.5em;
-      color:var(--cyan); opacity:.5; display:block; margin-bottom:.8rem; text-transform:uppercase;
-    }
-    .section-title {
-      font-family:var(--font-hero); font-size:clamp(1.5rem,3.5vw,2.6rem);
-      font-weight:700; color:var(--gold); letter-spacing:.18em;
-      text-shadow:0 0 30px rgba(212,160,23,.22);
-    }
-    .title-rule {
-      display:block; width:120px; height:1px; margin:1.4rem auto 0;
-      background:linear-gradient(90deg,transparent,var(--cyan),transparent);
-    }
+/* ── SOLD OUT BANNER ── */
+.sold-out-wrap{position:absolute;inset:0;z-index:20;pointer-events:none;overflow:hidden;}
+.sold-out-banner{
+  position:absolute;top:50%;left:50%;
+  transform:translate(-50%,-50%) rotate(-18deg);
+  white-space:nowrap;
+  font-family:var(--font-hud);font-size:clamp(1.8rem,4vw,3.2rem);font-weight:900;
+  letter-spacing:.25em;color:#020d0d;
+  background:var(--cyan);
+  padding:.7rem 5rem;
+  box-shadow:0 0 60px rgba(0,212,200,.6),0 0 120px rgba(0,212,200,.25);
+  border-top:2px solid rgba(255,255,255,.3);
+  border-bottom:2px solid rgba(255,255,255,.3);
+}
+/* Glitch layers */
+.sold-out-banner::before{
+  content:'SOLD OUT';position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  padding:.7rem 5rem;
+  color:rgba(255,0,80,.4);transform:translate(-3px,0);
+  animation:glitch1 3s ease-in-out infinite;
+}
+.sold-out-banner::after{
+  content:'SOLD OUT';position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  padding:.7rem 5rem;
+  color:rgba(0,255,200,.3);transform:translate(3px,0);
+  animation:glitch2 3s ease-in-out infinite;
+}
+@keyframes glitch1{0%,90%,100%{opacity:0;transform:translate(-3px,0)}91%{opacity:1;transform:translate(-4px,1px) skewX(-2deg)}93%{opacity:0}95%{opacity:1;transform:translate(-2px,-1px)}97%{opacity:0}}
+@keyframes glitch2{0%,90%,100%{opacity:0;transform:translate(3px,0)}92%{opacity:1;transform:translate(4px,-1px) skewX(2deg)}94%{opacity:0}96%{opacity:1;transform:translate(2px,1px)}98%{opacity:0}}
 
-    /* GALLERY */
-    #gallery { background:rgba(0,8,8,.7); }
-    .gallery-grid {
-      display:grid;
-      grid-template-columns:repeat(5,1fr);
-      gap:1.2rem;
-    }
-    @media(max-width:1100px) { .gallery-grid { grid-template-columns:repeat(4,1fr); } }
-    @media(max-width:960px)  { .gallery-grid { grid-template-columns:repeat(3,1fr); } }
-    .nft-card {
-      position:relative; background:rgba(0,18,18,.92);
-      cursor:pointer; transition:transform .3s, box-shadow .3s;
-      /* clip-path moved to ::after so overflow:hidden works correctly on children */
-    }
-    /* Cut-corner border via SVG outline — doesn't break child overflow */
-    .nft-card::after {
-      content:''; position:absolute; inset:0; pointer-events:none; z-index:3;
-      clip-path:polygon(0 0,calc(100% - 12px) 0,100% 12px,100% 100%,12px 100%,0 calc(100% - 12px));
-      border:1px solid rgba(0,212,200,.28);
-      transition:border-color .3s;
-    }
-    .nft-card::before {
-      content:''; position:absolute; inset:0;
-      background:linear-gradient(135deg,rgba(0,212,200,.04) 0%,transparent 55%);
-      pointer-events:none; z-index:2;
-    }
-    .nft-card:hover { transform:translateY(-6px); box-shadow:0 0 32px rgba(212,160,23,.16); }
-    .nft-card:hover::after { border-color:var(--gold); }
+/* ── WAVEFORM ── */
+.waveform-wrap{position:relative;width:100%;height:88px;overflow:hidden;}
+.waveform-svg{position:absolute;width:100%;height:100%;}
 
-    /* Image container: overflow:hidden here is the real clip */
-    .card-placeholder {
-      width:100%; aspect-ratio:1; position:relative;
-      overflow:hidden; /* THIS is what clips the image */
-      background:rgba(0,15,15,.9);
-      display:flex; align-items:center; justify-content:center; font-size:3.5rem;
-      /* Clip corners on the image area only */
-      clip-path:polygon(0 0,calc(100% - 12px) 0,100% 12px,100% 100%,12px 100%,0 calc(100% - 12px));
-    }
-    /* Image fills the square container, crops to fit regardless of source ratio */
-    .card-img {
-      position:absolute; inset:0;
-      width:100%; height:100%;
-      object-fit:cover; object-position:center;
-      display:block;
-      transition:transform .4s ease;
-    }
-    .nft-card:hover .card-img { transform:scale(1.06); }
+/* ── SECTIONS ── */
+section{position:relative;padding:5.5rem 2rem;}
+.container{max-width:1200px;margin:0 auto;}
+.section-head{text-align:center;margin-bottom:4rem;}
+.section-eyebrow{font-family:var(--font-hud);font-size:.54rem;letter-spacing:.48em;
+  color:var(--cyan);opacity:.48;display:block;margin-bottom:.8rem;text-transform:uppercase;}
+.section-title{font-family:var(--font-hero);font-size:clamp(1.4rem,3.2vw,2.4rem);
+  font-weight:700;color:var(--gold);letter-spacing:.16em;
+  text-shadow:0 0 28px rgba(212,160,23,.2);}
+.title-rule{display:block;width:110px;height:1px;margin:1.3rem auto 0;
+  background:linear-gradient(90deg,transparent,var(--cyan),transparent);}
 
-    .card-scan { position:absolute; left:0; right:0; height:1px; background:var(--cyan); opacity:0; transition:all .45s; top:0; z-index:1; }
-    .nft-card:hover .card-scan { opacity:.38; top:100%; }
-    .card-info { padding:.8rem 1rem; border-top:1px solid rgba(0,212,200,.13); position:relative; z-index:2; }
-    .card-id { font-family:var(--font-mono); font-size:.53rem; letter-spacing:.14em; color:rgba(0,212,200,.32); display:block; margin-bottom:.2rem; }
-    .card-name { font-family:var(--font-hud); font-size:.7rem; font-weight:700; letter-spacing:.1em; color:var(--gold); }
+/* ── GALLERY ── */
+#gallery{background:rgba(0,6,6,.72);}
+.gallery-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:1.1rem;}
+.nft-card{position:relative;background:rgba(0,14,14,.95);cursor:pointer;
+  transition:transform .3s,box-shadow .3s;}
+.nft-card::after{content:'';position:absolute;inset:0;pointer-events:none;z-index:3;
+  clip-path:polygon(0 0,calc(100% - 11px) 0,100% 11px,100% 100%,11px 100%,0 calc(100% - 11px));
+  border:1px solid rgba(0,212,200,.22);transition:border-color .3s;}
+.nft-card::before{content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(0,212,200,.03) 0%,transparent 55%);
+  pointer-events:none;z-index:2;}
+.nft-card:hover{transform:translateY(-5px);box-shadow:0 0 28px rgba(212,160,23,.14);}
+.nft-card:hover::after{border-color:rgba(212,160,23,.55);}
+.card-placeholder{width:100%;aspect-ratio:1;position:relative;overflow:hidden;
+  background:linear-gradient(135deg,rgba(0,25,22,.9),rgba(0,12,10,.95));
+  display:flex;align-items:center;justify-content:center;font-size:2.8rem;
+  clip-path:polygon(0 0,calc(100% - 11px) 0,100% 11px,100% 100%,11px 100%,0 calc(100% - 11px));}
+.card-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;display:block;transition:transform .4s ease;}
+.nft-card:hover .card-img{transform:scale(1.05);}
+.card-scan{position:absolute;left:0;right:0;height:1px;background:var(--cyan);opacity:0;transition:all .45s;top:0;z-index:1;}
+.nft-card:hover .card-scan{opacity:.32;top:100%;}
+.card-info{padding:.7rem .9rem;border-top:1px solid rgba(0,212,200,.1);position:relative;z-index:2;}
+.card-id{font-family:var(--font-mono);font-size:.48rem;letter-spacing:.12em;color:rgba(0,212,200,.28);display:block;margin-bottom:.2rem;}
+.card-name{font-family:var(--font-hud);font-size:.66rem;font-weight:700;letter-spacing:.08em;color:var(--gold);}
 
-    /* ABOUT */
-    #about { background:linear-gradient(180deg,var(--teal-dark) 0%,rgba(0,28,24,.5) 50%,var(--teal-dark) 100%); }
-    .about-grid { display:grid; grid-template-columns:1fr 1fr; gap:5rem; align-items:center; max-width:1000px; margin:0 auto; }
-    .about-vis {
-      aspect-ratio:1;
-      background:radial-gradient(ellipse 80% 80% at 50% 50%,rgba(0,75,68,.24) 0%,rgba(0,18,16,.85) 100%);
-      border:1px solid rgba(0,212,200,.22);
-      clip-path:polygon(0 0,calc(100% - 28px) 0,100% 28px,100% 100%,28px 100%,0 calc(100% - 28px));
-      display:flex; align-items:center; justify-content:center; font-size:6rem; position:relative;
-    }
-    .about-vis::before {
-      content:''; position:absolute; inset:14px;
-      border:1px solid rgba(0,212,200,.09);
-      clip-path:polygon(0 0,calc(100% - 22px) 0,100% 22px,100% 100%,22px 100%,0 calc(100% - 22px));
-    }
-    .about-vis::after {
-      content:''; position:absolute; inset:0;
-      background:radial-gradient(ellipse 60% 60% at 50% 50%,rgba(0,212,200,.06) 0%,transparent 70%);
-    }
-    .about-body { color:rgba(0,212,200,.58); font-size:.88rem; line-height:2; letter-spacing:.04em; }
-    .about-body p { margin-bottom:1.3rem; }
-    .about-body strong { color:var(--gold); font-weight:700; }
-    .about-tag {
-      display:inline-block; font-family:var(--font-mono); font-size:.6rem;
-      letter-spacing:.2em; color:var(--cyan);
-      border:1px solid rgba(0,212,200,.28); padding:.22rem .65rem; margin-bottom:1rem;
-    }
+/* ── ABOUT ── */
+#about{background:linear-gradient(180deg,var(--teal-dark) 0%,rgba(0,22,20,.55) 50%,var(--teal-dark) 100%);}
+.about-grid{display:grid;grid-template-columns:1fr 1.15fr;gap:5rem;align-items:center;max-width:1020px;margin:0 auto;}
+.about-vis{aspect-ratio:1;display:flex;align-items:center;justify-content:center;}
 
-    /* FOOTER */
-    footer {
-      border-top:1px solid rgba(0,212,200,.13); padding:4rem 2rem;
-      text-align:center; position:relative; background:rgba(0,4,4,.85);
-    }
-    footer::before {
-      content:''; position:absolute; top:0; left:0; right:0; height:1px;
-      background:linear-gradient(90deg,transparent,var(--cyan),var(--gold),var(--cyan),transparent); opacity:.28;
-    }
-    .footer-logo {
-      font-family:var(--font-hud); font-size:1.1rem; font-weight:700;
-      color:var(--gold); letter-spacing:.3em; display:block; margin-bottom:.8rem;
-      text-shadow:0 0 18px var(--gold-glow);
-    }
-    .footer-tagline { font-family:var(--font-mono); font-size:.58rem; letter-spacing:.3em; color:var(--text-dim); display:block; margin-bottom:2.5rem; }
-    .footer-cm { font-family:var(--font-mono); font-size:.55rem; letter-spacing:.1em; color:rgba(0,212,200,.22); margin-bottom:2rem; word-break:break-all; }
-    .footer-cm b { color:rgba(0,212,200,.42); }
-    .footer-links { display:flex; gap:2rem; justify-content:center; flex-wrap:wrap; margin-bottom:2.5rem; }
-    .footer-links a { font-family:var(--font-hud); font-size:.57rem; letter-spacing:.25em; color:rgba(0,212,200,.32); text-decoration:none; text-transform:uppercase; transition:color .2s; }
-    .footer-links a:hover { color:var(--gold); }
-    .footer-copy { font-family:var(--font-mono); font-size:.52rem; letter-spacing:.15em; color:rgba(0,212,200,.16); }
+/* ── GENESIS STORY TEXT — refined ── */
+.genesis-story{position:relative;}
+.story-head{font-family:var(--font-hud);font-size:.52rem;letter-spacing:.45em;
+  color:var(--cyan);opacity:.5;text-transform:uppercase;margin-bottom:1.6rem;}
+.story-title{font-family:var(--font-hero);font-size:clamp(1.2rem,2.5vw,1.8rem);
+  font-weight:700;color:var(--gold);letter-spacing:.14em;margin-bottom:2rem;
+  text-shadow:0 0 24px rgba(212,160,23,.2);}
+.story-body{font-family:'Cinzel',serif;font-size:.78rem;line-height:2;
+  color:var(--text-body);letter-spacing:.04em;}
+.story-body p{margin-bottom:1.4rem;}
+.story-body p:last-child{margin-bottom:0;}
+/* Gold keyword highlights */
+.kw{color:var(--gold-bright);font-weight:600;
+  text-shadow:0 0 12px rgba(212,160,23,.4);}
+.story-divider{display:flex;align-items:center;gap:.8rem;margin:1.8rem 0;opacity:.35;}
+.story-divider span{flex:1;height:1px;background:linear-gradient(90deg,transparent,var(--cyan));}
+.story-divider span:last-child{transform:scaleX(-1);}
+.story-divider em{font-family:var(--font-mono);font-size:.48rem;letter-spacing:.3em;color:var(--cyan);font-style:normal;}
+.story-tags{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:1.6rem;}
+.story-tag{font-family:var(--font-mono);font-size:.5rem;letter-spacing:.18em;
+  color:rgba(0,212,200,.42);border:1px solid rgba(0,212,200,.2);padding:.3rem .7rem;
+  text-transform:uppercase;}
 
-    /* MODALS */
-    .overlay { position:fixed; inset:0; background:rgba(1,6,6,.92); z-index:500; display:flex; align-items:center; justify-content:center; opacity:0; pointer-events:none; transition:opacity .3s; backdrop-filter:blur(14px); }
-    .overlay.show { opacity:1; pointer-events:all; }
-    .modal-box {
-      background:rgba(2,16,14,.98); border:1px solid var(--cyan);
-      clip-path:polygon(0 0,calc(100% - 24px) 0,100% 24px,100% 100%,24px 100%,0 calc(100% - 24px));
-      padding:3rem 2.5rem; max-width:460px; width:90%; text-align:center;
-      box-shadow:0 0 60px rgba(0,212,200,.1);
-    }
-    .modal-box h3 { font-family:var(--font-hero); font-size:1.5rem; color:var(--gold); margin-bottom:1rem; letter-spacing:.15em; }
-    .modal-box p { font-family:var(--font-mono); font-size:.7rem; line-height:1.8; color:rgba(0,212,200,.48); letter-spacing:.08em; margin-bottom:2rem; }
-    .btn-modal-close { font-family:var(--font-hud); font-size:.6rem; letter-spacing:.22em; color:rgba(0,212,200,.42); background:none; border:1px solid rgba(0,212,200,.22); cursor:pointer; padding:.55rem 1.4rem; text-transform:uppercase; transition:all .2s; }
-    .btn-modal-close:hover { color:var(--cyan); border-color:var(--cyan); }
+/* ── HUD PANEL ── */
+.hud{position:relative;background:var(--teal-panel);
+  border:1px solid rgba(0,212,200,.28);
+  clip-path:polygon(0 0,calc(100% - 12px) 0,100% 12px,100% 100%,12px 100%,0 calc(100% - 12px));
+  padding:1.1rem 1.4rem;}
+.hud::before{content:'';position:absolute;top:3px;left:3px;width:6px;height:6px;background:var(--cyan);opacity:.6;}
+.hud::after{content:'';position:absolute;bottom:3px;right:3px;width:6px;height:6px;background:var(--gold);opacity:.6;}
 
-    /* SPINNER */
-    .spin { display:inline-block; width:12px; height:12px; border:2px solid rgba(0,0,0,.2); border-top-color:#020d0d; border-radius:50%; animation:rot .65s linear infinite; vertical-align:middle; margin-right:7px; }
-    @keyframes rot { to{transform:rotate(360deg)} }
+/* ── FOOTER ── */
+footer{position:relative;padding:3.5rem 3rem 2.5rem;background:rgba(0,4,4,.95);
+  border-top:1px solid rgba(0,212,200,.1);}
+.footer-inner{max-width:1200px;margin:0 auto;}
+.footer-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:2rem;}
+.footer-brand{display:flex;align-items:center;gap:.8rem;}
+.footer-brand-name{font-family:var(--font-brand);font-size:1.3rem;font-weight:700;
+  color:var(--gold);letter-spacing:.02em;}
+.footer-brand-sub{font-family:var(--font-mono);font-size:.48rem;letter-spacing:.25em;
+  color:rgba(0,212,200,.32);text-transform:uppercase;margin-top:.2rem;}
+.footer-links{display:flex;align-items:center;gap:0;}
+.footer-link{font-family:var(--font-hud);font-size:.52rem;letter-spacing:.18em;
+  color:rgba(0,212,200,.38);text-decoration:none;text-transform:uppercase;
+  transition:color .2s;padding:0 1.4rem;position:relative;}
+.footer-link:hover{color:var(--cyan);}
+/* Crosshair dividers between links */
+.footer-link+.footer-link::before{content:'';position:absolute;left:0;top:50%;transform:translateY(-50%);
+  width:1px;height:12px;background:rgba(0,212,200,.18);}
+.footer-bottom{display:flex;align-items:center;justify-content:space-between;
+  padding-top:1.5rem;border-top:1px solid rgba(0,212,200,.07);}
+.footer-copy{font-family:var(--font-mono);font-size:.5rem;letter-spacing:.14em;color:rgba(0,212,200,.14);}
+.footer-chain{display:flex;align-items:center;gap:.5rem;}
+.footer-chain-dot{width:5px;height:5px;border-radius:50%;background:var(--cyan);
+  box-shadow:0 0 8px var(--cyan);animation:pulse-dot 2s ease-in-out infinite;}
+.footer-chain-txt{font-family:var(--font-mono);font-size:.48rem;letter-spacing:.18em;
+  color:rgba(0,212,200,.3);text-transform:uppercase;}
+/* Footer data point decorations */
+.footer-data-pts{position:absolute;bottom:2rem;right:3rem;display:flex;gap:.4rem;opacity:.15;}
+.data-pt{width:4px;height:4px;border:1px solid var(--cyan);transform:rotate(45deg);}
 
-    /* RESPONSIVE */
-    @media(max-width:768px) {
-      nav{padding:.75rem 1.2rem;} .nav-link{display:none;}
-      .hero-title{font-size:clamp(2.4rem,13vw,3.8rem);}
-      .sphere-wrap{width:min(90vw,400px);}
-      .stats-row{gap:.8rem;}
-      .gallery-grid{grid-template-columns:repeat(2,1fr);}
-      .about-grid{grid-template-columns:1fr;gap:2.5rem;}
-      .about-vis{max-width:260px;margin:0 auto;}
-      section{padding:4rem 1.25rem;}
-    }
-  </style>
+/* ── RESPONSIVE ── */
+@media(max-width:1100px){.gallery-grid{grid-template-columns:repeat(4,1fr);}}
+@media(max-width:900px){.gallery-grid{grid-template-columns:repeat(3,1fr);}
+  .about-grid{grid-template-columns:1fr;gap:3rem;}}
+@media(max-width:640px){.gallery-grid{grid-template-columns:repeat(2,1fr);}
+  nav{padding:.7rem 1.2rem;}.nav-link{display:none;}
+  .hero-title{font-size:clamp(2.4rem,13vw,3.8rem);}
+  .stats-row{gap:.6rem;}
+  .footer-top{flex-direction:column;gap:1.5rem;text-align:center;}
+  .footer-links{flex-wrap:wrap;justify-content:center;}
+}
+</style>
 </head>
 <body>
 <div class="scanline"></div>
 
-<!-- NAV -->
+<!-- ══ NAV ══ -->
 <nav>
-    <a href="#hero" class="nav-logo" id="navLogo">
-    <svg width="30" height="30" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0;">
+  <a href="#hero" class="nav-logo">
+    <svg width="28" height="28" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
       <defs>
-        <radialGradient id="nng" cx="58%" cy="40%" r="55%">
-          <stop offset="0%"  stop-color="#FFE066"/>
+        <radialGradient id="ng" cx="58%" cy="40%" r="55%">
+          <stop offset="0%" stop-color="#FFE066"/>
           <stop offset="50%" stop-color="#D4A017"/>
           <stop offset="100%" stop-color="#5a3e04"/>
         </radialGradient>
         <filter id="ngf"><feGaussianBlur stdDeviation="1.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
       </defs>
-      <!-- Hex outer -->
-      <polygon points="50,4 90,27 90,73 50,96 10,73 10,27" fill="none" stroke="#00d4c8" stroke-width="2.5" opacity=".7"/>
-      <polygon points="50,13 84,32 84,68 50,87 16,68 16,32" fill="none" stroke="rgba(212,160,23,.35)" stroke-width="1"/>
-      <!-- Banana shape -->
-      <path d="M 32 76 Q 22 60 22 44 Q 22 28 34 20 Q 44 13 56 16 Q 67 19 71 30 Q 63 22 52 23 Q 40 25 35 38 Q 30 52 34 64 Q 37 72 44 76 Q 38 80 32 76 Z"
-        fill="url(#nng)" stroke="rgba(212,160,23,.6)" stroke-width="1" filter="url(#ngf)"/>
-      <!-- Stem -->
+      <polygon points="50,4 90,27 90,73 50,96 10,73 10,27" fill="none" stroke="#00d4c8" stroke-width="2.5" opacity=".65"/>
+      <polygon points="50,13 84,32 84,68 50,87 16,68 16,32" fill="none" stroke="rgba(212,160,23,.3)" stroke-width="1"/>
+      <path d="M 32 76 Q 22 60 22 44 Q 22 28 34 20 Q 44 13 56 16 Q 67 19 71 30 Q 63 22 52 23 Q 40 25 35 38 Q 30 52 34 64 Q 37 72 44 76 Q 38 80 32 76 Z" fill="url(#ng)" stroke="rgba(212,160,23,.55)" stroke-width="1" filter="url(#ngf)"/>
       <path d="M 56 16 Q 60 8 66 9 Q 68 14 62 18 Z" fill="#4a7a20"/>
-      <!-- Shine -->
-      <path d="M 36 26 Q 44 18 54 18" fill="none" stroke="rgba(255,255,255,.35)" stroke-width="2" stroke-linecap="round"/>
-      <!-- Cyan glow dot -->
-      <circle cx="50" cy="50" r="3.5" fill="#00d4c8" filter="url(#ngf)" opacity=".85">
-        <animate attributeName="opacity" values=".85;.3;.85" dur="2.5s" repeatCount="indefinite"/>
-      </circle>
-      <!-- Circuit lines (tiny) -->
-      <g stroke="rgba(255,200,40,.5)" stroke-width=".8" fill="none">
-        <line x1="25" y1="45" x2="70" y2="38"/>
-        <line x1="25" y1="54" x2="68" y2="49"/>
-        <circle cx="36" cy="43" r="2" fill="rgba(255,200,40,.6)" stroke="none"/>
-        <circle cx="55" cy="40" r="2" fill="rgba(0,212,200,.7)" stroke="none"/>
-      </g>
+      <circle cx="50" cy="50" r="3" fill="#00d4c8" filter="url(#ngf)" opacity=".8"><animate attributeName="opacity" values=".8;.25;.8" dur="2.5s" repeatCount="indefinite"/></circle>
     </svg>
     <span class="brand">banana_artworks</span>
   </a>
   <div class="nav-right">
     <a href="#gallery" class="nav-link">Collection</a>
-    <a href="#about"   class="nav-link">Genesis</a>
-    <button class="btn-wallet" id="walletBtn" onclick="handleWalletClick()">Connect Wallet</button>
+    <a href="#about" class="nav-link">Genesis</a>
+    <button class="btn-wallet-nav connected">
+      <span class="wallet-dot"></span>Dw1m…4Dya
+    </button>
   </div>
 </nav>
 
-<!-- HERO -->
+<!-- ══ HERO ══ -->
 <section id="hero">
   <div class="hero-atmos"></div>
   <div class="circuit-bg"></div>
+
+  <!-- Topographic background SVG -->
+  <div class="topo-bg">
+    <svg viewBox="0 0 1400 900" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+      <g fill="none" stroke="#00d4c8" stroke-width="1">
+        <path d="M0,500 Q200,420 350,380 Q500,340 600,300 Q700,260 800,290 Q900,320 1050,280 Q1150,250 1300,310 Q1400,340 1500,320"/>
+        <path d="M0,540 Q200,460 350,415 Q500,372 600,335 Q700,298 800,325 Q900,355 1050,314 Q1150,282 1300,342 Q1400,372 1500,352"/>
+        <path d="M0,580 Q200,500 350,452 Q500,406 600,372 Q700,338 800,362 Q900,388 1050,348 Q1150,316 1300,375 Q1400,405 1500,385"/>
+        <path d="M0,455 Q200,378 350,342 Q500,306 620,265 Q720,228 820,256 Q920,284 1060,244 Q1160,214 1310,275 Q1410,305 1500,285"/>
+        <path d="M0,615 Q180,538 340,490 Q490,442 605,410 Q715,378 815,400 Q915,422 1055,382 Q1155,350 1300,408 Q1400,438 1500,418"/>
+        <path d="M100,640 Q280,565 440,518 Q580,472 700,442 Q800,415 900,435 Q1000,456 1130,418 Q1230,385 1380,442"/>
+        <path d="M0,410 Q180,336 340,302 Q490,268 620,228 Q720,194 828,224 Q930,252 1065,210 Q1170,178 1320,238 Q1420,268 1500,248"/>
+        <path d="M200,350 Q380,282 520,252 Q650,222 760,188 Q856,158 950,188 Q1040,218 1180,178 Q1280,148 1420,205"/>
+        <path d="M0,660 Q200,590 380,546 Q520,504 650,474 Q760,448 860,466 Q960,486 1090,450 Q1190,418 1340,474"/>
+      </g>
+    </svg>
+  </div>
+
   <div class="hero-vignette"></div>
   <div class="brk brk-tl"></div><div class="brk brk-tr"></div>
   <div class="brk brk-bl"></div><div class="brk brk-br"></div>
   <div class="hud-line hud-line-t"></div>
   <div class="hud-line hud-line-b"></div>
 
-  <!-- Animated Geo Sphere -->
+  <!-- Geo Sphere -->
   <div class="sphere-wrap">
-    <svg viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;">
+    <svg viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
       <defs>
         <radialGradient id="sg" cx="50%" cy="45%" r="50%">
-          <stop offset="0%"   stop-color="#00d4c8" stop-opacity=".28"/>
-          <stop offset="40%"  stop-color="#004d48" stop-opacity=".14"/>
+          <stop offset="0%" stop-color="#00d4c8" stop-opacity=".26"/>
+          <stop offset="40%" stop-color="#004d48" stop-opacity=".12"/>
           <stop offset="100%" stop-color="transparent"/>
         </radialGradient>
         <radialGradient id="sg2" cx="38%" cy="36%" r="32%">
-          <stop offset="0%"  stop-color="#D4A017" stop-opacity=".55"/>
+          <stop offset="0%" stop-color="#D4A017" stop-opacity=".5"/>
           <stop offset="100%" stop-color="transparent"/>
         </radialGradient>
         <filter id="glow"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
         <filter id="glow2"><feGaussianBlur stdDeviation="7" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-        <clipPath id="circ"><circle cx="300" cy="300" r="230"/></clipPath>
+        <clipPath id="circ"><circle cx="300" cy="300" r="228"/></clipPath>
       </defs>
-
-      <!-- Outer glow halo -->
-      <circle cx="300" cy="300" r="270" fill="none" stroke="rgba(0,212,200,.06)" stroke-width="1">
-        <animate attributeName="r" values="265;278;265" dur="6s" repeatCount="indefinite"/>
-        <animate attributeName="opacity" values=".07;.18;.07" dur="6s" repeatCount="indefinite"/>
-      </circle>
-      <circle cx="300" cy="300" r="248" fill="none" stroke="rgba(0,212,200,.1)" stroke-width=".8">
-        <animate attributeName="r" values="244;253;244" dur="4.5s" repeatCount="indefinite"/>
-      </circle>
-
-      <!-- Base sphere atmosphere -->
-      <circle cx="300" cy="300" r="230" fill="url(#sg)"/>
-      <circle cx="300" cy="300" r="230" fill="url(#sg2)"/>
-      <circle cx="300" cy="300" r="230" fill="none" stroke="rgba(0,212,200,.2)" stroke-width="1"/>
-
-      <!-- Latitude rings (clipped to sphere) -->
-      <g clip-path="url(#circ)" stroke="rgba(0,212,200,.22)" stroke-width=".9" fill="none" filter="url(#glow)">
-        <ellipse cx="300" cy="300" rx="230" ry="50"/>
-        <ellipse cx="300" cy="300" rx="230" ry="110"/>
-        <ellipse cx="300" cy="300" rx="230" ry="170"/>
-        <ellipse cx="300" cy="300" rx="230" ry="218"/>
-        <line x1="70" y1="300" x2="530" y2="300"/>
-        <line x1="300" y1="70" x2="300" y2="530"/>
+      <circle cx="300" cy="300" r="268" fill="none" stroke="rgba(0,212,200,.055)" stroke-width="1"><animate attributeName="r" values="264;276;264" dur="6s" repeatCount="indefinite"/></circle>
+      <circle cx="300" cy="300" r="246" fill="none" stroke="rgba(0,212,200,.09)" stroke-width=".7"><animate attributeName="r" values="242;250;242" dur="4.5s" repeatCount="indefinite"/></circle>
+      <circle cx="300" cy="300" r="228" fill="url(#sg)"/>
+      <circle cx="300" cy="300" r="228" fill="url(#sg2)"/>
+      <circle cx="300" cy="300" r="228" fill="none" stroke="rgba(0,212,200,.18)" stroke-width="1"/>
+      <g clip-path="url(#circ)" stroke="rgba(0,212,200,.2)" stroke-width=".8" fill="none" filter="url(#glow)">
+        <ellipse cx="300" cy="300" rx="228" ry="50"/>
+        <ellipse cx="300" cy="300" rx="228" ry="108"/>
+        <ellipse cx="300" cy="300" rx="228" ry="168"/>
+        <ellipse cx="300" cy="300" rx="228" ry="216"/>
+        <line x1="72" y1="300" x2="528" y2="300"/>
+        <line x1="300" y1="72" x2="300" y2="528"/>
       </g>
-
-      <!-- Longitude rings -->
-      <g clip-path="url(#circ)" stroke="rgba(0,212,200,.16)" stroke-width=".8" fill="none">
-        <ellipse cx="300" cy="300" rx="50"  ry="230"/>
-        <ellipse cx="300" cy="300" rx="110" ry="230"/>
-        <ellipse cx="300" cy="300" rx="170" ry="230"/>
+      <g clip-path="url(#circ)" stroke="rgba(0,212,200,.14)" stroke-width=".7" fill="none">
+        <ellipse cx="300" cy="300" rx="50" ry="228"/>
+        <ellipse cx="300" cy="300" rx="108" ry="228"/>
+        <ellipse cx="300" cy="300" rx="168" ry="228"/>
       </g>
-
-      <!-- Gold geometric star facets -->
-      <g clip-path="url(#circ)" stroke="rgba(212,160,23,.4)" stroke-width="1.4" fill="none" filter="url(#glow)">
-        <line x1="300" y1="70"  x2="530" y2="300"/>
-        <line x1="530" y1="300" x2="300" y2="530"/>
-        <line x1="300" y1="530" x2="70"  y2="300"/>
-        <line x1="70"  y1="300" x2="300" y2="70"/>
-        <line x1="300" y1="70"  x2="148" y2="460"/>
-        <line x1="300" y1="70"  x2="452" y2="460"/>
-        <line x1="70"  y1="185" x2="530" y2="415"/>
-        <line x1="530" y1="185" x2="70"  y2="415"/>
-        <line x1="148" y1="140" x2="452" y2="460"/>
-        <line x1="452" y1="140" x2="148" y2="460"/>
+      <g clip-path="url(#circ)" stroke="rgba(212,160,23,.35)" stroke-width="1.2" fill="none" filter="url(#glow)">
+        <line x1="300" y1="72" x2="528" y2="300"/>
+        <line x1="528" y1="300" x2="300" y2="528"/>
+        <line x1="300" y1="528" x2="72" y2="300"/>
+        <line x1="72" y1="300" x2="300" y2="72"/>
+        <line x1="300" y1="72" x2="150" y2="458"/>
+        <line x1="300" y1="72" x2="450" y2="458"/>
+        <line x1="72" y1="188" x2="528" y2="412"/>
+        <line x1="528" y1="188" x2="72" y2="412"/>
       </g>
-
-      <!-- Inner triangle -->
-      <g clip-path="url(#circ)" stroke="rgba(255,215,0,.55)" stroke-width="1.8" fill="none" filter="url(#glow)">
-        <polygon points="300,130 470,430 130,430"/>
-        <polygon points="300,470 130,170 470,170" opacity=".5"/>
-      </g>
-
-      <!-- Animated orbit rings -->
-      <ellipse cx="300" cy="300" rx="230" ry="52"
-        stroke="rgba(0,212,200,.55)" stroke-width="1.5" fill="none"
-        stroke-dasharray="22 14" filter="url(#glow)">
-        <animateTransform attributeName="transform" type="rotate" from="0 300 300" to="360 300 300" dur="11s" repeatCount="indefinite"/>
-      </ellipse>
-      <ellipse cx="300" cy="300" rx="52" ry="230"
-        stroke="rgba(212,160,23,.38)" stroke-width="1.2" fill="none"
-        stroke-dasharray="16 20" filter="url(#glow)">
-        <animateTransform attributeName="transform" type="rotate" from="0 300 300" to="-360 300 300" dur="17s" repeatCount="indefinite"/>
-      </ellipse>
-      <ellipse cx="300" cy="300" rx="165" ry="165"
-        stroke="rgba(0,212,200,.18)" stroke-width="1" fill="none"
-        stroke-dasharray="8 28">
-        <animateTransform attributeName="transform" type="rotate" from="45 300 300" to="405 300 300" dur="22s" repeatCount="indefinite"/>
-      </ellipse>
-
-      <!-- Center node -->
-      <circle cx="300" cy="300" r="14" fill="rgba(212,160,23,.7)" filter="url(#glow2)"/>
-      <circle cx="300" cy="300" r="6"  fill="#FFD700"/>
-      <circle cx="300" cy="300" r="2"  fill="white"/>
-
-      <!-- Animated data-point orbiting -->
       <circle r="5" fill="var(--cyan)" filter="url(#glow2)">
-        <animateMotion dur="8s" repeatCount="indefinite">
-          <mpath href="#orbit-path"/>
-        </animateMotion>
+        <animateMotion dur="8s" repeatCount="indefinite"><mpath href="#op"/></animateMotion>
         <animate attributeName="opacity" values="1;.3;1" dur="8s" repeatCount="indefinite"/>
       </circle>
-      <path id="orbit-path" d="M 300 68 A 232 232 0 1 1 299.9 68" fill="none" stroke="none"/>
-
-      <!-- Gold data-point orbiting opposite -->
-      <circle r="4" fill="var(--gold)" filter="url(#glow)">
-        <animateMotion dur="12s" repeatCount="indefinite" keyPoints="1;0" keyTimes="0;1" calcMode="linear">
-          <mpath href="#orbit-path"/>
-        </animateMotion>
+      <circle r="3.5" fill="var(--gold)" filter="url(#glow)">
+        <animateMotion dur="11s" repeatCount="indefinite" keyPoints="1;0" keyTimes="0;1" calcMode="linear"><mpath href="#op"/></animateMotion>
       </circle>
+      <path id="op" d="M 300 72 A 228 228 0 1 1 299.9 72" fill="none" stroke="none"/>
     </svg>
   </div>
 
-  <!-- CONTENT -->
+  <!-- Hero Content -->
   <div class="hero-inner">
     <div class="hero-eyebrow">
       <span class="eye-dash"></span>Solana Mainnet · Genesis Collection<span class="eye-dash"></span>
     </div>
-    <span class="hero-tag brand" style="font-size:1rem;">// banana_artworks //</span>
+    <span class="hero-tag">// banana_artworks //</span>
     <h1 class="hero-title">GENESIS</h1>
     <p class="hero-sub">101 &nbsp;·&nbsp; UNIQUE &nbsp;·&nbsp; ON-CHAIN</p>
 
@@ -559,69 +441,75 @@
       <div class="ln"></div><div class="dmd"></div><div class="ln"></div>
     </div>
 
+    <!-- LED Counter Display -->
     <div class="stats-row">
-      <div class="hud stat-panel">
-        <span class="stat-val" id="mintedCount">—</span>
+      <div class="stat-panel hud">
+        <div class="led-scan"></div>
+        <span class="stat-val">0</span>
         <span class="stat-label">Minted</span>
       </div>
       <div class="stat-sep">|</div>
-      <div class="hud stat-panel">
+      <div class="stat-panel hud">
+        <div class="led-scan"></div>
         <span class="stat-val">101</span>
         <span class="stat-label">Total Supply</span>
       </div>
       <div class="stat-sep">|</div>
-      <div class="hud stat-panel">
-        <span class="stat-val" id="remainingCount">—</span>
+      <div class="stat-panel hud">
+        <div class="led-scan"></div>
+        <span class="stat-val">101</span>
         <span class="stat-label">Remaining</span>
       </div>
       <div class="stat-sep">|</div>
-      <div class="hud stat-panel">
-        <span class="stat-val" id="mintPrice" style="font-size:1.4rem;">—</span>
-        <span class="stat-label">Mint Price</span>
+      <div class="stat-panel hud">
+        <div class="led-scan"></div>
+        <span class="stat-val" style="font-size:1.4rem;">0.25</span>
+        <span class="stat-label">SOL Price</span>
       </div>
     </div>
 
     <div class="btn-mint-wrap">
       <div class="btn-mint-glow"></div>
-      <button class="btn-mint" id="mintBtn" onclick="handleMint()">◈ &nbsp;MINT NOW&nbsp; ◈</button>
+      <button class="btn-mint">◈ &nbsp;MINT NOW&nbsp; ◈</button>
     </div>
     <div class="mint-meta">
       <span class="mint-tag">Phantom Wallet</span>
       <div class="mint-dot"></div>
       <span class="mint-tag">Solana Mainnet</span>
       <div class="mint-dot"></div>
-      <span class="mint-tag">SPL Token</span>
+      <span class="mint-tag">0.25 SOL</span>
     </div>
     <div id="mint-status"></div>
   </div>
+
+  <!-- SOLD OUT overlay — toggle visibility to show -->
+  <div class="sold-out-wrap" style="display:none;">
+    <div class="sold-out-banner">◈ &nbsp;SOLD OUT&nbsp; ◈</div>
+  </div>
 </section>
 
-<!-- WAVEFORM -->
+<!-- Waveform -->
 <div class="waveform-wrap">
-  <svg class="waveform-svg" viewBox="0 0 1440 90" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+  <svg class="waveform-svg" viewBox="0 0 1440 88" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
     <defs>
       <linearGradient id="wg" x1="0%" y1="0%" x2="100%" y2="0%">
-        <stop offset="0%"   stop-color="transparent"/>
-        <stop offset="20%"  stop-color="#00d4c8"/>
-        <stop offset="50%"  stop-color="#D4A017"/>
-        <stop offset="80%"  stop-color="#00d4c8"/>
+        <stop offset="0%" stop-color="transparent"/>
+        <stop offset="20%" stop-color="#00d4c8"/>
+        <stop offset="50%" stop-color="#D4A017"/>
+        <stop offset="80%" stop-color="#00d4c8"/>
         <stop offset="100%" stop-color="transparent"/>
       </linearGradient>
       <filter id="wf"><feGaussianBlur stdDeviation="2"/><feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge></filter>
     </defs>
-    <line x1="0" y1="45" x2="1440" y2="45" stroke="url(#wg)" stroke-width=".5" opacity=".22"/>
-    <path d="M0,45 L120,45 L140,20 L160,70 L180,10 L200,80 L220,30 L240,60 L260,45
-             L420,45 L440,22 L460,68 L480,8 L500,78 L520,28 L540,55 L560,45
-             L720,45 L740,20 L760,70 L780,10 L800,80 L820,30 L840,60 L860,45
-             L1020,45 L1040,22 L1060,68 L1080,8 L1100,78 L1120,28 L1140,55 L1160,45
-             L1320,45 L1340,20 L1360,70 L1380,10 L1400,80 L1440,45"
-      stroke="url(#wg)" stroke-width="2.2" fill="none" filter="url(#wf)" stroke-dasharray="250 500">
-      <animate attributeName="stroke-dashoffset" values="0;-750" dur="6s" repeatCount="indefinite"/>
+    <line x1="0" y1="44" x2="1440" y2="44" stroke="url(#wg)" stroke-width=".4" opacity=".18"/>
+    <path d="M0,44 L120,44 L140,20 L160,68 L180,10 L200,78 L220,30 L240,58 L260,44 L420,44 L440,22 L460,66 L480,8 L500,76 L520,28 L540,54 L560,44 L720,44 L740,20 L760,68 L780,10 L800,78 L820,30 L840,58 L860,44 L1020,44 L1040,22 L1060,66 L1080,8 L1100,76 L1120,28 L1140,54 L1160,44 L1320,44 L1340,20 L1360,68 L1380,10 L1400,78 L1440,44"
+      stroke="url(#wg)" stroke-width="2" fill="none" filter="url(#wf)" stroke-dasharray="240 480">
+      <animate attributeName="stroke-dashoffset" values="0;-720" dur="6s" repeatCount="indefinite"/>
     </path>
   </svg>
 </div>
 
-<!-- GALLERY -->
+<!-- ══ GALLERY ══ -->
 <section id="gallery">
   <div class="circuit-bg"></div>
   <div class="container">
@@ -630,26 +518,34 @@
       <h2 class="section-title">The Collection</h2>
       <span class="title-rule"></span>
     </div>
-    <div class="gallery-grid" id="galleryGrid"></div>
+    <div class="gallery-grid" id="galleryGrid">
+      <!-- Cards generated by JS or shown as placeholders here -->
+      <div class="nft-card"><div class="card-placeholder">🍌</div><div class="card-info"><span class="card-id">6Myzztq2…NRsP</span><span class="card-name">Genesis #001</span></div></div>
+      <div class="nft-card"><div class="card-placeholder">🍌</div><div class="card-info"><span class="card-id">6Myzztq2…NRsP</span><span class="card-name">Genesis #002</span></div></div>
+      <div class="nft-card"><div class="card-placeholder">🍌</div><div class="card-info"><span class="card-id">6Myzztq2…NRsP</span><span class="card-name">Genesis #003</span></div></div>
+      <div class="nft-card"><div class="card-placeholder">🍌</div><div class="card-info"><span class="card-id">6Myzztq2…NRsP</span><span class="card-name">Genesis #004</span></div></div>
+      <div class="nft-card"><div class="card-placeholder">🍌</div><div class="card-info"><span class="card-id">6Myzztq2…NRsP</span><span class="card-name">Genesis #005</span></div></div>
+      <div class="nft-card"><div class="card-placeholder">🍌</div><div class="card-info"><span class="card-id">6Myzztq2…NRsP</span><span class="card-name">Genesis #006</span></div></div>
+      <div class="nft-card"><div class="card-placeholder">🍌</div><div class="card-info"><span class="card-id">6Myzztq2…NRsP</span><span class="card-name">Genesis #007</span></div></div>
+      <div class="nft-card"><div class="card-placeholder">🍌</div><div class="card-info"><span class="card-id">6Myzztq2…NRsP</span><span class="card-name">Genesis #008</span></div></div>
+      <div class="nft-card"><div class="card-placeholder">🍌</div><div class="card-info"><span class="card-id">6Myzztq2…NRsP</span><span class="card-name">Genesis #009</span></div></div>
+      <div class="nft-card"><div class="card-placeholder">🍌</div><div class="card-info"><span class="card-id">6Myzztq2…NRsP</span><span class="card-name">Genesis #010</span></div></div>
+    </div>
   </div>
 </section>
 
-<!-- WAVEFORM reversed -->
+<!-- Waveform reversed -->
 <div class="waveform-wrap">
-  <svg class="waveform-svg" viewBox="0 0 1440 90" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-    <line x1="0" y1="45" x2="1440" y2="45" stroke="url(#wg)" stroke-width=".5" opacity=".22"/>
-    <path d="M0,45 L120,45 L140,20 L160,70 L180,10 L200,80 L220,30 L240,60 L260,45
-             L420,45 L440,22 L460,68 L480,8 L500,78 L520,28 L540,55 L560,45
-             L720,45 L740,20 L760,70 L780,10 L800,80 L820,30 L840,60 L860,45
-             L1020,45 L1040,22 L1060,68 L1080,8 L1100,78 L1120,28 L1140,55 L1160,45
-             L1320,45 L1340,20 L1360,70 L1380,10 L1400,80 L1440,45"
-      stroke="url(#wg)" stroke-width="2.2" fill="none" filter="url(#wf)" stroke-dasharray="250 500">
-      <animate attributeName="stroke-dashoffset" values="-750;0" dur="6s" repeatCount="indefinite"/>
+  <svg class="waveform-svg" viewBox="0 0 1440 88" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <line x1="0" y1="44" x2="1440" y2="44" stroke="url(#wg)" stroke-width=".4" opacity=".18"/>
+    <path d="M0,44 L120,44 L140,20 L160,68 L180,10 L200,78 L220,30 L240,58 L260,44 L420,44 L440,22 L460,66 L480,8 L500,76 L520,28 L540,54 L560,44 L720,44 L740,20 L760,68 L780,10 L800,78 L820,30 L840,58 L860,44 L1020,44 L1040,22 L1060,66 L1080,8 L1100,76 L1120,28 L1140,54 L1160,44 L1320,44 L1340,20 L1360,68 L1380,10 L1400,78 L1440,44"
+      stroke="url(#wg)" stroke-width="2" fill="none" filter="url(#wf)" stroke-dasharray="240 480">
+      <animate attributeName="stroke-dashoffset" values="-720;0" dur="6s" repeatCount="indefinite"/>
     </path>
   </svg>
 </div>
 
-<!-- ABOUT -->
+<!-- ══ ABOUT ══ -->
 <section id="about">
   <div class="circuit-bg"></div>
   <div class="container">
@@ -659,714 +555,133 @@
       <span class="title-rule"></span>
     </div>
     <div class="about-grid">
-            <div class="about-vis" style="background:none;border:none;clip-path:none;padding:0;overflow:visible;position:relative;">
+
+      <!-- Animated Logo Visual -->
+      <div class="about-vis">
         <svg viewBox="0 0 420 440" xmlns="http://www.w3.org/2000/svg"
-          style="width:100%;height:100%;max-width:400px;
-                 filter:drop-shadow(0 0 40px rgba(212,160,23,.35)) drop-shadow(0 0 80px rgba(0,212,200,.15));">
+          style="width:100%;max-width:380px;
+                 filter:drop-shadow(0 0 40px rgba(212,160,23,.32)) drop-shadow(0 0 80px rgba(0,212,200,.12));">
           <defs>
             <radialGradient id="hatmos" cx="50%" cy="50%" r="50%">
-              <stop offset="0%"  stop-color="rgba(0,60,55,.5)"/>
+              <stop offset="0%" stop-color="rgba(0,60,55,.5)"/>
               <stop offset="100%" stop-color="transparent"/>
             </radialGradient>
-            <filter id="glow1">
-              <feGaussianBlur stdDeviation="3" result="b"/>
-              <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
-            </filter>
-            <filter id="glow2">
-              <feGaussianBlur stdDeviation="6" result="b"/>
-              <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
-            </filter>
-            <filter id="pelec">
-              <feGaussianBlur stdDeviation="3.5" result="b"/>
-              <feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
-            </filter>
-            <!-- Circular clip for the image -->
-            <clipPath id="imgclip">
-              <circle cx="210" cy="205" r="168"/>
-            </clipPath>
+            <filter id="glow1"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+            <filter id="glow3"><feGaussianBlur stdDeviation="6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+            <clipPath id="imgclip"><circle cx="210" cy="205" r="168"/></clipPath>
           </defs>
-
-          <!-- ═══ ATMOSPHERE ═══ -->
-          <ellipse cx="210" cy="205" rx="190" ry="190" fill="url(#hatmos)"/>
-
-          <!-- ═══ ROTATING HEX FRAMES ═══ -->
-          <polygon points="210,12 382,110 382,300 210,398 38,300 38,110"
-            fill="none" stroke="rgba(212,160,23,.4)" stroke-width="1.8">
-            <animateTransform attributeName="transform" type="rotate"
-              from="0 210 205" to="360 210 205" dur="38s" repeatCount="indefinite"/>
-          </polygon>
-          <polygon points="210,26 368,118 368,292 210,384 52,292 52,118"
-            fill="none" stroke="rgba(0,212,200,.25)" stroke-width=".9">
-            <animateTransform attributeName="transform" type="rotate"
-              from="360 210 205" to="0 210 205" dur="25s" repeatCount="indefinite"/>
-          </polygon>
-          <!-- Static outer frame -->
-          <polygon points="210,40 358,126 358,284 210,370 62,284 62,126"
-            fill="none" stroke="rgba(212,160,23,.45)" stroke-width="1.8"/>
-
-          <!-- Corner dots -->
-          <g filter="url(#glow1)">
-            <circle cx="210" cy="40"  r="3.5" fill="#D4A017"/>
-            <circle cx="358" cy="126" r="3.5" fill="#00d4c8"/>
-            <circle cx="358" cy="284" r="3.5" fill="#D4A017"/>
-            <circle cx="210" cy="370" r="3.5" fill="#00d4c8"/>
-            <circle cx="62"  cy="284" r="3.5" fill="#D4A017"/>
-            <circle cx="62"  cy="126" r="3.5" fill="#00d4c8"/>
-          </g>
-
-          <!-- HUD tick lines on hex -->
-          <g stroke="rgba(212,160,23,.3)" stroke-width="1">
-            <line x1="210" y1="40"  x2="210" y2="52"/>
-            <line x1="358" y1="126" x2="348" y2="132"/>
-            <line x1="358" y1="284" x2="348" y2="278"/>
-            <line x1="210" y1="370" x2="210" y2="358"/>
-            <line x1="62"  cy="284" x2="72"  y2="278"/>
-            <line x1="62"  cy="126" x2="72"  y2="132"/>
-          </g>
-
-          <!-- ═══ THE IMAGE — clipped to circle ═══ -->
-          <image href="logo.png"
-            x="42" y="37" width="336" height="336"
-            clip-path="url(#imgclip)"
-            preserveAspectRatio="xMidYMid slice"/>
-
-          <!-- Subtle vignette over image edges -->
-          <circle cx="210" cy="205" r="168"
-            fill="none"
-            stroke="rgba(0,212,200,.25)" stroke-width="2"/>
-          <circle cx="210" cy="205" r="168"
-            fill="url(#hatmos)" opacity=".3"/>
-
-          <!-- ═══ MOTION PATHS — invisible, drive the pulses ═══ -->
-          <defs>
-            <path id="e1" d="M 115 95 C 132 86,150 83,164 90 C 180 98,190 114,192 132
-               C 194 150,186 168,174 184 C 162 200,148 214,144 230
-               C 140 244,144 258,152 266"/>
-            <path id="e2" d="M 270 102 C 284 110,294 126,294 144 C 294 162,284 178,270 192
-               C 256 206,240 216,232 230 C 226 242,226 256,232 266"/>
-            <path id="e3" d="M 132 268 C 148 276,166 280,184 278 C 202 276,218 268,228 256
-               C 238 244,244 228,242 214 C 240 200,232 188,220 178"/>
-          </defs>
-
-          <!-- ── BANANA 1: Gold pulse (no clip-path on animated element!) ── -->
-          <g>
-            <!-- glow trail -->
-            <circle r="12" fill="rgba(255,215,0,.18)">
-              <animateMotion dur="2.2s" repeatCount="indefinite">
-                <mpath xlink:href="#e1"/>
-              </animateMotion>
-            </circle>
-            <!-- sharp core -->
-            <circle r="5" fill="#FFD700">
-              <animateMotion dur="2.2s" repeatCount="indefinite">
-                <mpath xlink:href="#e1"/>
-              </animateMotion>
-              <animate attributeName="opacity" values="1;.4;1" dur="2.2s" repeatCount="indefinite"/>
-            </circle>
-            <!-- reverse pulse -->
-            <circle r="4" fill="#FFF0a0">
-              <animateMotion dur="2.2s" begin="1.1s" repeatCount="indefinite"
-                keyPoints="1;0" keyTimes="0;1" calcMode="linear">
-                <mpath xlink:href="#e1"/>
-              </animateMotion>
-              <animate attributeName="opacity" values=".9;.2;.9" dur="2.2s" begin="1.1s" repeatCount="indefinite"/>
-            </circle>
-          </g>
-
-          <!-- ── BANANA 2: Cyan pulse ── -->
-          <g>
-            <circle r="12" fill="rgba(0,212,200,.18)">
-              <animateMotion dur="2.6s" repeatCount="indefinite">
-                <mpath xlink:href="#e2"/>
-              </animateMotion>
-            </circle>
-            <circle r="5" fill="#00d4c8">
-              <animateMotion dur="2.6s" repeatCount="indefinite">
-                <mpath xlink:href="#e2"/>
-              </animateMotion>
-              <animate attributeName="opacity" values="1;.4;1" dur="2.6s" repeatCount="indefinite"/>
-            </circle>
-            <circle r="4" fill="#aafff8">
-              <animateMotion dur="2.6s" begin="1.3s" repeatCount="indefinite"
-                keyPoints="1;0" keyTimes="0;1" calcMode="linear">
-                <mpath xlink:href="#e2"/>
-              </animateMotion>
-              <animate attributeName="opacity" values=".9;.2;.9" dur="2.6s" begin="1.3s" repeatCount="indefinite"/>
-            </circle>
-          </g>
-
-          <!-- ── BANANA 3: Orange pulse ── -->
-          <g>
-            <circle r="12" fill="rgba(255,180,0,.18)">
-              <animateMotion dur="2.9s" repeatCount="indefinite">
-                <mpath xlink:href="#e3"/>
-              </animateMotion>
-            </circle>
-            <circle r="5" fill="#FFB800">
-              <animateMotion dur="2.9s" repeatCount="indefinite">
-                <mpath xlink:href="#e3"/>
-              </animateMotion>
-              <animate attributeName="opacity" values="1;.4;1" dur="2.9s" repeatCount="indefinite"/>
-            </circle>
-            <circle r="4" fill="#FFE566">
-              <animateMotion dur="2.9s" begin="1.45s" repeatCount="indefinite"
-                keyPoints="1;0" keyTimes="0;1" calcMode="linear">
-                <mpath xlink:href="#e3"/>
-              </animateMotion>
-              <animate attributeName="opacity" values=".9;.2;.9" dur="2.9s" begin="1.45s" repeatCount="indefinite"/>
-            </circle>
-          </g>
-
-          <!-- ── Center core pulse ── -->
-          <circle cx="210" cy="205" r="6" fill="#FFD700">
-            <animate attributeName="r"       values="5;13;5"   dur="2s" repeatCount="indefinite"/>
-            <animate attributeName="opacity" values=".9;.15;.9" dur="2s" repeatCount="indefinite"/>
+          <!-- Outer rings -->
+          <circle cx="210" cy="205" r="200" fill="none" stroke="rgba(0,212,200,.12)" stroke-width="1" stroke-dasharray="6 8">
+            <animateTransform attributeName="transform" type="rotate" values="0 210 205;360 210 205" dur="40s" repeatCount="indefinite"/>
           </circle>
-          <circle cx="210" cy="205" r="3.5" fill="white">
-            <animate attributeName="opacity" values="1;.3;1" dur="1.4s" repeatCount="indefinite"/>
+          <circle cx="210" cy="205" r="185" fill="none" stroke="rgba(212,160,23,.1)" stroke-width=".8"/>
+          <!-- Atmosphere -->
+          <circle cx="210" cy="205" r="172" fill="url(#hatmos)"/>
+          <!-- Main circle border -->
+          <circle cx="210" cy="205" r="168" fill="rgba(0,10,10,.6)" stroke="rgba(0,212,200,.38)" stroke-width="1.5"/>
+          <!-- Image placeholder -->
+          <circle cx="210" cy="205" r="168" fill="rgba(0,30,26,.8)" clip-path="url(#imgclip)"/>
+          <!-- Banana emoji as placeholder -->
+          <text x="210" y="230" text-anchor="middle" font-size="120" filter="url(#glow1)">🍌</text>
+          <!-- Scan line -->
+          <line x1="42" y1="205" x2="378" y2="205" stroke="rgba(0,212,200,.15)" stroke-width=".8"/>
+          <line x1="210" y1="37" x2="210" y2="373" stroke="rgba(0,212,200,.15)" stroke-width=".8"/>
+          <!-- Orbit dot -->
+          <circle r="5" fill="var(--cyan)" filter="url(#glow3)">
+            <animateMotion dur="6s" repeatCount="indefinite">
+              <mpath href="#orbit1"/>
+            </animateMotion>
+            <animate attributeName="opacity" values="1;.3;1" dur="6s" repeatCount="indefinite"/>
           </circle>
-
-          <!-- ── Electric arc sparks ── -->
-          <line x1="152" y1="266" x2="210" y2="205"
-            stroke="#FFD700" stroke-width="1.2" opacity="0">
-            <animate attributeName="opacity" values="0;.7;0;0;0;.5;0;0" dur="3.1s" repeatCount="indefinite"/>
-          </line>
-          <line x1="232" y1="266" x2="210" y2="205"
-            stroke="#00d4c8" stroke-width="1.2" opacity="0">
-            <animate attributeName="opacity" values="0;0;0;.7;0;0;.4;0" dur="2.8s" repeatCount="indefinite"/>
-          </line>
-          <line x1="220" y1="178" x2="210" y2="205"
-            stroke="#FFB800" stroke-width="1.2" opacity="0">
-            <animate attributeName="opacity" values="0;0;.6;0;0;0;.4;0" dur="3.5s" repeatCount="indefinite"/>
-          </line>
-
-          <!-- ═══ SCAN LINE ═══ -->
-          <rect x="42" y="37" width="336" height="3" fill="rgba(0,212,200,.3)">
-            <animate attributeName="y"       values="37;373;37"  dur="5s" repeatCount="indefinite"/>
-            <animate attributeName="opacity" values="0;.55;0"    dur="5s" repeatCount="indefinite"/>
-          </rect>
-
-          <!-- ═══ ORBITING PARTICLES ═══ -->
-          <circle r="4.5" fill="#00d4c8" filter="url(#pelec)">
-            <animateMotion dur="8s" repeatCount="indefinite"><mpath href="#orb"/></animateMotion>
-            <animate attributeName="opacity" values="1;.2;1" dur="8s" repeatCount="indefinite"/>
-          </circle>
-          <circle r="3" fill="#FFD700" filter="url(#glow1)">
-            <animateMotion dur="13s" repeatCount="indefinite"
-              keyPoints="1;0" keyTimes="0;1" calcMode="linear"><mpath href="#orb"/></animateMotion>
-          </circle>
-          <!-- Second orbit ring -->
-          <circle r="3" fill="#00d4c8" filter="url(#glow1)" opacity=".7">
-            <animateMotion dur="18s" repeatCount="indefinite" begin="4s"><mpath href="#orb2"/></animateMotion>
-          </circle>
-          <path id="orb"  d="M 378 205 A 168 168 0 1 1 377.9 205" fill="none" stroke="none"/>
-          <path id="orb2" d="M 358 126 A 148 148 0 1 1 357.9 126" fill="none" stroke="none"/>
-
-          <!-- ═══ CORNER HUD BRACKETS ═══ -->
-          <g stroke="rgba(0,212,200,.5)" stroke-width="1.5" fill="none">
-            <path d="M 42 80 L 42 55 L 67 55"/>
-            <path d="M 378 80 L 378 55 L 353 55"/>
-            <path d="M 42 330 L 42 355 L 67 355"/>
-            <path d="M 378 330 L 378 355 L 353 355"/>
+          <path id="orbit1" d="M 210 37 A 168 168 0 1 1 209.9 37" fill="none"/>
+          <!-- Corner HUD marks -->
+          <g stroke="rgba(0,212,200,.4)" stroke-width="1.2" fill="none">
+            <path d="M 10 30 L 10 10 L 30 10"/><path d="M 390 30 L 390 10 L 370 10"/>
+            <path d="M 10 380 L 10 400 L 30 400"/><path d="M 390 380 L 390 400 L 370 400"/>
           </g>
-
-          <!-- ═══ WORDMARK ═══ -->
-          <text x="210" y="400"
-            font-family="Bradley Hand ITC, Bradley Hand, Caveat, cursive"
-            font-size="22" font-weight="600" fill="#D4A017"
-            text-anchor="middle" letter-spacing="2" filter="url(#glow1)">banana_artworks</text>
-          <text x="210" y="416"
-            font-family="Share Tech Mono, monospace"
-            font-size="8" fill="rgba(0,212,200,.45)"
-            text-anchor="middle" letter-spacing="5">GENESIS COLLECTION · SOLANA</text>
+          <!-- Data label -->
+          <text x="210" y="425" text-anchor="middle" font-family="'Share Tech Mono'" font-size="9" fill="rgba(0,212,200,.35)" letter-spacing="3">BANANA_ARTWORKS · GENESIS</text>
         </svg>
       </div>
-      <div class="about-body">
-        <span class="about-tag">CHIANG RAI · THAILAND · SOLANA</span>
-        <p><strong class="brand">banana_artworks Genesis</strong> is a collection of 101 unique digital artworks — each one minted immutably on the Solana blockchain, existing on-chain forever.</p>
-        <p>Created from the mountains of northern Thailand, these works carry the energy of <strong>Chiang Rai's golden light</strong> — the same light that turns the Doi range to copper at dusk.</p>
-        <p>An expat artist. A blockchain. A banana. <strong>101 reasons to believe</strong> the most unexpected places birth the boldest art.</p>
-        <p><strong>This is the Genesis. Everything begins here.</strong></p>
+
+      <!-- Genesis Story — refined typography -->
+      <div class="genesis-story">
+        <p class="story-head">// 19.03.2026 · Block #312,847,221 //</p>
+        <h3 class="story-title">Digital Art Born from<br>Highland Origins</h3>
+
+        <div class="story-body">
+          <p>
+            Deep in the mountains of <span class="kw">Chiang Rai</span>, at an elevation where clouds meet jungle canopy, a singular creative vision took form. The <span class="kw">Banana Artworks Genesis</span> collection emerges not from a studio — but from a lived experience at the intersection of nature and technology.
+          </p>
+
+          <div class="story-divider">
+            <span></span><em>◈ ORIGIN COORDINATES ◈</em><span></span>
+          </div>
+
+          <p>
+            Each of the <span class="kw">101 Unique</span> artworks encodes the spirit of the <span class="kw">Doi Chang</span> highlands — transformed through generative processes into permanent on-chain artifacts. No two pieces share the same structure. Every token is a singular node in a distributed network of expression.
+          </p>
+
+          <p>
+            Minted on Solana Mainnet, the collection lives beyond servers and storage — immutable, borderless, and entirely yours. A genesis event, preserved forever in the ledger of the blockchain.
+          </p>
+        </div>
+
+        <div class="story-tags">
+          <span class="story-tag">Solana Mainnet</span>
+          <span class="story-tag">101 Editions</span>
+          <span class="story-tag">Chiang Rai · TH</span>
+          <span class="story-tag">Genesis 2026</span>
+          <span class="story-tag">On-Chain</span>
+        </div>
       </div>
+
     </div>
   </div>
 </section>
 
-<!-- FOOTER -->
+<!-- ══ FOOTER ══ -->
 <footer>
-  <div class="circuit-bg"></div>
-  <div style="position:relative;z-index:2;">
-    <span class="footer-logo brand" style="font-size:1.6rem;">◈ &nbsp;banana_artworks&nbsp; ◈</span>
-    <span class="footer-tagline">Genesis Collection · Solana Mainnet · Chiang Rai, Thailand</span>
-    <p class="footer-cm">Candy Machine ID: <b>6Myzztq28zM4385VxfGdeGxg1ygSWrnC6KwfT1KnNRsP</b></p>
-    <div class="footer-links">
-      <a href="https://magiceden.io/marketplace/banana_artworks_genesis" target="_blank" rel="noopener">Magic Eden</a>
-      <a href="https://solscan.io/account/6Myzztq28zM4385VxfGdeGxg1ygSWrnC6KwfT1KnNRsP" target="_blank" rel="noopener">Solscan</a>
-      <a href="https://twitter.com/banana_artworks" target="_blank" rel="noopener">X / Twitter</a>
-      <a href="https://github.com/banana-artworks" target="_blank" rel="noopener">GitHub</a>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <svg width="32" height="32" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <radialGradient id="fg" cx="58%" cy="40%" r="55%">
+              <stop offset="0%" stop-color="#FFE066"/><stop offset="50%" stop-color="#D4A017"/><stop offset="100%" stop-color="#5a3e04"/>
+            </radialGradient>
+            <filter id="ff"><feGaussianBlur stdDeviation="1.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+          </defs>
+          <polygon points="50,4 90,27 90,73 50,96 10,73 10,27" fill="none" stroke="#00d4c8" stroke-width="2.5" opacity=".6"/>
+          <path d="M 32 76 Q 22 60 22 44 Q 22 28 34 20 Q 44 13 56 16 Q 67 19 71 30 Q 63 22 52 23 Q 40 25 35 38 Q 30 52 34 64 Q 37 72 44 76 Q 38 80 32 76 Z" fill="url(#fg)" filter="url(#ff)"/>
+          <path d="M 56 16 Q 60 8 66 9 Q 68 14 62 18 Z" fill="#4a7a20"/>
+          <circle cx="50" cy="50" r="3" fill="#00d4c8" filter="url(#ff)" opacity=".8">
+            <animate attributeName="opacity" values=".8;.25;.8" dur="2.5s" repeatCount="indefinite"/>
+          </circle>
+        </svg>
+        <div>
+          <div class="footer-brand-name">banana_artworks</div>
+          <div class="footer-brand-sub">Genesis Collection · Solana · 2026</div>
+        </div>
+      </div>
+      <nav class="footer-links">
+        <a href="https://magiceden.io/marketplace/banana_artworks_genesis" target="_blank" class="footer-link">Magic Eden</a>
+        <a href="https://solscan.io/account/6Myzztq28zM4385VxfGdeGxg1ygSWrnC6KwfT1KnNRsP" target="_blank" class="footer-link">Solscan</a>
+        <a href="https://twitter.com/banana_artworks" target="_blank" class="footer-link">X / Twitter</a>
+        <a href="https://github.com/banana-artworks" target="_blank" class="footer-link">GitHub</a>
+      </nav>
     </div>
-    <p class="footer-copy">© 2025 banana_artworks · All Rights Reserved</p>
+    <div class="footer-bottom">
+      <p class="footer-copy">© 2026 banana_artworks · All Rights Reserved · Solana Mainnet</p>
+      <div class="footer-chain">
+        <div class="footer-chain-dot"></div>
+        <span class="footer-chain-txt">Live on Mainnet</span>
+      </div>
+    </div>
+  </div>
+  <div class="footer-data-pts">
+    <div class="data-pt"></div><div class="data-pt"></div><div class="data-pt"></div>
   </div>
 </footer>
-
-<!-- MODAL: No Wallet -->
-<div class="overlay" id="noWalletModal" onclick="onOvClick(event,'noWalletModal')">
-  <div class="modal-box">
-    <h3>Phantom Required</h3>
-    <p>To mint a Banana Artworks Genesis NFT, install the Phantom Wallet browser extension and connect to Solana Mainnet.</p>
-    <a href="https://phantom.app/" target="_blank" rel="noopener" style="display:block;margin-bottom:1rem;">
-      <button class="btn-mint" style="width:100%;padding:.9rem 2rem;">Get Phantom →</button>
-    </a>
-    <button class="btn-modal-close" onclick="closeOv('noWalletModal')">Dismiss</button>
-  </div>
-</div>
-
-<!-- MODAL: Success -->
-<div class="overlay" id="successModal" onclick="onOvClick(event,'successModal')">
-  <div class="modal-box">
-    <h3>◈ &nbsp;Minted&nbsp; ◈</h3>
-    <p id="successText">Your Banana Artworks Genesis NFT has been minted on Solana.</p>
-    <button class="btn-modal-close" onclick="closeOv('successModal')">Close</button>
-  </div>
-</div>
-
-<script>
-  // ── CONFIG ────────────────────────────────────────────────────────────────
-  const CM_ID = '6Myzztq28zM4385VxfGdeGxg1ygSWrnC6KwfT1KnNRsP';
-
-  // ╔══════════════════════════════════════════════════════════════╗
-  // ║  HELIUS FREE API KEY — einmalig registrieren:               ║
-  // ║  https://helius.dev  → "Get API Key" → Free Plan           ║
-  // ║  Dann deinen Key unten eintragen:                           ║
-  // ╚══════════════════════════════════════════════════════════════╝
-  const HELIUS_KEY = 'fc7e345b-f4f3-44a2-84e3-25d8bd33c87c';
-  const RPC = `https://mainnet.helius-rpc.com/?api-key=${HELIUS_KEY}`;
-
-  // ── STATE ─────────────────────────────────────────────────────────────────
-  let walletAddr = null;
-  let isMinting  = false;
-  let _umi       = null;
-  let _cm        = null;   // cached CandyMachine account
-  let _guard     = null;   // cached CandyGuard account
-
-  // ── MODULE CACHE (loaded once, reused) ───────────────────────────────────
-  const M = {};
-  let _modulePromise = null;  // Promise lock — prevents parallel loads
-
-  // ── BASE58 ENCODER (fix: Solana signatures are base58, not hex) ──────────
-  function toBase58(bytes) {
-    const ALPHA = '123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz';
-    const digits = [0];
-    for (let i = 0; i < bytes.length; i++) {
-      let carry = bytes[i];
-      for (let j = 0; j < digits.length; j++) {
-        carry += digits[j] << 8;
-        digits[j] = carry % 58;
-        carry = (carry / 58) | 0;
-      }
-      while (carry > 0) { digits.push(carry % 58); carry = (carry / 58) | 0; }
-    }
-    let out = '';
-    for (let i = 0; bytes[i] === 0 && i < bytes.length; i++) out += '1';
-    for (let i = digits.length - 1; i >= 0; i--) out += ALPHA[digits[i]];
-    return out;
-  }
-
-  // ── UI HELPERS ────────────────────────────────────────────────────────────
-  function dbg(...a) { console.log('[BA]', ...a); }
-
-  function setStatus(msg, isErr = false) {
-    const el = document.getElementById('mint-status');
-    el.textContent = msg;
-    el.className = isErr ? 'error' : '';
-  }
-
-  function setMintedUI(minted, remaining) {
-    document.getElementById('mintedCount').textContent   = minted;
-    document.getElementById('remainingCount').textContent = remaining;
-    if (remaining <= 0) {
-      const b = document.getElementById('mintBtn');
-      b.textContent = '◈ SOLD OUT ◈';
-      b.disabled = true;
-    }
-  }
-
-  function setPriceUI(sol) {
-    const el = document.getElementById('mintPrice');
-    el.textContent = sol !== null ? `${sol} SOL` : '—';
-  }
-
-  function openOv(id)  { document.getElementById(id).classList.add('show'); }
-  function closeOv(id) { document.getElementById(id).classList.remove('show'); }
-  function onOvClick(e, id) { if (e.target.id === id) closeOv(id); }
-
-  // ── MODULE LOADER (lokaler vendor.js Bundle — kein CDN nötig) ───────────
-  // Timeout wrapper: zeigt genau welches Paket hängt
-  function timedImport(url, label, ms = 20000) {
-    return Promise.race([
-      import(url),
-      new Promise((_, rej) => setTimeout(() => rej(new Error(`⏱ TIMEOUT (${ms}ms): ${label}`)), ms))
-    ]);
-  }
-
-  async function initModules() {
-    if (M.ready) return;
-    if (_modulePromise) return _modulePromise;
-    dbg('Loading vendor bundle…');
-
-    _modulePromise = (async () => {
-      try {
-        const pkg = await timedImport('./vendor.js', 'vendor.js', 30000);
-        M.createUmi             = pkg.createUmi;
-        M.publicKey             = pkg.publicKey;
-        M.generateSigner        = pkg.generateSigner;
-        M.some                  = pkg.some;
-        M.none                  = pkg.none;
-        M.mplCandyMachine       = pkg.mplCandyMachine;
-        M.fetchCandyMachine     = pkg.fetchCandyMachine;
-        M.fetchCandyGuard       = pkg.fetchCandyGuard;
-        M.mintV2                = pkg.mintV2;
-        M.walletAdapterIdentity = pkg.walletAdapterIdentity;
-        M.setComputeUnitLimit   = pkg.setComputeUnitLimit;
-        M.ready = true;
-        dbg('✅ vendor.js loaded!');
-        dbg('  createUmi:', typeof M.createUmi);
-        dbg('  mintV2:', typeof M.mintV2);
-        dbg('  some:', typeof M.some);
-      } catch (e) {
-        _modulePromise = null;
-        dbg('❌ vendor.js FAILED:', e?.message || e);
-        dbg('   Stack:', e?.stack?.slice(0,400));
-        throw e;
-      }
-    })();
-
-    return _modulePromise;
-  }
-
-  // ── UMI INIT ──────────────────────────────────────────────────────────────
-  async function initUmi() {
-    if (_umi) return;
-    await initModules();
-    if (HELIUS_KEY === 'DEIN-HELIUS-API-KEY-HIER') {
-      dbg('⚠️  Kein Helius API Key! Bitte eintragen.');
-      setStatus('RPC nicht konfiguriert — sieh Console.', true);
-      return;
-    }
-    _umi = M.createUmi(RPC)
-      .use(M.mplCandyMachine())
-      .use(M.walletAdapterIdentity(window.solana));
-    dbg('✅ UMI ready, RPC:', RPC.split('?')[0]);
-    dbg('   Signer:', window.solana.publicKey?.toString());
-  }
-
-  // ── FETCH CANDY MACHINE + GUARD ───────────────────────────────────────────
-  async function fetchCMState() {
-    if (!_umi) return;
-    try {
-      const cmKey = M.publicKey(CM_ID);
-      _cm = await M.fetchCandyMachine(_umi, cmKey);
-      dbg('CM fetched:', JSON.stringify({
-        itemsRedeemed:   _cm.itemsRedeemed.toString(),
-        itemsAvailable:  _cm.data.itemsAvailable.toString(),
-        mintAuthority:   _cm.mintAuthority,
-        authority:       _cm.authority,
-        collectionMint:  _cm.collectionMint,
-      }));
-
-      const minted    = Number(_cm.itemsRedeemed);
-      const available = Number(_cm.data.itemsAvailable);
-      setMintedUI(minted, available - minted);
-
-      // Fetch Guard (mint authority = guard PDA in CM v3)
-      if (_cm.mintAuthority?.__option === 'Some') {
-        try {
-          _guard = await M.fetchCandyGuard(_umi, _cm.mintAuthority.value);
-          dbg('Guard fetched:', JSON.stringify(_guard.guards));
-          parseMintPrice(_guard);
-        } catch (ge) {
-          dbg('Guard fetch failed (no guard?):', ge.message);
-          _guard = null;
-        }
-      } else {
-        dbg('No candy guard (mintAuthority is None)');
-        _guard = null;
-      }
-    } catch (e) {
-      dbg('fetchCMState error:', e);
-      document.getElementById('mintedCount').textContent    = '?';
-      document.getElementById('remainingCount').textContent = '?';
-    }
-  }
-
-  // ── PARSE MINT PRICE FROM GUARD ───────────────────────────────────────────
-  function parseMintPrice(guard) {
-    try {
-      const sp = guard?.guards?.solPayment;
-      if (sp?.__option === 'Some') {
-        // lamports.basisPoints = raw lamports (BigInt)
-        const lamports = Number(sp.value.lamports.basisPoints);
-        const sol      = (lamports / 1e9).toFixed(2);
-        setPriceUI(sol);
-        dbg(`Mint price: ${sol} SOL (${lamports} lamports), destination: ${sp.value.destination}`);
-        return { type: 'sol', lamports, destination: sp.value.destination };
-      }
-      // Token payment guard
-      const tp = guard?.guards?.tokenPayment;
-      if (tp?.__option === 'Some') {
-        setPriceUI('Token');
-        dbg('Token payment guard detected');
-        return { type: 'token', mint: tp.value.mint };
-      }
-      // Free mint / no payment guard
-      setPriceUI('Free');
-      dbg('No payment guard — free mint');
-      return { type: 'free' };
-    } catch (e) {
-      dbg('parseMintPrice error:', e);
-      setPriceUI('—');
-      return null;
-    }
-  }
-
-  // ── BUILD MINT ARGS FROM GUARD ────────────────────────────────────────────
-  function buildMintArgs(guard) {
-    if (!guard) return {};
-    const args = {};
-    try {
-      const sp = guard?.guards?.solPayment;
-      if (sp?.__option === 'Some') {
-        // some() wrapper required by UMI for optional guard args
-        args.solPayment = M.some({ destination: sp.value.destination });
-        dbg('mintArgs: solPayment destination =', sp.value.destination);
-      }
-      const tp = guard?.guards?.tokenPayment;
-      if (tp?.__option === 'Some') {
-        args.tokenPayment = M.some({
-          mint:            tp.value.mint,
-          destinationAta:  tp.value.destinationAta,
-        });
-      }
-      // startDate / endDate guards don't need mintArgs
-      // allowList guard would need merkle proof — not handled here
-    } catch (e) {
-      dbg('buildMintArgs error:', e);
-    }
-    return args;
-  }
-
-  // ── WALLET ────────────────────────────────────────────────────────────────
-  async function handleWalletClick() {
-    walletAddr ? disconnectWallet() : await connectWallet();
-  }
-
-  async function connectWallet() {
-    if (!window.solana?.isPhantom) { openOv('noWalletModal'); return; }
-    try {
-      setStatus('Connecting…');
-      const r = await window.solana.connect();
-      walletAddr = r.publicKey.toString();
-      dbg('Wallet connected:', walletAddr);
-      refreshWalletBtn();
-      await initUmi();
-      await fetchCMState();
-      setStatus('');
-    } catch (e) {
-      dbg('Connect error:', e);
-      const msg = e?.message || '';
-      if (msg.includes('rejected') || msg.includes('cancel') || e.code === 4001) {
-        setStatus('Connection cancelled.', true);
-      } else {
-        setStatus('Connection failed — check console.', true);
-      }
-      setTimeout(() => setStatus(''), 3500);
-    }
-  }
-
-  function disconnectWallet() {
-    window.solana?.disconnect();
-    walletAddr = null;
-    _umi = null;
-    _cm  = null;
-    _guard = null;
-    refreshWalletBtn();
-    document.getElementById('mintedCount').textContent    = '—';
-    document.getElementById('remainingCount').textContent = '—';
-    setPriceUI(null);
-  }
-
-  function refreshWalletBtn() {
-    const b = document.getElementById('walletBtn');
-    if (walletAddr) {
-      b.textContent = `✓ ${walletAddr.slice(0,4)}…${walletAddr.slice(-4)}`;
-      b.classList.add('connected');
-    } else {
-      b.textContent = 'Connect Wallet';
-      b.classList.remove('connected');
-    }
-  }
-
-  // ── MINT ──────────────────────────────────────────────────────────────────
-  async function handleMint() {
-    if (!walletAddr) { await connectWallet(); return; }
-    if (isMinting) return;
-    isMinting = true;
-
-    const btn = document.getElementById('mintBtn');
-    btn.innerHTML = '<span class="spin"></span>MINTING…';
-    btn.disabled = true;
-    setStatus('Preparing transaction…');
-
-    try {
-      // Ensure UMI + modules loaded
-      if (!_umi) await initUmi();
-      if (!_cm)  await fetchCMState();
-
-      // Re-fetch CM state right before mint (latest data)
-      setStatus('Fetching candy machine…');
-      _cm = await M.fetchCandyMachine(_umi, M.publicKey(CM_ID));
-
-      // Re-fetch guard if needed
-      if (!_guard && _cm.mintAuthority?.__option === 'Some') {
-        try { _guard = await M.fetchCandyGuard(_umi, _cm.mintAuthority.value); } catch {}
-      }
-
-      // Build mint args from guard
-      const mintArgs = buildMintArgs(_guard);
-      dbg('Final mintArgs:', JSON.stringify(mintArgs));
-
-      // Generate ephemeral NFT mint keypair
-      const nftMint = M.generateSigner(_umi);
-      dbg('nftMint address:', nftMint.publicKey);
-
-      setStatus('Waiting for wallet approval…');
-
-      let tx = M.mintV2(_umi, {
-        candyMachine:               _cm.publicKey,
-        nftMint,
-        collectionMint:             _cm.collectionMint,
-        collectionUpdateAuthority:  _cm.authority,
-        candyGuard:                 _guard?.publicKey ?? undefined,
-        mintArgs,
-      });
-
-      // Increase compute budget — CM mints are heavy
-      tx = tx.prepend(M.setComputeUnitLimit(_umi, { units: 800_000 }));
-
-      setStatus('Sending transaction…');
-      const result = await tx.sendAndConfirm(_umi, { confirm: { commitment: 'finalized' } });
-
-      // ✅ FIX: encode signature as Base58 (not hex)
-      const sig = result.signature;
-      const sigB58 = (sig instanceof Uint8Array || Array.isArray(sig))
-        ? toBase58(sig instanceof Uint8Array ? sig : new Uint8Array(sig))
-        : String(sig);
-
-      dbg('Mint success! Signature:', sigB58);
-      setStatus('');
-      document.getElementById('successText').innerHTML =
-        `Your Banana Artworks Genesis NFT has been minted!<br><br>` +
-        `<a href="https://solscan.io/tx/${sigB58}" target="_blank" rel="noopener"
-           style="color:var(--cyan);font-family:var(--font-mono);font-size:.65rem;letter-spacing:.1em;">
-           ◈ View on Solscan →</a>`;
-      openOv('successModal');
-
-      // Update counters
-      await fetchCMState();
-
-    } catch (e) {
-      console.error('[BA] Mint error:', e);
-      const m = e?.message || String(e);
-      dbg('Error message:', m);
-      if (m.includes('rejected') || m.includes('cancel') || e?.code === 4001) {
-        setStatus('Transaction cancelled.', true);
-      } else if (m.includes('insufficient') || m.includes('0x1')) {
-        setStatus('Insufficient SOL balance.', true);
-      } else if (m.includes('0x1770') || m.includes('guard')) {
-        setStatus('Guard condition not met — check mint price/allowlist.', true);
-      } else if (m.includes('sold out') || m.includes('0x1775')) {
-        setStatus('Sold out!', true);
-      } else {
-        setStatus(`Mint failed: ${m.slice(0, 80)}`, true);
-      }
-      setTimeout(() => setStatus(''), 8000);
-    } finally {
-      isMinting = false;
-      btn.innerHTML = '◈ &nbsp;MINT NOW&nbsp; ◈';
-      btn.disabled  = false;
-    }
-  }
-
-  // ── INIT ON LOAD ──────────────────────────────────────────────────────────
-  window.addEventListener('load', async () => {
-    buildGallery();
-    // Auto-reconnect if Phantom already approved this site
-    if (window.solana?.isPhantom) {
-      try {
-        const r = await window.solana.connect({ onlyIfTrusted: true });
-        walletAddr = r.publicKey.toString();
-        dbg('Auto-reconnected:', walletAddr);
-        refreshWalletBtn();
-        await initUmi();
-        await fetchCMState();
-      } catch {
-        // Not trusted / user never connected — silent
-        dbg('No trusted session (first visit or revoked)');
-      }
-    } else {
-      dbg('Phantom not detected');
-    }
-  });
-
-  // Handle account switch in Phantom
-  window.solana?.on?.('accountChanged', pk => {
-    if (pk) {
-      walletAddr = pk.toString();
-      dbg('Account changed:', walletAddr);
-      refreshWalletBtn();
-      if (_umi) { _umi = null; initUmi().then(fetchCMState); }
-    } else {
-      disconnectWallet();
-    }
-  });
-
-  // ── GALLERY ───────────────────────────────────────────────────────────────
-  function buildGallery() {
-    const g = document.getElementById('galleryGrid');
-    const images = [
-      { file:'bag-001.png', id:'#001' },
-      { file:'bag-002.png', id:'#002' },
-      { file:'bag-003.png', id:'#003' },
-      { file:'bag-004.png', id:'#004' },
-      { file:'bag-005.png', id:'#005' },
-      { file:'bag-006.png', id:'#006' },
-      { file:'bag-007.png', id:'#007' },
-      { file:'bag-008.png', id:'#008' },
-      { file:'bag-009.png', id:'#009' },
-      { file:'bag-010.png', id:'#010' },
-    ];
-    g.innerHTML = images.map(({ file, id }) => `
-      <div class="nft-card">
-        <div class="card-placeholder" style="padding:0;">
-          <img class="card-img" src="${file}" alt="Banana Artworks Genesis ${id}" loading="lazy"
-               onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
-          <div style="display:none;width:100%;height:100%;align-items:center;justify-content:center;font-size:3rem;">🍌</div>
-          <div class="card-scan"></div>
-        </div>
-        <div class="card-info">
-          <span class="card-id">${CM_ID.slice(0,8)}…${CM_ID.slice(-4)}</span>
-          <span class="card-name">Genesis ${id}</span>
-        </div>
-      </div>`).join('');
-  }
-
-  // ── GLOBAL EXPORTS für onclick="" Handler ────────────────────────────────
-  // Nötig weil Script ohne type="module" läuft aber dynamic import() nutzt
-  window.handleWalletClick = handleWalletClick;
-  window.handleMint        = handleMint;
-  window.openOv            = openOv;
-  window.closeOv           = closeOv;
-  window.onOvClick         = onOvClick;
-</script>
 </body>
 </html>
