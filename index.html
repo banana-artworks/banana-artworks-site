@@ -648,15 +648,28 @@
   let walletAddr=null, isMinting=false, umiReady=false, _umi=null;
 
   function buildGallery() {
-    const g=document.getElementById('galleryGrid');
-    const emojis=['🍌','🌿','🎨','⚡','🔮','🌙','🦋','🏔️','🐉','🌺','🦅','🔥'];
-    const ids=['#001','#007','#013','#021','#034','#042','#055','#069','#077','#088','#094','#101'];
-    g.innerHTML=ids.map((n,i)=>`
+    const g = document.getElementById('galleryGrid');
+    const images = [
+      { file:'bag-001.png', id:'#001' },
+      { file:'bag-002.png', id:'#002' },
+      { file:'bag-003.png', id:'#003' },
+      { file:'bag-004.png', id:'#004' },
+      { file:'bag-005.png', id:'#005' },
+      { file:'bag-006.png', id:'#006' },
+      { file:'bag-007.png', id:'#007' },
+      { file:'bag-008.png', id:'#008' },
+    ];
+    g.innerHTML = images.map(({ file, id }) => `
       <div class="nft-card">
-        <div class="card-placeholder">${emojis[i]}<div class="card-scan"></div></div>
+        <div class="card-placeholder" style="padding:0;">
+          <img class="card-img" src="${file}" alt="Banana Artworks Genesis ${id}" loading="lazy"
+               onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
+          <div style="display:none;width:100%;height:100%;align-items:center;justify-content:center;font-size:3rem;">🍌</div>
+          <div class="card-scan"></div>
+        </div>
         <div class="card-info">
           <span class="card-id">${CM_ID.slice(0,8)}…${CM_ID.slice(-4)}</span>
-          <span class="card-name">Genesis ${n}</span>
+          <span class="card-name">Genesis ${id}</span>
         </div>
       </div>`).join('');
   }
