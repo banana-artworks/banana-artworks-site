@@ -1101,7 +1101,7 @@
       if (guardPDA) {
         try {
           _guard = await M.fetchCandyGuard(_umi, M.publicKey(guardPDA));
-          dbg('Guard fetched:', JSON.stringify(_guard.guards));
+          dbg('Guard fetched:', JSON.stringify(_guard.guards, (k,v) => typeof v === 'bigint' ? v.toString() : v));
           parseMintPrice(_guard);
         } catch (ge) {
           dbg('Guard fetch failed:', ge.message);
