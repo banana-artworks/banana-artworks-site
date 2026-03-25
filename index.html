@@ -943,7 +943,8 @@
   let _guard     = null;   // cached CandyGuard account
 
   // ── MODULE CACHE (loaded once, reused) ───────────────────────────────────
-  const M = {};  // filled by initModules()
+  const M = {};
+  let _modulePromise = null;  // Promise lock — prevents parallel loads
 
   // ── BASE58 ENCODER (fix: Solana signatures are base58, not hex) ──────────
   function toBase58(bytes) {
@@ -992,37 +993,51 @@
   function closeOv(id) { document.getElementById(id).classList.remove('show'); }
   function onOvClick(e, id) { if (e.target.id === id) closeOv(id); }
 
-  // ── MODULE LOADER (all ESM imports done once) ─────────────────────────────
+  // ── MODULE LOADER (Promise-lock: safe against parallel calls) ────────────
   async function initModules() {
-    if (M.ready) return;
+    if (M.ready) return;                      // already loaded
+    if (_modulePromise) return _modulePromise; // loading in progress — await same promise
     dbg('Loading ESM modules…');
-    try {
-      const [umiPkg, cmPkg, adapterPkg, toolboxPkg] = await Promise.all([
-        import('https://esm.sh/@metaplex-foundation/umi@0.9.2'),
-        import('https://esm.sh/@metaplex-foundation/mpl-candy-machine@1.1.0'),
-        import('https://esm.sh/@metaplex-foundation/umi-signer-wallet-adapters@0.9.2'),
-        import('https://esm.sh/@metaplex-foundation/mpl-toolbox@0.9.2'),
-      ]);
-      // UMI bundle-defaults (createUmi)
-      const { createUmi } = await import('https://esm.sh/@metaplex-foundation/umi-bundle-defaults@0.9.2');
 
-      M.createUmi             = createUmi;
-      M.publicKey             = umiPkg.publicKey;
-      M.generateSigner        = umiPkg.generateSigner;
-      M.some                  = umiPkg.some;   // ← required for mintArgs
-      M.none                  = umiPkg.none;
-      M.mplCandyMachine       = cmPkg.mplCandyMachine;
-      M.fetchCandyMachine     = cmPkg.fetchCandyMachine;
-      M.fetchCandyGuard       = cmPkg.fetchCandyGuard;
-      M.mintV2                = cmPkg.mintV2;
-      M.walletAdapterIdentity = adapterPkg.walletAdapterIdentity;
-      M.setComputeUnitLimit   = toolboxPkg.setComputeUnitLimit;
-      M.ready = true;
-      dbg('Modules loaded ✓');
-    } catch (e) {
-      dbg('Module load failed:', e);
-      throw e;
-    }
+    _modulePromise = (async () => {
+      try {
+        // Load one by one so we can see which package fails
+        dbg('  1/5 umi-bundle-defaults…');
+        const bundlePkg = await import('https://esm.sh/@metaplex-foundation/umi-bundle-defaults@0.9.2');
+        dbg('  2/5 umi…');
+        const umiPkg    = await import('https://esm.sh/@metaplex-foundation/umi@0.9.2');
+        dbg('  3/5 mpl-candy-machine…');
+        const cmPkg     = await import('https://esm.sh/@metaplex-foundation/mpl-candy-machine@1.1.0');
+        dbg('  4/5 umi-signer-wallet-adapters…');
+        const adapterPkg = await import('https://esm.sh/@metaplex-foundation/umi-signer-wallet-adapters@0.9.2');
+        dbg('  5/5 mpl-toolbox…');
+        const toolboxPkg = await import('https://esm.sh/@metaplex-foundation/mpl-toolbox@0.9.2');
+
+        M.createUmi             = bundlePkg.createUmi;
+        M.publicKey             = umiPkg.publicKey;
+        M.generateSigner        = umiPkg.generateSigner;
+        M.some                  = umiPkg.some;
+        M.none                  = umiPkg.none;
+        M.mplCandyMachine       = cmPkg.mplCandyMachine;
+        M.fetchCandyMachine     = cmPkg.fetchCandyMachine;
+        M.fetchCandyGuard       = cmPkg.fetchCandyGuard;
+        M.mintV2                = cmPkg.mintV2;
+        M.walletAdapterIdentity = adapterPkg.walletAdapterIdentity;
+        M.setComputeUnitLimit   = toolboxPkg.setComputeUnitLimit;
+        M.ready = true;
+        dbg('✅ All modules loaded!');
+        dbg('  createUmi:', typeof M.createUmi);
+        dbg('  mintV2:', typeof M.mintV2);
+        dbg('  some:', typeof M.some);
+      } catch (e) {
+        _modulePromise = null; // allow retry on next call
+        dbg('❌ Module load FAILED:', e?.message || e);
+        dbg('   Stack:', e?.stack?.slice(0,300));
+        throw e;
+      }
+    })();
+
+    return _modulePromise;
   }
 
   // ── UMI INIT ──────────────────────────────────────────────────────────────
@@ -1275,8 +1290,6 @@
   // ── INIT ON LOAD ──────────────────────────────────────────────────────────
   window.addEventListener('load', async () => {
     buildGallery();
-    // Pre-load modules in background
-    initModules().catch(() => {});
     // Auto-reconnect if Phantom already approved this site
     if (window.solana?.isPhantom) {
       try {
@@ -1288,6 +1301,7 @@
         await fetchCMState();
       } catch {
         // Not trusted / user never connected — silent
+        dbg('No trusted session (first visit or revoked)');
       }
     } else {
       dbg('Phantom not detected');
