@@ -930,17 +930,17 @@
   </div>
 </div>
 
-<script type="module">
+<script>
   // ── CONFIG ────────────────────────────────────────────────────────────────
   const CM_ID = '6Myzztq28zM4385VxfGdeGxg1ygSWrnC6KwfT1KnNRsP';
-  // RPC Endpoints — Fallback-Kette falls einer blockiert
-  // api.mainnet-beta.solana.com blockiert Browser (kein CORS)
-  const RPC_LIST = [
-    'https://rpc.ankr.com/solana',
-    'https://solana.drpc.org',
-    'https://solana-mainnet.g.alchemy.com/v2/demo',
-  ];
-  let RPC = RPC_LIST[0];
+
+  // ╔══════════════════════════════════════════════════════════════╗
+  // ║  HELIUS FREE API KEY — einmalig registrieren:               ║
+  // ║  https://helius.dev  → "Get API Key" → Free Plan           ║
+  // ║  Dann deinen Key unten eintragen:                           ║
+  // ╚══════════════════════════════════════════════════════════════╝
+  const HELIUS_KEY = 'DEIN-HELIUS-API-KEY-HIER';
+  const RPC = `https://mainnet.helius-rpc.com/?api-key=${HELIUS_KEY}`;
 
   // ── STATE ─────────────────────────────────────────────────────────────────
   let walletAddr = null;
@@ -1048,28 +1048,16 @@
   async function initUmi() {
     if (_umi) return;
     await initModules();
-    // Probiere RPCs durch bis einer antwortet
-    for (const endpoint of RPC_LIST) {
-      try {
-        dbg('Trying RPC:', endpoint);
-        const testUmi = M.createUmi(endpoint)
-          .use(M.mplCandyMachine())
-          .use(M.walletAdapterIdentity(window.solana));
-        // Quick ping: fetch CM account (wirft bei 403/CORS)
-        await M.fetchCandyMachine(testUmi, M.publicKey(CM_ID));
-        _umi = testUmi;
-        RPC  = endpoint;
-        dbg('✅ RPC ok:', endpoint);
-        return;
-      } catch (e) {
-        dbg('❌ RPC failed:', endpoint, e?.message?.slice(0,60));
-      }
+    if (HELIUS_KEY === 'DEIN-HELIUS-API-KEY-HIER') {
+      dbg('⚠️  Kein Helius API Key! Bitte eintragen.');
+      setStatus('RPC nicht konfiguriert — sieh Console.', true);
+      return;
     }
-    // Alle RPCs fehlgeschlagen — trotzdem erstes nehmen (zeigt Fehlermeldung beim Mint)
-    dbg('⚠️ All RPCs failed — using fallback');
-    _umi = M.createUmi(RPC_LIST[0])
+    _umi = M.createUmi(RPC)
       .use(M.mplCandyMachine())
       .use(M.walletAdapterIdentity(window.solana));
+    dbg('✅ UMI ready, RPC:', RPC.split('?')[0]);
+    dbg('   Signer:', window.solana.publicKey?.toString());
   }
 
   // ── FETCH CANDY MACHINE + GUARD ───────────────────────────────────────────
@@ -1371,6 +1359,14 @@
         </div>
       </div>`).join('');
   }
+
+  // ── GLOBAL EXPORTS für onclick="" Handler ────────────────────────────────
+  // Nötig weil Script ohne type="module" läuft aber dynamic import() nutzt
+  window.handleWalletClick = handleWalletClick;
+  window.handleMint        = handleMint;
+  window.openOv            = openOv;
+  window.closeOv           = closeOv;
+  window.onOvClick         = onOvClick;
 </script>
 </body>
 </html>
