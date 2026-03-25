@@ -7,7 +7,7 @@
   <title>Banana Artworks Genesis | Solana NFT</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Cinzel+Decorative:wght@400;700;900&family=Share+Tech+Mono&family=Orbitron:wght@400;600;700;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Cinzel+Decorative:wght@400;700;900&family=Share+Tech+Mono&family=Orbitron:wght@400;600;700;900&family=Caveat:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
       --gold:         #D4A017;
@@ -25,9 +25,16 @@
       --font-body:    'Cinzel',serif;
       --font-hud:     'Orbitron',sans-serif;
       --font-mono:    'Share Tech Mono',monospace;
+      --font-brand:   'Bradley Hand ITC','Bradley Hand','Caveat',cursive;
     }
     *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
     html { scroll-behavior:smooth; }
+    .brand {
+      font-family: var(--font-brand) !important;
+      font-weight: 600;
+      text-transform: lowercase !important;
+      letter-spacing: .04em !important;
+    }
     body {
       background:var(--teal-dark);
       color:var(--gold); font-family:var(--font-body);
@@ -379,8 +386,39 @@
 
 <!-- NAV -->
 <nav>
-  <a href="#hero" class="nav-logo">
-    <span class="nav-bar"></span>🍌 &nbsp;Banana Artworks
+    <a href="#hero" class="nav-logo" id="navLogo">
+    <svg width="30" height="30" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0;">
+      <defs>
+        <radialGradient id="nng" cx="58%" cy="40%" r="55%">
+          <stop offset="0%"  stop-color="#FFE066"/>
+          <stop offset="50%" stop-color="#D4A017"/>
+          <stop offset="100%" stop-color="#5a3e04"/>
+        </radialGradient>
+        <filter id="ngf"><feGaussianBlur stdDeviation="1.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+      </defs>
+      <!-- Hex outer -->
+      <polygon points="50,4 90,27 90,73 50,96 10,73 10,27" fill="none" stroke="#00d4c8" stroke-width="2.5" opacity=".7"/>
+      <polygon points="50,13 84,32 84,68 50,87 16,68 16,32" fill="none" stroke="rgba(212,160,23,.35)" stroke-width="1"/>
+      <!-- Banana shape -->
+      <path d="M 32 76 Q 22 60 22 44 Q 22 28 34 20 Q 44 13 56 16 Q 67 19 71 30 Q 63 22 52 23 Q 40 25 35 38 Q 30 52 34 64 Q 37 72 44 76 Q 38 80 32 76 Z"
+        fill="url(#nng)" stroke="rgba(212,160,23,.6)" stroke-width="1" filter="url(#ngf)"/>
+      <!-- Stem -->
+      <path d="M 56 16 Q 60 8 66 9 Q 68 14 62 18 Z" fill="#4a7a20"/>
+      <!-- Shine -->
+      <path d="M 36 26 Q 44 18 54 18" fill="none" stroke="rgba(255,255,255,.35)" stroke-width="2" stroke-linecap="round"/>
+      <!-- Cyan glow dot -->
+      <circle cx="50" cy="50" r="3.5" fill="#00d4c8" filter="url(#ngf)" opacity=".85">
+        <animate attributeName="opacity" values=".85;.3;.85" dur="2.5s" repeatCount="indefinite"/>
+      </circle>
+      <!-- Circuit lines (tiny) -->
+      <g stroke="rgba(255,200,40,.5)" stroke-width=".8" fill="none">
+        <line x1="25" y1="45" x2="70" y2="38"/>
+        <line x1="25" y1="54" x2="68" y2="49"/>
+        <circle cx="36" cy="43" r="2" fill="rgba(255,200,40,.6)" stroke="none"/>
+        <circle cx="55" cy="40" r="2" fill="rgba(0,212,200,.7)" stroke="none"/>
+      </g>
+    </svg>
+    <span class="brand">banana_artworks</span>
   </a>
   <div class="nav-right">
     <a href="#gallery" class="nav-link">Collection</a>
@@ -513,7 +551,7 @@
     <div class="hero-eyebrow">
       <span class="eye-dash"></span>Solana Mainnet · Genesis Collection<span class="eye-dash"></span>
     </div>
-    <span class="hero-tag">// BANANA ARTWORKS //</span>
+    <span class="hero-tag brand" style="font-size:1rem;">// banana_artworks //</span>
     <h1 class="hero-title">GENESIS</h1>
     <p class="hero-sub">101 &nbsp;·&nbsp; UNIQUE &nbsp;·&nbsp; ON-CHAIN</p>
 
@@ -616,10 +654,216 @@
       <span class="title-rule"></span>
     </div>
     <div class="about-grid">
-      <div class="about-vis">🍌</div>
+            <div class="about-vis" style="background:none;border:none;clip-path:none;padding:0;overflow:visible;">
+        <svg viewBox="0 0 420 440" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;max-width:400px;filter:drop-shadow(0 0 30px rgba(212,160,23,.25)) drop-shadow(0 0 60px rgba(0,212,200,.1));">
+          <defs>
+            <!-- Main banana gradient: gold with inner glow -->
+            <radialGradient id="bfill" cx="58%" cy="40%" r="55%">
+              <stop offset="0%"   stop-color="#FFE066"/>
+              <stop offset="25%"  stop-color="#FFD700"/>
+              <stop offset="55%"  stop-color="#D4A017"/>
+              <stop offset="80%"  stop-color="#9a6e08"/>
+              <stop offset="100%" stop-color="#5a3e04"/>
+            </radialGradient>
+            <!-- Inner hot-spot glow -->
+            <radialGradient id="bglow" cx="62%" cy="38%" r="35%">
+              <stop offset="0%"  stop-color="rgba(255,220,80,.9)"/>
+              <stop offset="100%" stop-color="transparent"/>
+            </radialGradient>
+            <!-- Cyan base light -->
+            <radialGradient id="cbase" cx="50%" cy="95%" r="40%">
+              <stop offset="0%"  stop-color="rgba(0,212,200,.5)"/>
+              <stop offset="100%" stop-color="transparent"/>
+            </radialGradient>
+            <!-- Circuit line gradient -->
+            <linearGradient id="circ1" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%"   stop-color="rgba(255,220,80,.0)"/>
+              <stop offset="50%"  stop-color="rgba(255,220,80,.7)"/>
+              <stop offset="100%" stop-color="rgba(255,220,80,.0)"/>
+            </linearGradient>
+            <!-- Glow filter -->
+            <filter id="gf1"><feGaussianBlur stdDeviation="3.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+            <filter id="gf2"><feGaussianBlur stdDeviation="7" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+            <filter id="gf3"><feGaussianBlur stdDeviation="14"/></filter>
+            <filter id="gf4"><feGaussianBlur stdDeviation="2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+            <!-- Clip for banana interior circuits -->
+            <clipPath id="bclip">
+              <path d="M 148 342 Q 108 290 105 228 Q 102 168 128 126 Q 148 96 178 84 Q 205 74 232 82 Q 258 90 272 114 Q 288 140 285 175 Q 268 148 242 145 Q 208 142 185 168 Q 162 196 164 238 Q 166 272 180 296 Q 195 322 210 335 Q 185 355 148 342 Z"/>
+            </clipPath>
+          </defs>
+
+          <!-- ── BACKGROUND ATMOSPHERE ── -->
+          <ellipse cx="210" cy="380" rx="150" ry="35" fill="rgba(0,212,200,.08)" filter="url(#gf3)"/>
+          <ellipse cx="210" cy="210" rx="180" ry="170" fill="rgba(0,30,28,.4)"/>
+
+          <!-- ── HEX FRAME (animated) ── -->
+          <polygon points="210,8 376,103 376,317 210,412 44,317 44,103"
+            fill="none" stroke="rgba(0,212,200,.28)" stroke-width="1.5">
+            <animateTransform attributeName="transform" type="rotate" from="0 210 210" to="360 210 210" dur="35s" repeatCount="indefinite"/>
+          </polygon>
+          <polygon points="210,22 362,111 362,309 210,398 58,309 58,111"
+            fill="none" stroke="rgba(212,160,23,.2)" stroke-width="1">
+            <animateTransform attributeName="transform" type="rotate" from="360 210 210" to="0 210 210" dur="22s" repeatCount="indefinite"/>
+          </polygon>
+          <!-- Static frame -->
+          <polygon points="210,36 350,119 350,301 210,384 70,301 70,119"
+            fill="none" stroke="rgba(212,160,23,.45)" stroke-width="2"/>
+
+          <!-- Hex corner dots -->
+          <g filter="url(#gf1)">
+            <circle cx="210" cy="36"  r="4" fill="#D4A017"/>
+            <circle cx="350" cy="119" r="4" fill="#00d4c8"/>
+            <circle cx="350" cy="301" r="4" fill="#D4A017"/>
+            <circle cx="210" cy="384" r="4" fill="#00d4c8"/>
+            <circle cx="70"  cy="301" r="4" fill="#D4A017"/>
+            <circle cx="70"  cy="119" r="4" fill="#00d4c8"/>
+          </g>
+
+          <!-- ── CYAN FLOOR GLOW ── -->
+          <ellipse cx="210" cy="358" rx="90" ry="16" fill="rgba(0,212,200,.3)" filter="url(#gf2)">
+            <animate attributeName="opacity" values=".4;.8;.4" dur="3s" repeatCount="indefinite"/>
+          </ellipse>
+
+          <!-- ── BANANA BODY SHADOW ── -->
+          <path d="M 148 342 Q 108 290 105 228 Q 102 168 128 126 Q 148 96 178 84 Q 205 74 232 82 Q 258 90 272 114 Q 288 140 285 175 Q 268 148 242 145 Q 208 142 185 168 Q 162 196 164 238 Q 166 272 180 296 Q 195 322 210 335 Q 185 355 148 342 Z"
+            fill="rgba(0,0,0,.5)" transform="translate(6,8)" filter="url(#gf2)"/>
+
+          <!-- ── BANANA BASE FILL ── -->
+          <path d="M 148 342 Q 108 290 105 228 Q 102 168 128 126 Q 148 96 178 84 Q 205 74 232 82 Q 258 90 272 114 Q 288 140 285 175 Q 268 148 242 145 Q 208 142 185 168 Q 162 196 164 238 Q 166 272 180 296 Q 195 322 210 335 Q 185 355 148 342 Z"
+            fill="url(#bfill)" stroke="rgba(212,160,23,.5)" stroke-width="1.5"/>
+
+          <!-- Inner glow overlay -->
+          <path d="M 148 342 Q 108 290 105 228 Q 102 168 128 126 Q 148 96 178 84 Q 205 74 232 82 Q 258 90 272 114 Q 288 140 285 175 Q 268 148 242 145 Q 208 142 185 168 Q 162 196 164 238 Q 166 272 180 296 Q 195 322 210 335 Q 185 355 148 342 Z"
+            fill="url(#bglow)" opacity=".7">
+            <animate attributeName="opacity" values=".5;.9;.5" dur="4s" repeatCount="indefinite"/>
+          </path>
+
+          <!-- ── CIRCUIT BOARD PATTERNS (clipped to banana) ── -->
+          <g clip-path="url(#bclip)" opacity=".85">
+
+            <!-- Horizontal circuit lanes -->
+            <g stroke="rgba(255,200,40,.55)" stroke-width="1" fill="none">
+              <line x1="108" y1="175" x2="282" y2="155"/>
+              <line x1="107" y1="200" x2="283" y2="182"/>
+              <line x1="108" y1="225" x2="280" y2="210"/>
+              <line x1="110" y1="250" x2="276" y2="238"/>
+              <line x1="115" y1="275" x2="265" y2="266"/>
+              <line x1="123" y1="298" x2="248" y2="292"/>
+              <line x1="134" y1="318" x2="228" y2="315"/>
+            </g>
+
+            <!-- Vertical circuit connectors -->
+            <g stroke="rgba(255,200,40,.45)" stroke-width="1" fill="none">
+              <line x1="135" y1="150" x2="132" y2="310"/>
+              <line x1="158" y1="130" x2="152" y2="328"/>
+              <line x1="182" y1="115" x2="174" y2="338"/>
+              <line x1="208" y1="108" x2="200" y2="336"/>
+              <line x1="234" y1="112" x2="226" y2="316"/>
+              <line x1="258" y1="128" x2="252" y2="290"/>
+              <line x1="276" y1="148" x2="272" y2="260"/>
+            </g>
+
+            <!-- Circuit rectangles (PCB pads) -->
+            <g fill="none" stroke="rgba(255,220,60,.5)" stroke-width="1">
+              <rect x="143" y="168" width="14" height="9" rx="1"/>
+              <rect x="168" y="153" width="14" height="9" rx="1"/>
+              <rect x="195" y="143" width="14" height="9" rx="1"/>
+              <rect x="222" y="148" width="14" height="9" rx="1"/>
+              <rect x="247" y="162" width="14" height="9" rx="1"/>
+              <rect x="138" y="218" width="14" height="9" rx="1"/>
+              <rect x="165" y="210" width="14" height="9" rx="1"/>
+              <rect x="192" y="205" width="14" height="9" rx="1"/>
+              <rect x="219" y="207" width="14" height="9" rx="1"/>
+              <rect x="244" y="215" width="14" height="9" rx="1"/>
+              <rect x="133" y="268" width="14" height="9" rx="1"/>
+              <rect x="158" y="262" width="14" height="9" rx="1"/>
+              <rect x="183" y="259" width="14" height="9" rx="1"/>
+              <rect x="208" y="260" width="14" height="9" rx="1"/>
+            </g>
+
+            <!-- Glowing circuit nodes -->
+            <g filter="url(#gf4)">
+              <circle cx="150" cy="172" r="3.5" fill="#FFD700" opacity=".9"/>
+              <circle cx="202" cy="147" r="3.5" fill="#00d4c8" opacity=".9">
+                <animate attributeName="opacity" values=".9;.3;.9" dur="2.1s" repeatCount="indefinite"/>
+              </circle>
+              <circle cx="254" cy="166" r="3.5" fill="#FFD700" opacity=".9"/>
+              <circle cx="171" cy="214" r="3.5" fill="#00d4c8" opacity=".8">
+                <animate attributeName="opacity" values=".8;.2;.8" dur="1.7s" repeatCount="indefinite"/>
+              </circle>
+              <circle cx="226" cy="211" r="3.5" fill="#FFD700" opacity=".9"/>
+              <circle cx="190" cy="263" r="3.5" fill="#00d4c8" opacity=".8">
+                <animate attributeName="opacity" values=".8;.4;.8" dur="2.5s" repeatCount="indefinite"/>
+              </circle>
+              <circle cx="165" cy="266" r="3" fill="#FFE066" opacity=".7"/>
+              <circle cx="215" cy="264" r="3" fill="#FFE066" opacity=".7"/>
+            </g>
+
+            <!-- Animated scan line through circuits -->
+            <rect x="100" y="0" width="195" height="4" fill="rgba(0,212,200,.35)" filter="url(#gf1)" opacity="0">
+              <animate attributeName="y" values="80;360;80" dur="4s" repeatCount="indefinite"/>
+              <animate attributeName="opacity" values="0;.6;0" dur="4s" repeatCount="indefinite"/>
+            </rect>
+          </g>
+
+          <!-- ── BANANA OUTLINE (on top of circuits) ── -->
+          <path d="M 148 342 Q 108 290 105 228 Q 102 168 128 126 Q 148 96 178 84 Q 205 74 232 82 Q 258 90 272 114 Q 288 140 285 175 Q 268 148 242 145 Q 208 142 185 168 Q 162 196 164 238 Q 166 272 180 296 Q 195 322 210 335 Q 185 355 148 342 Z"
+            fill="none" stroke="#D4A017" stroke-width="2.5" filter="url(#gf1)"/>
+
+          <!-- ── STEM ── -->
+          <path d="M 230 82 Q 234 58 244 46 Q 252 36 260 42 Q 265 48 258 56 Q 250 62 248 72 Q 244 82 238 86 Z"
+            fill="#4a7a20" stroke="rgba(80,140,30,.6)" stroke-width="1"/>
+          <path d="M 234 82 Q 237 64 245 52 Q 250 44 254 46"
+            fill="none" stroke="rgba(120,200,60,.4)" stroke-width="1.5" stroke-linecap="round"/>
+
+          <!-- ── SHINE HIGHLIGHT ── -->
+          <path d="M 178 130 Q 192 106 220 100 Q 205 118 195 142 Q 186 162 183 185"
+            fill="none" stroke="rgba(255,255,255,.4)" stroke-width="3.5" stroke-linecap="round"
+            filter="url(#gf1)"/>
+          <path d="M 172 140 Q 184 118 208 112"
+            fill="none" stroke="rgba(255,255,255,.2)" stroke-width="2" stroke-linecap="round"/>
+
+          <!-- ── TIP (dark end) ── -->
+          <path d="M 146 344 Q 135 352 128 348 Q 124 338 134 332 Q 142 330 152 338 Z"
+            fill="#2a1a02" stroke="rgba(100,70,10,.5)" stroke-width="1"/>
+
+          <!-- ── CYAN BASE REFLECTION ── -->
+          <path d="M 148 342 Q 108 290 105 228" fill="none" stroke="rgba(0,212,200,.3)" stroke-width="2" filter="url(#gf1)">
+            <animate attributeName="opacity" values=".3;.7;.3" dur="3.5s" repeatCount="indefinite"/>
+          </path>
+          <ellipse cx="210" cy="358" rx="70" ry="10" fill="rgba(0,212,200,.15)" filter="url(#gf2)"/>
+
+          <!-- ── ORBITING PARTICLE ── -->
+          <circle r="3.5" fill="#00d4c8" filter="url(#gf2)">
+            <animateMotion dur="7s" repeatCount="indefinite">
+              <mpath href="#orb1"/>
+            </animateMotion>
+            <animate attributeName="opacity" values="1;.2;1" dur="7s" repeatCount="indefinite"/>
+          </circle>
+          <path id="orb1" d="M 350 210 A 140 140 0 1 1 349.9 210" fill="none" stroke="none"/>
+
+          <!-- Gold particle opposite -->
+          <circle r="2.5" fill="#FFD700" filter="url(#gf1)">
+            <animateMotion dur="11s" repeatCount="indefinite" keyPoints="1;0" keyTimes="0;1" calcMode="linear">
+              <mpath href="#orb1"/>
+            </animateMotion>
+          </circle>
+
+          <!-- ── WORDMARK ── -->
+          <text x="210" y="424"
+            font-family="Bradley Hand ITC, Bradley Hand, Caveat, cursive"
+            font-size="18" font-weight="600"
+            fill="#D4A017" text-anchor="middle" letter-spacing="2"
+            filter="url(#gf1)">banana_artworks</text>
+          <text x="210" y="438"
+            font-family="Share Tech Mono, monospace"
+            font-size="8.5" fill="rgba(0,212,200,.5)"
+            text-anchor="middle" letter-spacing="4">GENESIS COLLECTION</text>
+        </svg>
+      </div>
       <div class="about-body">
         <span class="about-tag">CHIANG RAI · THAILAND · SOLANA</span>
-        <p><strong>Banana Artworks Genesis</strong> is a collection of 101 unique digital artworks — each one minted immutably on the Solana blockchain, existing on-chain forever.</p>
+        <p><strong class="brand">banana_artworks Genesis</strong> is a collection of 101 unique digital artworks — each one minted immutably on the Solana blockchain, existing on-chain forever.</p>
         <p>Created from the mountains of northern Thailand, these works carry the energy of <strong>Chiang Rai's golden light</strong> — the same light that turns the Doi range to copper at dusk.</p>
         <p>An expat artist. A blockchain. A banana. <strong>101 reasons to believe</strong> the most unexpected places birth the boldest art.</p>
         <p><strong>This is the Genesis. Everything begins here.</strong></p>
@@ -632,7 +876,7 @@
 <footer>
   <div class="circuit-bg"></div>
   <div style="position:relative;z-index:2;">
-    <span class="footer-logo">◈ &nbsp;BANANA ARTWORKS&nbsp; ◈</span>
+    <span class="footer-logo brand" style="font-size:1.6rem;">◈ &nbsp;banana_artworks&nbsp; ◈</span>
     <span class="footer-tagline">Genesis Collection · Solana Mainnet · Chiang Rai, Thailand</span>
     <p class="footer-cm">Candy Machine ID: <b>6Myzztq28zM4385VxfGdeGxg1ygSWrnC6KwfT1KnNRsP</b></p>
     <div class="footer-links">
@@ -641,7 +885,7 @@
       <a href="https://twitter.com/banana_artworks" target="_blank" rel="noopener">X / Twitter</a>
       <a href="https://github.com/banana-artworks" target="_blank" rel="noopener">GitHub</a>
     </div>
-    <p class="footer-copy">© 2025 Banana Artworks · All Rights Reserved</p>
+    <p class="footer-copy">© 2025 banana_artworks · All Rights Reserved</p>
   </div>
 </footer>
 
