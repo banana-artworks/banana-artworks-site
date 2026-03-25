@@ -244,26 +244,44 @@
     .gallery-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:1.2rem; }
     .nft-card {
       position:relative; background:rgba(0,18,18,.92);
-      border:1px solid rgba(0,212,200,.2);
+      cursor:pointer; transition:transform .3s, box-shadow .3s;
+      /* clip-path moved to ::after so overflow:hidden works correctly on children */
+    }
+    /* Cut-corner border via SVG outline — doesn't break child overflow */
+    .nft-card::after {
+      content:''; position:absolute; inset:0; pointer-events:none; z-index:3;
       clip-path:polygon(0 0,calc(100% - 12px) 0,100% 12px,100% 100%,12px 100%,0 calc(100% - 12px));
-      overflow:hidden; cursor:pointer; transition:all .3s;
+      border:1px solid rgba(0,212,200,.28);
+      transition:border-color .3s;
     }
     .nft-card::before {
       content:''; position:absolute; inset:0;
       background:linear-gradient(135deg,rgba(0,212,200,.04) 0%,transparent 55%);
-      pointer-events:none; z-index:1;
+      pointer-events:none; z-index:2;
     }
-    .nft-card:hover {
-      border-color:var(--gold);
-      box-shadow:0 0 28px rgba(212,160,23,.14),inset 0 0 22px rgba(212,160,23,.03);
-      transform:translateY(-6px);
-    }
+    .nft-card:hover { transform:translateY(-6px); box-shadow:0 0 32px rgba(212,160,23,.16); }
+    .nft-card:hover::after { border-color:var(--gold); }
+
+    /* Image container: overflow:hidden here is the real clip */
     .card-placeholder {
       width:100%; aspect-ratio:1; position:relative;
-      background:radial-gradient(ellipse 70% 70% at 50% 40%,rgba(0,212,200,.07) 0%,rgba(0,15,15,.9) 100%);
+      overflow:hidden; /* THIS is what clips the image */
+      background:rgba(0,15,15,.9);
       display:flex; align-items:center; justify-content:center; font-size:3.5rem;
+      /* Clip corners on the image area only */
+      clip-path:polygon(0 0,calc(100% - 12px) 0,100% 12px,100% 100%,12px 100%,0 calc(100% - 12px));
     }
-    .card-scan { position:absolute; left:0; right:0; height:1px; background:var(--cyan); opacity:0; transition:all .45s; top:0; }
+    /* Image fills the square container, crops to fit regardless of source ratio */
+    .card-img {
+      position:absolute; inset:0;
+      width:100%; height:100%;
+      object-fit:cover; object-position:center;
+      display:block;
+      transition:transform .4s ease;
+    }
+    .nft-card:hover .card-img { transform:scale(1.06); }
+
+    .card-scan { position:absolute; left:0; right:0; height:1px; background:var(--cyan); opacity:0; transition:all .45s; top:0; z-index:1; }
     .nft-card:hover .card-scan { opacity:.38; top:100%; }
     .card-info { padding:.8rem 1rem; border-top:1px solid rgba(0,212,200,.13); position:relative; z-index:2; }
     .card-id { font-family:var(--font-mono); font-size:.53rem; letter-spacing:.14em; color:rgba(0,212,200,.32); display:block; margin-bottom:.2rem; }
