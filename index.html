@@ -950,7 +950,7 @@
   // ║  https://helius.dev  → "Get API Key" → Free Plan           ║
   // ║  Dann deinen Key unten eintragen:                           ║
   // ╚══════════════════════════════════════════════════════════════╝
-  const HELIUS_KEY = 'fc7e345b-f4f3-44a2-84e3-25d8bd33c87c';
+  const HELIUS_KEY = 'DEIN-HELIUS-API-KEY-HIER';
   const RPC = `https://mainnet.helius-rpc.com/?api-key=${HELIUS_KEY}`;
 
   // ── STATE ─────────────────────────────────────────────────────────────────
@@ -1089,14 +1089,22 @@
       const available = Number(_cm.data.itemsAvailable);
       setMintedUI(minted, available - minted);
 
-      // Fetch Guard (mint authority = guard PDA in CM v3)
+      // Guard PDA ermitteln — unterstützt beide Formate (string + __option)
+      let guardPDA = null;
       if (_cm.mintAuthority?.__option === 'Some') {
+        guardPDA = _cm.mintAuthority.value;
+      } else if (typeof _cm.mintAuthority === 'string' && _cm.mintAuthority.length > 30) {
+        guardPDA = _cm.mintAuthority;
+      }
+      dbg('guardPDA:', guardPDA);
+
+      if (guardPDA) {
         try {
-          _guard = await M.fetchCandyGuard(_umi, _cm.mintAuthority.value);
+          _guard = await M.fetchCandyGuard(_umi, M.publicKey(guardPDA));
           dbg('Guard fetched:', JSON.stringify(_guard.guards));
           parseMintPrice(_guard);
         } catch (ge) {
-          dbg('Guard fetch failed (no guard?):', ge.message);
+          dbg('Guard fetch failed:', ge.message);
           _guard = null;
         }
       } else {
@@ -1115,23 +1123,15 @@
   function parseMintPrice(guard) {
     try {
       const sp = guard?.guards?.solPayment;
-      if (sp?.__option === 'Some') {
-        // lamports.basisPoints = raw lamports (BigInt)
-        const lamports = Number(sp.value.lamports.basisPoints);
-        const sol      = (lamports / 1e9).toFixed(2);
+      const spVal = sp?.__option === 'Some' ? sp.value : (sp && sp.lamports ? sp : null);
+      if (spVal) {
+        const lamports = Number(spVal.lamports?.basisPoints ?? spVal.lamports);
+        const sol = (lamports / 1e9).toFixed(2);
         setPriceUI(sol);
-        dbg(`Mint price: ${sol} SOL (${lamports} lamports), destination: ${sp.value.destination}`);
-        return { type: 'sol', lamports, destination: sp.value.destination };
+        dbg('Mint price:', sol, 'SOL (' + lamports + ' lamports)');
+        return { type: 'sol', lamports, destination: spVal.destination };
       }
-      // Token payment guard
-      const tp = guard?.guards?.tokenPayment;
-      if (tp?.__option === 'Some') {
-        setPriceUI('Token');
-        dbg('Token payment guard detected');
-        return { type: 'token', mint: tp.value.mint };
-      }
-      // Free mint / no payment guard
-      setPriceUI('Free');
+      setPriceUI('FREE');
       dbg('No payment guard — free mint');
       return { type: 'free' };
     } catch (e) {
@@ -1147,20 +1147,17 @@
     const args = {};
     try {
       const sp = guard?.guards?.solPayment;
-      if (sp?.__option === 'Some') {
-        // some() wrapper required by UMI for optional guard args
-        args.solPayment = M.some({ destination: sp.value.destination });
-        dbg('mintArgs: solPayment destination =', sp.value.destination);
+      // Unterstützt __option:'Some' und direkte Objekte
+      const spVal = sp?.__option === 'Some' ? sp.value : (sp && sp.lamports ? sp : null);
+      if (spVal) {
+        args.solPayment = M.some({ destination: spVal.destination });
+        dbg('mintArgs solPayment destination:', spVal.destination);
       }
       const tp = guard?.guards?.tokenPayment;
-      if (tp?.__option === 'Some') {
-        args.tokenPayment = M.some({
-          mint:            tp.value.mint,
-          destinationAta:  tp.value.destinationAta,
-        });
+      const tpVal = tp?.__option === 'Some' ? tp.value : (tp && tp.mint ? tp : null);
+      if (tpVal) {
+        args.tokenPayment = M.some({ mint: tpVal.mint, destinationAta: tpVal.destinationAta });
       }
-      // startDate / endDate guards don't need mintArgs
-      // allowList guard would need merkle proof — not handled here
     } catch (e) {
       dbg('buildMintArgs error:', e);
     }
