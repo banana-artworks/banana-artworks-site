@@ -946,12 +946,11 @@
   const CM_ID = '6Myzztq28zM4385VxfGdeGxg1ygSWrnC6KwfT1KnNRsP';
 
   // ╔══════════════════════════════════════════════════════════════╗
-  // ║  HELIUS FREE API KEY — einmalig registrieren:               ║
-  // ║  https://helius.dev  → "Get API Key" → Free Plan           ║
-  // ║  Dann deinen Key unten eintragen:                           ║
+  // ║  RPC läuft über sicheren Vercel Proxy — Key serverseitig    ║
+  // ║  /api/rpc → Vercel Function → Helius (Key nie im Browser)  ║
   // ╚══════════════════════════════════════════════════════════════╝
-  const HELIUS_KEY = 'fc7e345b-f4f3-44a2-84e3-25d8bd33c87c';
-  const RPC = `https://mainnet.helius-rpc.com/?api-key=${HELIUS_KEY}`;
+  const HELIUS_KEY = 'PROXY';  // Kein echter Key mehr nötig
+  const RPC = '/api/rpc';      // Relativer Pfad zum Proxy
 
   // ── STATE ─────────────────────────────────────────────────────────────────
   let walletAddr = null;
