@@ -949,8 +949,8 @@
   // ║  RPC läuft über sicheren Vercel Proxy — Key serverseitig    ║
   // ║  /api/rpc → Vercel Function → Helius (Key nie im Browser)  ║
   // ╚══════════════════════════════════════════════════════════════╝
-  const HELIUS_KEY = 'PROXY';  // Kein echter Key mehr nötig
-  const RPC = '/api/rpc';      // Relativer Pfad zum Proxy
+  const HELIUS_KEY = 'PROXY';
+  const RPC = window.location.origin + '/api/rpc';
 
   // ── STATE ─────────────────────────────────────────────────────────────────
   let walletAddr = null;
