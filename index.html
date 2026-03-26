@@ -945,12 +945,10 @@
   // ── CONFIG ────────────────────────────────────────────────────────────────
   const CM_ID = '6Myzztq28zM4385VxfGdeGxg1ygSWrnC6KwfT1KnNRsP';
 
-  // ╔══════════════════════════════════════════════════════════════╗
-  // ║  RPC läuft über sicheren Vercel Proxy — Key serverseitig    ║
-  // ║  /api/rpc → Vercel Function → Helius (Key nie im Browser)  ║
-  // ╚══════════════════════════════════════════════════════════════╝
-  const HELIUS_KEY = 'PROXY';
-  const RPC = window.location.origin + '/api/rpc';
+  // RPC: Helius direkt — WebSocket für TX-Bestätigung zwingend nötig
+  // Schutz: Domain-Whitelist in Helius Dashboard auf banana-artworks.com setzen
+  const HELIUS_KEY = 'DEIN-HELIUS-KEY-HIER';
+  const RPC = `https://mainnet.helius-rpc.com/?api-key=${HELIUS_KEY}`;
 
   // ── STATE ─────────────────────────────────────────────────────────────────
   let walletAddr = null;
@@ -1221,6 +1219,16 @@
     if (!walletAddr) { await connectWallet(); return; }
     if (isMinting) return;
     isMinting = true;
+    // Sicherheits-Timeout: Button nach 120s automatisch zurücksetzen
+    const mintTimeout = setTimeout(() => {
+      if (isMinting) {
+        isMinting = false;
+        btn.innerHTML = '◈ &nbsp;MINT NOW&nbsp; ◈';
+        btn.disabled = false;
+        setStatus('Timeout — bitte erneut versuchen.', true);
+        setTimeout(() => setStatus(''), 5000);
+      }
+    }, 120000);
 
     const btn = document.getElementById('mintBtn');
     btn.innerHTML = '<span class="spin"></span>MINTING…';
@@ -1301,6 +1309,7 @@
       }
       setTimeout(() => setStatus(''), 8000);
     } finally {
+      clearTimeout(mintTimeout);
       isMinting = false;
       btn.innerHTML = '◈ &nbsp;MINT NOW&nbsp; ◈';
       btn.disabled  = false;
