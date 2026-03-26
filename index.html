@@ -1052,9 +1052,20 @@
     return _modulePromise;
   }
 
+  // ── UMI READ-ONLY (kein Wallet nötig — nur für CM Daten lesen) ───────────
+  async function initUmiReadOnly() {
+    await initModules();
+    if (!_umi) {
+      // Temporäre UMI ohne Wallet-Identity — nur zum Lesen
+      const { createNoopSigner } = await import('./vendor.js').catch(() => ({ createNoopSigner: null }));
+      _umi = M.createUmi(RPC).use(M.mplCandyMachine());
+      dbg('✅ UMI read-only ready');
+    }
+  }
+
   // ── UMI INIT ──────────────────────────────────────────────────────────────
   async function initUmi() {
-    if (_umi) return;
+    if (_umi && walletAddr) return; // bereits mit Wallet initialisiert
     await initModules();
     if (HELIUS_KEY === 'DEIN-HELIUS-API-KEY-HIER') {
       dbg('⚠️  Kein Helius API Key! Bitte eintragen.');
@@ -1317,27 +1328,40 @@
   }
 
   // ── INIT ON LOAD ──────────────────────────────────────────────────────────
-  let _initInProgress = false;  // prevents parallel init calls
+  let _initInProgress = false;
 
   window.addEventListener('load', async () => {
     buildGallery();
     if (_initInProgress) return;
     _initInProgress = true;
+
+    // CM Daten immer laden — auch ohne Wallet
+    try {
+      await initModules();
+      _umi = M.createUmi(RPC).use(M.mplCandyMachine());
+      dbg('✅ UMI read-only, lade CM Daten…');
+      await fetchCMState();
+    } catch (e) {
+      dbg('CM initial load failed:', e?.message);
+    }
+
+    // Wallet auto-reconnect falls bereits verbunden
     if (window.solana?.isPhantom) {
       try {
         const r = await window.solana.connect({ onlyIfTrusted: true });
         walletAddr = r.publicKey.toString();
         dbg('Auto-reconnected:', walletAddr);
         refreshWalletBtn();
-        await initUmi();
-        await fetchCMState();
+        // UMI mit Wallet-Identity neu initialisieren
+        _umi = M.createUmi(RPC)
+          .use(M.mplCandyMachine())
+          .use(M.walletAdapterIdentity(window.solana));
       } catch {
-        dbg('No trusted session (first visit or revoked)');
+        dbg('No trusted session');
       }
-    } else {
-      dbg('Phantom not detected');
     }
     _initInProgress = false;
+  });
   });
 
   // Handle account switch in Phantom
