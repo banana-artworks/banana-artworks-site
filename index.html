@@ -219,8 +219,8 @@
 
     .mint-stats {
       display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      gap: 1.5rem;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.2rem;
       margin-bottom: 2rem;
       padding-bottom: 2rem;
       border-bottom: 1px solid rgba(237, 232, 223, 0.05);
@@ -765,6 +765,19 @@
     }
 
     /* ── RESPONSIVE ── */
+    @media (max-width: 480px) {
+      .mint-stats {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.8rem;
+      }
+      .mint-stat-value { font-size: 1.5rem; }
+      .btn-mint {
+        width: 100%;
+        padding: 1rem;
+        font-size: 0.9rem;
+      }
+    }
+
     @media (max-width: 900px) {
       .hero { grid-template-columns: 1fr; padding: 7rem 1.5rem 3rem; gap: 3rem; }
       .hero-image { order: -1; }
@@ -813,16 +826,20 @@
       <div class="mint-card">
         <div class="mint-stats">
           <div>
-            <div class="mint-stat-label">Price</div>
+            <div class="mint-stat-label">Mint Price</div>
             <div class="mint-stat-value">0.1<span>SOL</span></div>
           </div>
           <div>
-            <div class="mint-stat-label">Supply</div>
+            <div class="mint-stat-label">Total Supply</div>
             <div class="mint-stat-value">101</div>
           </div>
           <div>
             <div class="mint-stat-label">Minted</div>
             <div class="mint-stat-value" id="minted-count">0</div>
+          </div>
+          <div>
+            <div class="mint-stat-label">Remaining</div>
+            <div class="mint-stat-value" id="remaining-count">101</div>
           </div>
         </div>
         <div class="progress-label">
@@ -1054,7 +1071,19 @@
       showMintSuccessModal('#001');
     }
 
+    function updateMintStats(minted) {
+      const total = 101;
+      const remaining = total - minted;
+      document.getElementById('minted-count').textContent = minted;
+      document.getElementById('remaining-count').textContent = remaining;
+      document.getElementById('pct').textContent = minted + ' / ' + total;
+      document.getElementById('progress-fill').style.width = ((minted / total) * 100) + '%';
+    }
+
     window.addEventListener('load', async () => {
+      // TODO: fetch real minted count from Candy Machine here
+      updateMintStats(0);
+
       if (window.solana?.isPhantom) {
         try {
           const resp = await window.solana.connect({ onlyIfTrusted: true });
