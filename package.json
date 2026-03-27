@@ -1,0 +1,11 @@
+{
+  "name": "banana-guard-setup",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@metaplex-foundation/mpl-candy-machine": "6.1.0",
+    "@metaplex-foundation/umi": "1.5.1",
+    "@metaplex-foundation/umi-bundle-defaults": "1.5.1",
+    "bs58": "^6.0.0"
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "tokenStandard": "nft",
+  "number": 101,
+  "symbol": "BAG",
+  "sellerFeeBasisPoints": 500,
+  "isMutable": true,
+  "isSequential": false,
+  "creators": [
+    {
+      "address": "Dw1mTq978joHLnEm3fsVjBPFeFm7VQjGgZbU8Xmy4Dya",
+      "share": 100
+    }
+  ],
+  "uploadMethod": "bundlr",
+  "ruleSet": null,
+  "awsConfig": null,
+  "sdriveApiKey": null,
+  "pinataConfig": null,
+  "hiddenSettings": null,
+  "guards": null,
+  "maxEditionSupply": null
+}

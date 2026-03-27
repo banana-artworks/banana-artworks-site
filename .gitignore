@@ -1,0 +1,25 @@
+# Wallet Keys — NEVER commit these
+key.txt
+authority-keypair.json
+*.key
+*.pem
+
+# Dependencies
+node_modules/
+
+# Large binary / build artifacts
+assets/
+solana-install.exe
+*.zip
+*.exe
+
+# Logs & cache
+*.log
+cache.json
+validate_errors.json
+__pycache__/
+*.pyc
+
+# OS
+.DS_Store
+Thumbs.db

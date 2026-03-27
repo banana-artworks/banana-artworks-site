@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Banana Artworks | Genesis NFT Collection on Solana</title>
+  <meta name="description" content="101 original mixed media artworks on Solana. Handpainted and digitally processed. Dark art from Chiang Rai, Thailand. Zero AI. Mint for 0.1 SOL.">
+  <link rel="canonical" href="https://banana-artworks.com/">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://banana-artworks.com/">
+  <meta property="og:title" content="Banana Artworks | Genesis NFT Collection on Solana">
+  <meta property="og:description" content="101 original mixed media artworks. Handpainted, digitally processed. Dark art from Chiang Rai, Thailand. Zero AI. Mint for 0.1 SOL.">
+  <meta property="og:image" content="https://banana-artworks.com/artwork-hero.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+
+  <!-- Twitter / X -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@bananaartworks">
+  <meta name="twitter:title" content="Banana Artworks | Genesis NFT Collection on Solana">
+  <meta name="twitter:description" content="101 original mixed media artworks. Zero AI. Mint for 0.1 SOL on Solana.">
+  <meta name="twitter:image" content="https://banana-artworks.com/artwork-hero.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;900&family=Cinzel+Decorative:wght@400;700&family=Barlow:ital,wght@0,300;0,400;0,600;1,300&family=Barlow+Condensed:wght@300;400;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black:    #050403;
+      --white:    #ede8df;
+      --gold:     #D4A017;
+      --gold-dim: rgba(212, 160, 23, 0.12);
+      --gold-glow:rgba(212, 160, 23, 0.25);
+      --grey:     #141210;
+      --grey-mid: #1e1b17;
+      --font-display: 'Cinzel Decorative', serif;
+      --font-heading: 'Cinzel', serif;
+      --font-body:    'Barlow', sans-serif;
+      --font-label:   'Barlow Condensed', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--black);
+      color: var(--white);
+      font-family: var(--font-body);
+      font-weight: 300;
+      overflow-x: hidden;
+      cursor: crosshair;
+    }
+
+    /* NOISE */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.4rem 3rem;
+      border-bottom: 1px solid rgba(212, 160, 23, 0.1);
+      background: rgba(5, 4, 3, 0.9);
+      backdrop-filter: blur(16px);
+    }
+
+    .nav-logo {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      color: var(--gold);
+      text-decoration: none;
+      letter-spacing: 0.05em;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: rgba(237, 232, 223, 0.45);
+      text-decoration: none;
+      font-family: var(--font-label);
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      transition: color 0.3s;
+    }
+
+    .nav-links a:hover { color: var(--gold); }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      padding: 8rem 3rem 4rem;
+      gap: 5rem;
+      position: relative;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 15%;
+      right: 20%;
+      width: 700px;
+      height: 700px;
+      background: radial-gradient(circle, rgba(212, 160, 23, 0.04) 0%, transparent 65%);
+      pointer-events: none;
+    }
+
+    .hero-text { position: relative; z-index: 2; }
+
+    .hero-eyebrow {
+      font-family: var(--font-label);
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.8rem;
+      opacity: 0;
+      animation: fadeUp 0.8s ease 0.2s forwards;
+    }
+
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: clamp(2.8rem, 5vw, 5rem);
+      font-weight: 700;
+      line-height: 1.1;
+      margin-bottom: 0.5rem;
+      letter-spacing: 0.02em;
+      opacity: 0;
+      animation: fadeUp 0.8s ease 0.4s forwards;
+    }
+
+    .hero-subtitle {
+      font-family: var(--font-heading);
+      font-size: clamp(1.5rem, 2.5vw, 2.5rem);
+      font-weight: 400;
+      line-height: 1.2;
+      color: rgba(237, 232, 223, 0.35);
+      margin-bottom: 2.5rem;
+      letter-spacing: 0.1em;
+      opacity: 0;
+      animation: fadeUp 0.8s ease 0.5s forwards;
+    }
+
+    .hero-desc {
+      font-size: 0.95rem;
+      line-height: 1.9;
+      color: rgba(237, 232, 223, 0.5);
+      max-width: 440px;
+      margin-bottom: 2.5rem;
+      opacity: 0;
+      animation: fadeUp 0.8s ease 0.6s forwards;
+    }
+
+    .hero-tags {
+      display: flex;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+      margin-bottom: 3rem;
+      opacity: 0;
+      animation: fadeUp 0.8s ease 0.7s forwards;
+    }
+
+    .tag {
+      font-family: var(--font-label);
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 0.4rem 1rem;
+      border: 1px solid rgba(237, 232, 223, 0.12);
+      color: rgba(237, 232, 223, 0.45);
+    }
+
+    .tag.gold {
+      border-color: var(--gold);
+      color: var(--gold);
+      background: var(--gold-dim);
+    }
+
+    /* ── MINT CARD ── */
+    .mint-card {
+      background: var(--grey);
+      border: 1px solid rgba(212, 160, 23, 0.15);
+      padding: 2.5rem;
+      position: relative;
+      opacity: 0;
+      animation: fadeUp 0.8s ease 0.8s forwards;
+    }
+
+    .mint-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    }
+
+    .mint-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+      padding-bottom: 2rem;
+      border-bottom: 1px solid rgba(237, 232, 223, 0.05);
+    }
+
+    .mint-stat-label {
+      font-family: var(--font-label);
+      font-size: 0.6rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(237, 232, 223, 0.3);
+      margin-bottom: 0.5rem;
+    }
+
+    .mint-stat-value {
+      font-family: var(--font-heading);
+      font-size: 1.9rem;
+      font-weight: 600;
+      color: var(--white);
+    }
+
+    .mint-stat-value span {
+      font-family: var(--font-label);
+      font-size: 0.75rem;
+      font-weight: 400;
+      color: rgba(237, 232, 223, 0.35);
+      margin-left: 0.3rem;
+    }
+
+    .progress-label {
+      font-family: var(--font-label);
+      font-size: 0.6rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(237, 232, 223, 0.3);
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 0.6rem;
+    }
+
+    .progress-bar {
+      height: 2px;
+      background: rgba(237, 232, 223, 0.07);
+      margin-bottom: 2rem;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: var(--gold);
+      width: 0%;
+      transition: width 1.5s ease;
+    }
+
+    .btn-connect {
+      width: 100%;
+      padding: 1rem;
+      background: transparent;
+      color: var(--white);
+      border: 1px solid rgba(237, 232, 223, 0.2);
+      font-family: var(--font-label);
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.3s;
+      margin-bottom: 0.75rem;
+    }
+
+    .btn-connect:hover {
+      border-color: var(--gold);
+      color: var(--gold);
+    }
+
+    .btn-mint {
+      width: 100%;
+      padding: 1.1rem;
+      background: var(--gold);
+      color: var(--black);
+      border: none;
+      font-family: var(--font-heading);
+      font-size: 1rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-mint:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+
+    .btn-mint:not(:disabled):hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px var(--gold-glow);
+    }
+
+    .mint-note {
+      font-family: var(--font-label);
+      font-size: 0.55rem;
+      font-weight: 400;
+      letter-spacing: 0.08em;
+      color: rgba(237, 232, 223, 0.2);
+      text-align: center;
+      margin-top: 1rem;
+      word-break: break-all;
+    }
+
+    /* ── HERO IMAGE ── */
+    .hero-image {
+      position: relative;
+      opacity: 0;
+      animation: fadeIn 1.4s ease 0.3s forwards;
+    }
+
+    .hero-image img {
+      width: 100%;
+      max-width: 540px;
+      display: block;
+      filter: contrast(1.05) brightness(0.95);
+    }
+
+    .hero-image-placeholder {
+      width: 100%;
+      max-width: 540px;
+      aspect-ratio: 1;
+      background: var(--grey-mid);
+      border: 1px solid rgba(212, 160, 23, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .hero-image-placeholder span {
+      font-family: var(--font-label);
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      color: rgba(237,232,223,0.2);
+      text-transform: uppercase;
+    }
+
+    .hero-image::after {
+      content: 'Genesis #001';
+      position: absolute;
+      bottom: -1.8rem;
+      right: 0;
+      font-family: var(--font-label);
+      font-size: 0.6rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(237, 232, 223, 0.2);
+    }
+
+    /* ── DIVIDER ── */
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      padding: 3rem 3rem;
+      opacity: 0.15;
+    }
+
+    .divider-line { flex: 1; height: 1px; background: var(--gold); }
+    .divider-symbol {
+      font-family: var(--font-heading);
+      font-size: 0.7rem;
+      letter-spacing: 0.4em;
+      color: var(--gold);
+      text-transform: uppercase;
+    }
+
+    /* ── ABOUT ── */
+    .about {
+      padding: 6rem 3rem 8rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6rem;
+      align-items: start;
+      border-top: 1px solid rgba(237, 232, 223, 0.04);
+    }
+
+    .section-label {
+      font-family: var(--font-label);
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 2rem;
+    }
+
+    .about-title {
+      font-family: var(--font-heading);
+      font-size: clamp(2rem, 3.5vw, 3.5rem);
+      font-weight: 600;
+      line-height: 1.2;
+      margin-bottom: 2rem;
+      letter-spacing: 0.03em;
+    }
+
+    .about-text {
+      font-size: 0.95rem;
+      line-height: 1.9;
+      color: rgba(237, 232, 223, 0.5);
+      margin-bottom: 1.5rem;
+    }
+
+    .about-text em {
+      color: var(--white);
+      font-style: normal;
+    }
+
+    .manifesto {
+      border-left: 2px solid var(--gold);
+      padding: 1.8rem 2rem;
+      background: var(--gold-dim);
+      margin-top: 1rem;
+    }
+
+    .manifesto p {
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+      font-style: italic;
+      font-weight: 300;
+      line-height: 2;
+      color: rgba(237, 232, 223, 0.65);
+    }
+
+    .manifesto-credit {
+      font-family: var(--font-label);
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      color: rgba(237, 232, 223, 0.3);
+      margin-top: 1rem;
+    }
+
+    /* ── GALLERY ── */
+    .gallery {
+      padding: 4rem 3rem 8rem;
+      border-top: 1px solid rgba(237, 232, 223, 0.04);
+    }
+
+    .gallery-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 3rem;
+    }
+
+    .gallery-title {
+      font-family: var(--font-heading);
+      font-size: 2rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+    }
+
+    .gallery-note {
+      font-family: var(--font-label);
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      color: rgba(237, 232, 223, 0.25);
+      text-transform: uppercase;
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2px;
+    }
+
+    .gallery-item {
+      aspect-ratio: 1;
+      overflow: hidden;
+      background: var(--grey-mid);
+      position: relative;
+    }
+
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s ease, filter 0.4s;
+      filter: grayscale(15%) brightness(0.9);
+    }
+
+    .gallery-item:hover img {
+      transform: scale(1.06);
+      filter: grayscale(0%) brightness(1);
+    }
+
+    .gallery-item-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(5,4,3,0.75);
+      display: flex;
+      align-items: flex-end;
+      padding: 0.8rem;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .gallery-item:hover .gallery-item-overlay { opacity: 1; }
+
+    .gallery-item-name {
+      font-family: var(--font-label);
+      font-size: 0.6rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+
+    /* ── DETAILS ── */
+    .details {
+      padding: 6rem 3rem;
+      border-top: 1px solid rgba(237, 232, 223, 0.04);
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 3rem;
+    }
+
+    .detail-label {
+      font-family: var(--font-label);
+      font-size: 0.6rem;
+      font-weight: 600;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: rgba(237, 232, 223, 0.25);
+      margin-bottom: 0.75rem;
+    }
+
+    .detail-value {
+      font-family: var(--font-heading);
+      font-size: 1rem;
+      font-weight: 400;
+      color: var(--white);
+      letter-spacing: 0.02em;
+    }
+
+    .detail-value.mono {
+      font-family: var(--font-label);
+      font-size: 0.6rem;
+      font-weight: 400;
+      color: rgba(237, 232, 223, 0.4);
+      word-break: break-all;
+      line-height: 1.6;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid rgba(212, 160, 23, 0.1);
+      padding: 3rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-logo {
+      font-family: var(--font-display);
+      font-size: 0.9rem;
+      color: rgba(212, 160, 23, 0.4);
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .footer-links a {
+      font-family: var(--font-label);
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(237, 232, 223, 0.25);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    .footer-links a:hover { color: var(--gold); }
+
+    .footer-copy {
+      font-family: var(--font-label);
+      font-size: 0.6rem;
+      font-weight: 400;
+      color: rgba(237, 232, 223, 0.18);
+      letter-spacing: 0.1em;
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .hero { grid-template-columns: 1fr; padding: 7rem 1.5rem 3rem; gap: 3rem; }
+      .hero-image { order: -1; }
+      .about { grid-template-columns: 1fr; gap: 3rem; padding: 4rem 1.5rem; }
+      .details { grid-template-columns: 1fr 1fr; padding: 4rem 1.5rem; }
+      .gallery { padding: 3rem 1.5rem; }
+      .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+      nav { padding: 1.2rem 1.5rem; }
+      .nav-links { display: none; }
+      footer { flex-direction: column; gap: 1.5rem; text-align: center; padding: 2rem 1.5rem; }
+      .divider { padding: 2rem 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#" class="nav-logo">Banana Artworks</a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#gallery">Gallery</a></li>
+      <li><a href="#mint">Mint</a></li>
+      <li><a href="https://twitter.com/bananaartworks" target="_blank">Twitter</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero" id="mint">
+    <div class="hero-text">
+      <p class="hero-eyebrow">☠ Solana · Genesis Collection · 101 Editions</p>
+      <h1 class="hero-title">Banana<br>Artworks</h1>
+      <h2 class="hero-subtitle">Genesis</h2>
+      <p class="hero-desc">
+        101 original mixed media artworks — handpainted and digitally processed.
+        Dark art from Chiang Rai, Thailand. Every piece is unique. Zero AI.
+      </p>
+      <div class="hero-tags">
+        <span class="tag gold">Zero AI</span>
+        <span class="tag">Handpainted</span>
+        <span class="tag">101 Editions</span>
+        <span class="tag">Solana</span>
+        <span class="tag">5% Royalty</span>
+      </div>
+
+      <div class="mint-card">
+        <div class="mint-stats">
+          <div>
+            <div class="mint-stat-label">Price</div>
+            <div class="mint-stat-value">0.1<span>SOL</span></div>
+          </div>
+          <div>
+            <div class="mint-stat-label">Supply</div>
+            <div class="mint-stat-value">101</div>
+          </div>
+          <div>
+            <div class="mint-stat-label">Minted</div>
+            <div class="mint-stat-value" id="minted-count">0</div>
+          </div>
+        </div>
+        <div class="progress-label">
+          <span>Minting Progress</span>
+          <span id="pct">0 / 101</span>
+        </div>
+        <div class="progress-bar">
+          <div class="progress-fill" id="progress-fill"></div>
+        </div>
+        <button class="btn-connect" id="btn-connect" onclick="connectWallet()">
+          Connect Phantom Wallet
+        </button>
+        <button class="btn-mint" id="btn-mint" onclick="mintNFT()" disabled>
+          Mint Genesis NFT
+        </button>
+        <p class="mint-note">
+          Candy Machine · 6Myzztq28zM4385VxfGdeGxg1ygSWrnC6KwfT1KnNRsP
+        </p>
+      </div>
+    </div>
+
+    <div class="hero-image">
+      <img src="artwork-hero.png" alt="Banana Artworks Genesis"
+           onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+      <div class="hero-image-placeholder">
+        <span>Artwork Preview</span>
+        <span>Coming Soon</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider">
+    <div class="divider-line"></div>
+    <div class="divider-symbol">☠ Genesis ☠</div>
+    <div class="divider-line"></div>
+  </div>
+
+  <!-- ABOUT -->
+  <section class="about" id="about">
+    <div>
+      <p class="section-label">// About the Artist</p>
+      <h2 class="about-title">Dark Art.<br>Human Hands.<br>Zero AI.</h2>
+      <p class="about-text">
+        <em>Banana Artworks</em> is the work of a German expat living in
+        Chiang Rai, Thailand. Each piece in the Genesis Collection is a
+        unique original — painted by hand, then digitally processed into
+        something darker and stranger.
+      </p>
+      <p class="about-text">
+        In a world flooded with AI-generated imagery, these are artifacts
+        of actual human expression. The chaos, the imperfection, the
+        obsession — it's all real.
+      </p>
+    </div>
+    <div>
+      <div class="manifesto">
+        <p>
+          "Every skull has a story.<br>
+          Every banana carries a warning.<br>
+          These 101 works are not generated —<br>
+          they are made. By hand. With intention.<br>
+          From the dark side of the tropics."
+        </p>
+        <p class="manifesto-credit">— Banana Artworks, Chiang Rai 2024</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section class="gallery" id="gallery">
+    <div class="gallery-header">
+      <h2 class="gallery-title">The Collection</h2>
+      <span class="gallery-note">101 unique artworks</span>
+    </div>
+    <div class="gallery-grid">
+      <div class="gallery-item" style="background:#0d0b09;">
+        <div class="gallery-item-overlay"><span class="gallery-item-name">BAG #001</span></div>
+      </div>
+      <div class="gallery-item" style="background:#100e0b;">
+        <div class="gallery-item-overlay"><span class="gallery-item-name">BAG #002</span></div>
+      </div>
+      <div class="gallery-item" style="background:#0b0a08;">
+        <div class="gallery-item-overlay"><span class="gallery-item-name">BAG #003</span></div>
+      </div>
+      <div class="gallery-item" style="background:#131109;">
+        <div class="gallery-item-overlay"><span class="gallery-item-name">BAG #004</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DETAILS -->
+  <section class="details">
+    <div>
+      <div class="detail-label">Collection</div>
+      <div class="detail-value">Banana Artworks Genesis</div>
+    </div>
+    <div>
+      <div class="detail-label">Blockchain</div>
+      <div class="detail-value">Solana</div>
+    </div>
+    <div>
+      <div class="detail-label">Standard</div>
+      <div class="detail-value">Metaplex · CMv3</div>
+    </div>
+    <div>
+      <div class="detail-label">Supply</div>
+      <div class="detail-value">101 Unique Editions</div>
+    </div>
+    <div>
+      <div class="detail-label">Royalties</div>
+      <div class="detail-value">5%</div>
+    </div>
+    <div>
+      <div class="detail-label">Candy Machine ID</div>
+      <div class="detail-value mono">6Myzztq28zM4385VxfGdeGxg1ygSWrnC6KwfT1KnNRsP</div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo">Banana Artworks</div>
+    <ul class="footer-links">
+      <li><a href="https://twitter.com/bananaartworks" target="_blank">Twitter</a></li>
+      <li><a href="https://magiceden.io" target="_blank">Magic Eden</a></li>
+      <li><a href="https://solscan.io/account/6Myzztq28zM4385VxfGdeGxg1ygSWrnC6KwfT1KnNRsP" target="_blank">Solscan</a></li>
+    </ul>
+    <div class="footer-copy">© 2026 Banana Artworks · Chiang Rai, Thailand</div>
+  </footer>
+
+  <script>
+    let walletConnected = false;
+    let publicKey = null;
+
+    async function connectWallet() {
+      try {
+        if (!window.solana) {
+          alert('Please install Phantom Wallet: https://phantom.app');
+          return;
+        }
+        const resp = await window.solana.connect();
+        publicKey = resp.publicKey.toString();
+        walletConnected = true;
+        const btn = document.getElementById('btn-connect');
+        btn.textContent = publicKey.slice(0,4) + '...' + publicKey.slice(-4) + ' ✓';
+        btn.style.borderColor = 'rgba(212,160,23,0.4)';
+        btn.style.color = 'rgba(212,160,23,0.7)';
+        const mintBtn = document.getElementById('btn-mint');
+        mintBtn.disabled = false;
+      } catch(e) { console.error(e); }
+    }
+
+    async function mintNFT() {
+      if (!walletConnected) return;
+      alert('Minting coming soon! Follow @BananaArtworks for the launch date.');
+    }
+
+    window.addEventListener('load', async () => {
+      if (window.solana?.isPhantom) {
+        try {
+          const resp = await window.solana.connect({ onlyIfTrusted: true });
+          if (resp.publicKey) {
+            publicKey = resp.publicKey.toString();
+            walletConnected = true;
+            const btn = document.getElementById('btn-connect');
+            btn.textContent = publicKey.slice(0,4) + '...' + publicKey.slice(-4) + ' ✓';
+            document.getElementById('btn-mint').disabled = false;
+          }
+        } catch(e) {}
+      }
+    });
+  </script>
+</body>
+</html>
