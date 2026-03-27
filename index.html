@@ -753,6 +753,62 @@
       to   { transform: translateY(0);    opacity: 1; }
     }
 
+    /* ── LIGHTBOX ── */
+    .lightbox-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.95);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10000;
+      cursor: zoom-out;
+      animation: fadeIn 0.25s ease;
+    }
+
+    .lightbox-content {
+      position: relative;
+      max-width: 90vw;
+      max-height: 90vh;
+      text-align: center;
+      cursor: default;
+    }
+
+    .lightbox-img {
+      max-width: 100%;
+      max-height: 80vh;
+      object-fit: contain;
+      border: 1px solid rgba(212, 160, 23, 0.3);
+      border-radius: 4px;
+      display: block;
+    }
+
+    .lightbox-title {
+      font-family: var(--font-label);
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-top: 1rem;
+    }
+
+    .lightbox-close {
+      position: absolute;
+      top: -2.5rem;
+      right: 0;
+      background: none;
+      border: none;
+      color: rgba(237, 232, 223, 0.5);
+      font-size: 1.4rem;
+      cursor: pointer;
+      padding: 4px 8px;
+      line-height: 1;
+      transition: color 0.2s;
+    }
+
+    .lightbox-close:hover { color: var(--white); }
+
     /* ── ANIMATIONS ── */
     @keyframes fadeUp {
       from { opacity: 0; transform: translateY(20px); }
@@ -915,56 +971,56 @@
       <span class="gallery-note">101 unique artworks · 8 previews</span>
     </div>
     <div class="gallery-grid">
-      <div class="gallery-item">
+      <div class="gallery-item" onclick="openLightbox('files/bag-001.png', 'BAG #001 · Legendary')">
         <img src="files/bag-001.png"
              alt="Banana Artworks Genesis BAG #001 — Metallic-surreal banana with skull pattern, Dark Gothic mixed media, Legendary edition, Solana NFT"
              loading="eager"
              width="500" height="500">
         <div class="gallery-item-overlay"><span class="gallery-item-name">BAG #001 · Legendary</span></div>
       </div>
-      <div class="gallery-item">
+      <div class="gallery-item" onclick="openLightbox('files/bag-002.png', 'BAG #002 · Uncommon')">
         <img src="files/bag-002.png"
              alt="Banana Artworks Genesis BAG #002 — Surreal mechanical banana with gothic aesthetic, Ink on Paper, Solana NFT"
              loading="lazy"
              width="500" height="500">
         <div class="gallery-item-overlay"><span class="gallery-item-name">BAG #002 · Uncommon</span></div>
       </div>
-      <div class="gallery-item">
+      <div class="gallery-item" onclick="openLightbox('files/bag-003.png', 'BAG #003 · Common')">
         <img src="files/bag-003.png"
              alt="Banana Artworks Genesis BAG #003 — Glitch aesthetics, neon-gothic expressionist mixed media, Solana NFT"
              loading="lazy"
              width="500" height="500">
         <div class="gallery-item-overlay"><span class="gallery-item-name">BAG #003 · Common</span></div>
       </div>
-      <div class="gallery-item">
+      <div class="gallery-item" onclick="openLightbox('files/bag-004.png', 'BAG #004 · Uncommon')">
         <img src="files/bag-004.png"
              alt="Banana Artworks Genesis BAG #004 — Psychedelic surreal creature, vibrant abstract acrylic on canvas, Solana NFT"
              loading="lazy"
              width="500" height="500">
         <div class="gallery-item-overlay"><span class="gallery-item-name">BAG #004 · Uncommon</span></div>
       </div>
-      <div class="gallery-item">
+      <div class="gallery-item" onclick="openLightbox('files/bag-005.png', 'BAG #005 · Common')">
         <img src="files/bag-005.png"
              alt="Banana Artworks Genesis BAG #005 — Dark Gothic ink on paper, monochrome red palette, Solana NFT"
              loading="lazy"
              width="500" height="500">
         <div class="gallery-item-overlay"><span class="gallery-item-name">BAG #005 · Common</span></div>
       </div>
-      <div class="gallery-item">
+      <div class="gallery-item" onclick="openLightbox('files/bag-006.png', 'BAG #006 · Rare')">
         <img src="files/bag-006.png"
              alt="Banana Artworks Genesis BAG #006 — Banana-skull fusion, surreal gothic mixed media, Rare edition, Solana NFT"
              loading="lazy"
              width="500" height="500">
         <div class="gallery-item-overlay"><span class="gallery-item-name">BAG #006 · Rare</span></div>
       </div>
-      <div class="gallery-item">
+      <div class="gallery-item" onclick="openLightbox('files/bag-007.png', 'BAG #007 · Uncommon')">
         <img src="files/bag-007.png"
              alt="Banana Artworks Genesis BAG #007 — Symmetric dark skull, intense blue tones, acrylic on canvas, Solana NFT"
              loading="lazy"
              width="500" height="500">
         <div class="gallery-item-overlay"><span class="gallery-item-name">BAG #007 · Uncommon</span></div>
       </div>
-      <div class="gallery-item">
+      <div class="gallery-item" onclick="openLightbox('files/bag-008.png', 'BAG #008 · Common')">
         <img src="files/bag-008.png"
              alt="Banana Artworks Genesis BAG #008 — Skull composition, dystopian neon aesthetic, surreal mixed media, Solana NFT"
              loading="lazy"
@@ -1014,6 +1070,25 @@
   </footer>
 
   <script>
+    function openLightbox(imgSrc, nftName) {
+      const lightbox = document.createElement('div');
+      lightbox.className = 'lightbox-overlay';
+      lightbox.innerHTML = `
+        <div class="lightbox-content">
+          <button class="lightbox-close" onclick="this.closest('.lightbox-overlay').remove()">✕</button>
+          <img src="${imgSrc}" alt="${nftName}" class="lightbox-img">
+          <p class="lightbox-title">${nftName}</p>
+        </div>
+      `;
+      lightbox.addEventListener('click', (e) => {
+        if (e.target === lightbox) lightbox.remove();
+      });
+      document.addEventListener('keydown', function escHandler(e) {
+        if (e.key === 'Escape') { lightbox.remove(); document.removeEventListener('keydown', escHandler); }
+      });
+      document.body.appendChild(lightbox);
+    }
+
     let walletConnected = false;
     let publicKey = null;
 
