@@ -333,6 +333,21 @@
       animation: mintGlow 2s ease-in-out infinite;
     }
 
+    .mint-error {
+      display: none;
+      font-family: var(--font-label);
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      color: #ff6b6b;
+      background: rgba(255, 107, 107, 0.08);
+      border: 1px solid rgba(255, 107, 107, 0.25);
+      padding: 0.6rem 1rem;
+      margin-top: 0.75rem;
+      text-align: center;
+      animation: fadeIn 0.2s ease;
+    }
+
     .mint-note {
       font-family: var(--font-label);
       font-size: 0.55rem;
@@ -920,6 +935,7 @@
         <button class="btn-mint" id="btn-mint" onclick="mintNFT()" disabled>
           Mint Genesis NFT
         </button>
+        <div class="mint-error" id="mint-error"></div>
         <p class="mint-note">
           Candy Machine · 6Myzztq28zM4385VxfGdeGxg1ygSWrnC6KwfT1KnNRsP
         </p>
@@ -981,59 +997,59 @@
     </div>
     <div class="gallery-grid">
       <div class="gallery-item" onclick="openLightbox('files/bag-001.png', 'BAG #001 · Legendary')">
-        <img src="files/bag-001.png"
-             alt="Banana Artworks Genesis BAG #001 — Metallic-surreal banana with skull pattern, Dark Gothic mixed media, Legendary edition, Solana NFT"
-             loading="eager"
-             width="500" height="500">
+        <picture>
+          <source srcset="files/bag-001.webp" type="image/webp">
+          <img src="files/bag-001.png" alt="Banana Artworks Genesis BAG #001 — Metallic-surreal banana with skull pattern, Dark Gothic mixed media, Legendary edition, Solana NFT" loading="eager" width="500" height="500">
+        </picture>
         <div class="gallery-item-overlay"><span class="gallery-item-name">BAG #001 · Legendary</span></div>
       </div>
       <div class="gallery-item" onclick="openLightbox('files/bag-002.png', 'BAG #002 · Uncommon')">
-        <img src="files/bag-002.png"
-             alt="Banana Artworks Genesis BAG #002 — Surreal mechanical banana with gothic aesthetic, Ink on Paper, Solana NFT"
-             loading="lazy"
-             width="500" height="500">
+        <picture>
+          <source srcset="files/bag-002.webp" type="image/webp">
+          <img src="files/bag-002.png" alt="Banana Artworks Genesis BAG #002 — Surreal mechanical banana with gothic aesthetic, Ink on Paper, Solana NFT" loading="lazy" width="500" height="500">
+        </picture>
         <div class="gallery-item-overlay"><span class="gallery-item-name">BAG #002 · Uncommon</span></div>
       </div>
       <div class="gallery-item" onclick="openLightbox('files/bag-003.png', 'BAG #003 · Common')">
-        <img src="files/bag-003.png"
-             alt="Banana Artworks Genesis BAG #003 — Glitch aesthetics, neon-gothic expressionist mixed media, Solana NFT"
-             loading="lazy"
-             width="500" height="500">
+        <picture>
+          <source srcset="files/bag-003.webp" type="image/webp">
+          <img src="files/bag-003.png" alt="Banana Artworks Genesis BAG #003 — Glitch aesthetics, neon-gothic expressionist mixed media, Solana NFT" loading="lazy" width="500" height="500">
+        </picture>
         <div class="gallery-item-overlay"><span class="gallery-item-name">BAG #003 · Common</span></div>
       </div>
       <div class="gallery-item" onclick="openLightbox('files/bag-004.png', 'BAG #004 · Uncommon')">
-        <img src="files/bag-004.png"
-             alt="Banana Artworks Genesis BAG #004 — Psychedelic surreal creature, vibrant abstract acrylic on canvas, Solana NFT"
-             loading="lazy"
-             width="500" height="500">
+        <picture>
+          <source srcset="files/bag-004.webp" type="image/webp">
+          <img src="files/bag-004.png" alt="Banana Artworks Genesis BAG #004 — Psychedelic surreal creature, vibrant abstract acrylic on canvas, Solana NFT" loading="lazy" width="500" height="500">
+        </picture>
         <div class="gallery-item-overlay"><span class="gallery-item-name">BAG #004 · Uncommon</span></div>
       </div>
       <div class="gallery-item" onclick="openLightbox('files/bag-005.png', 'BAG #005 · Common')">
-        <img src="files/bag-005.png"
-             alt="Banana Artworks Genesis BAG #005 — Dark Gothic ink on paper, monochrome red palette, Solana NFT"
-             loading="lazy"
-             width="500" height="500">
+        <picture>
+          <source srcset="files/bag-005.webp" type="image/webp">
+          <img src="files/bag-005.png" alt="Banana Artworks Genesis BAG #005 — Dark Gothic ink on paper, monochrome red palette, Solana NFT" loading="lazy" width="500" height="500">
+        </picture>
         <div class="gallery-item-overlay"><span class="gallery-item-name">BAG #005 · Common</span></div>
       </div>
       <div class="gallery-item" onclick="openLightbox('files/bag-006.png', 'BAG #006 · Rare')">
-        <img src="files/bag-006.png"
-             alt="Banana Artworks Genesis BAG #006 — Banana-skull fusion, surreal gothic mixed media, Rare edition, Solana NFT"
-             loading="lazy"
-             width="500" height="500">
+        <picture>
+          <source srcset="files/bag-006.webp" type="image/webp">
+          <img src="files/bag-006.png" alt="Banana Artworks Genesis BAG #006 — Banana-skull fusion, surreal gothic mixed media, Rare edition, Solana NFT" loading="lazy" width="500" height="500">
+        </picture>
         <div class="gallery-item-overlay"><span class="gallery-item-name">BAG #006 · Rare</span></div>
       </div>
       <div class="gallery-item" onclick="openLightbox('files/bag-007.png', 'BAG #007 · Uncommon')">
-        <img src="files/bag-007.png"
-             alt="Banana Artworks Genesis BAG #007 — Symmetric dark skull, intense blue tones, acrylic on canvas, Solana NFT"
-             loading="lazy"
-             width="500" height="500">
+        <picture>
+          <source srcset="files/bag-007.webp" type="image/webp">
+          <img src="files/bag-007.png" alt="Banana Artworks Genesis BAG #007 — Symmetric dark skull, intense blue tones, acrylic on canvas, Solana NFT" loading="lazy" width="500" height="500">
+        </picture>
         <div class="gallery-item-overlay"><span class="gallery-item-name">BAG #007 · Uncommon</span></div>
       </div>
       <div class="gallery-item" onclick="openLightbox('files/bag-008.png', 'BAG #008 · Common')">
-        <img src="files/bag-008.png"
-             alt="Banana Artworks Genesis BAG #008 — Skull composition, dystopian neon aesthetic, surreal mixed media, Solana NFT"
-             loading="lazy"
-             width="500" height="500">
+        <picture>
+          <source srcset="files/bag-008.webp" type="image/webp">
+          <img src="files/bag-008.png" alt="Banana Artworks Genesis BAG #008 — Skull composition, dystopian neon aesthetic, surreal mixed media, Solana NFT" loading="lazy" width="500" height="500">
+        </picture>
         <div class="gallery-item-overlay"><span class="gallery-item-name">BAG #008 · Common</span></div>
       </div>
     </div>
@@ -1149,9 +1165,27 @@
       document.body.appendChild(overlay);
     }
 
+    function showMintError(errorCode) {
+      const messages = {
+        'USER_REJECTED':        '❌ Transaction cancelled. Please confirm in your Phantom wallet.',
+        'INSUFFICIENT_FUNDS':   '❌ Not enough SOL. You need at least 0.1 SOL + gas fees.',
+        'SOLD_OUT':             '❌ Sold out! All 101 NFTs have been minted.',
+        'WALLET_NOT_CONNECTED': '⚠️ Please connect your Phantom wallet first.',
+        'DEFAULT':              '❌ Minting failed. Please try again.'
+      };
+      const errorDiv = document.getElementById('mint-error');
+      errorDiv.textContent = messages[errorCode] || messages['DEFAULT'];
+      errorDiv.style.display = 'block';
+      setTimeout(() => { errorDiv.style.display = 'none'; }, 5000);
+    }
+
     async function mintNFT() {
-      if (!walletConnected) return;
-      // TODO: wire up real Candy Machine transaction here
+      if (!walletConnected) {
+        showMintError('WALLET_NOT_CONNECTED');
+        return;
+      }
+      // TODO: wire up real Candy Machine transaction here.
+      // On error, call: showMintError('USER_REJECTED') etc.
       // On success, call: showMintSuccessModal('#' + mintedNumber.toString().padStart(3, '0'));
       showMintSuccessModal('#001');
     }
