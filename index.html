@@ -621,6 +621,121 @@
       letter-spacing: 0.1em;
     }
 
+    /* ── MINT SUCCESS MODAL ── */
+    .mint-success-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.85);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10000;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .mint-success-modal {
+      background: linear-gradient(135deg, #0a1f1a 0%, #0d2b24 100%);
+      border: 1px solid rgba(212, 160, 23, 0.4);
+      border-radius: 16px;
+      padding: 40px;
+      max-width: 480px;
+      width: 90%;
+      text-align: center;
+      box-shadow: 0 0 60px rgba(212, 160, 23, 0.2);
+      animation: slideUp 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+
+    .mint-success-emoji { font-size: 4rem; margin-bottom: 16px; }
+
+    .mint-success-title {
+      font-family: var(--font-heading);
+      font-size: 1.8rem;
+      color: var(--gold);
+      margin-bottom: 8px;
+      letter-spacing: 0.05em;
+    }
+
+    .mint-success-sub {
+      color: rgba(237, 232, 223, 0.6);
+      font-size: 0.9rem;
+      line-height: 1.7;
+      margin-bottom: 32px;
+    }
+
+    .share-btn-x {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: #000;
+      color: #fff;
+      border: 1px solid rgba(255,255,255,0.2);
+      padding: 12px 24px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-family: var(--font-label);
+      font-weight: 600;
+      font-size: 0.85rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      transition: all 0.2s;
+      margin-bottom: 10px;
+      width: 100%;
+    }
+
+    .share-btn-x:hover {
+      background: #1a1a1a;
+      border-color: rgba(255,255,255,0.4);
+      transform: translateY(-2px);
+    }
+
+    .magic-eden-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: transparent;
+      color: var(--gold);
+      border: 1px solid rgba(212, 160, 23, 0.4);
+      padding: 12px 24px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-family: var(--font-label);
+      font-size: 0.85rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      transition: all 0.2s;
+      margin-bottom: 10px;
+      width: 100%;
+    }
+
+    .magic-eden-btn:hover {
+      background: rgba(212, 160, 23, 0.1);
+      border-color: rgba(212, 160, 23, 0.7);
+      transform: translateY(-2px);
+    }
+
+    .close-modal-btn {
+      background: none;
+      border: none;
+      color: rgba(237, 232, 223, 0.3);
+      font-family: var(--font-label);
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      cursor: pointer;
+      margin-top: 8px;
+      padding: 8px 16px;
+      transition: color 0.2s;
+    }
+
+    .close-modal-btn:hover { color: rgba(237, 232, 223, 0.7); }
+
+    @keyframes slideUp {
+      from { transform: translateY(30px); opacity: 0; }
+      to   { transform: translateY(0);    opacity: 1; }
+    }
+
     /* ── ANIMATIONS ── */
     @keyframes fadeUp {
       from { opacity: 0; transform: translateY(20px); }
@@ -842,9 +957,40 @@
       } catch(e) { console.error(e); }
     }
 
+    function showMintSuccessModal(mintNumber) {
+      const tweetText = encodeURIComponent(
+        `Just minted Banana Artworks Genesis 🍌 One of 101 original on-chain assets. Zero AI. 100% handmade. #BananaArtworks #Solana #NFT\nhttps://banana-artworks.com`
+      );
+      const overlay = document.createElement('div');
+      overlay.className = 'mint-success-overlay';
+      overlay.innerHTML = `
+        <div class="mint-success-modal">
+          <div class="mint-success-emoji">🍌</div>
+          <h2 class="mint-success-title">Genesis ${mintNumber} Minted!</h2>
+          <p class="mint-success-sub">You are now part of Banana Artworks history.<br>101 unique. On-chain. Forever.</p>
+          <a href="https://twitter.com/intent/tweet?text=${tweetText}"
+             target="_blank" rel="noopener"
+             class="share-btn-x">✕ &nbsp;Share on X</a>
+          <a href="https://magiceden.io/marketplace/banana_artworks"
+             target="_blank" rel="noopener"
+             class="magic-eden-btn">View on Magic Eden</a>
+          <button class="close-modal-btn"
+                  onclick="this.closest('.mint-success-overlay').remove()">
+            Close
+          </button>
+        </div>
+      `;
+      overlay.addEventListener('click', (e) => {
+        if (e.target === overlay) overlay.remove();
+      });
+      document.body.appendChild(overlay);
+    }
+
     async function mintNFT() {
       if (!walletConnected) return;
-      alert('Minting coming soon! Follow @BananaArtworks for the launch date.');
+      // TODO: wire up real Candy Machine transaction here
+      // On success, call: showMintSuccessModal('#' + mintedNumber.toString().padStart(3, '0'));
+      showMintSuccessModal('#001');
     }
 
     window.addEventListener('load', async () => {
