@@ -1,56 +1,227 @@
 # 🍌 BANANA ARTWORKS — TODO.md
+> Projekt: banana-artworks.com | Solana NFT Minting Page
+> Stack: HTML/CSS/JS, Phantom Wallet, Candy Machine, Solana Mainnet
+> Ziel: Von "gut" auf "Weltklasse" — alle Tasks sind direkt ausführbar
 
-> Alle Tasks beziehen sich ausschließlich auf das Projekt **banana-artworks.com**
+---
+
+## ✅ BEREITS ERLEDIGT (nicht nochmal anfassen!)
+- [x] SEO Meta-Tags, Open Graph, Twitter Card in `<head>`
+- [x] `artwork-hero.png` (1200×630px) als OG-Image
+- [x] Canonical URL
+- [x] Anthropic API Key aus Code entfernt → in Vercel Environment Variables
+- [x] Live Mint Counter (MINTED / TOTAL SUPPLY / REMAINING / MINT PRICE)
+- [x] Phantom Wallet Integration (`window.solana`)
+- [x] MINT NOW Button
+- [x] NFT Gallery mit echten Assets
+- [x] Trust Bar (Phantom Wallet · Solana Mainnet · SPL Token)
 
 ---
 
 ## 🔴 PRIORITÄT 1 — Sofort umsetzen
 
-### SEO: Meta-Tags
-**Datei:** `index.html` → in `<head>` einfügen
+### TASK 1: Share-Button nach erfolgreichem Mint
+**Ziel:** Nach jedem Mint erscheint ein Modal mit X/Twitter Share Button → viraler Mechanismus
 
-```html
-<title>Banana Artworks | AI Solutions Builder & Vibe Coder | DACH Market</title>
-<meta name="description" content="Freelance AI-Entwickler für den DACH-Markt. Ich baue KI-Automatisierungen, Chatbots und Web-Apps mit FastAPI & Claude API. Verfügbar auf Upwork.">
-<meta name="keywords" content="AI Freelancer DACH, Upwork KI-Entwickler, FastAPI, Claude API, Automatisierung, Vibe Coder">
-<link rel="canonical" href="https://banana-artworks.com/">
+**Anweisung für Claude Code:**
+Finde die `mintNFT()` Funktion im JavaScript. Nach einem erfolgreichen Mint-Vorgang soll ein Modal erscheinen. Das Modal soll:
+1. Die gemintete NFT-Nummer anzeigen (z.B. "Genesis #042")
+2. Einen "Share on X" Button haben mit vorausgefülltem Tweet
+3. Einen "View on Magic Eden" Link haben
+4. Einen "Close" Button haben
+5. Zum bestehenden Gold/Teal Design passen
+
+**Tweet-Text:**
+```
+Just minted Banana Artworks Genesis 🍌 One of 101 original on-chain assets. Zero AI. 100% handmade. #BananaArtworks #Solana #NFT
+https://banana-artworks.com
 ```
 
-### SEO: Open Graph Tags
-**Datei:** `index.html` → in `<head>` einfügen
-
-```html
-<meta property="og:title" content="Banana Artworks | AI Solutions Builder">
-<meta property="og:description" content="KI-Automatisierung für den DACH-Markt. FastAPI. Claude. Ergebnisse.">
-<meta property="og:image" content="https://banana-artworks.com/og-image.jpg">
-<meta property="og:url" content="https://banana-artworks.com">
-<meta property="og:type" content="website">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Banana Artworks | AI Solutions Builder">
-```
-
-### SEO: Structured Data (Schema.org)
-**Datei:** `index.html` → in `<head>` einfügen
-
-```html
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "Person",
-  "name": "Banana Artworks",
-  "jobTitle": "AI Solutions Builder & Freelance Developer",
-  "url": "https://banana-artworks.com",
-  "sameAs": [
-    "https://github.com/banana-artworks",
-    "https://www.upwork.com/freelancers/~banana-artworks"
-  ],
-  "knowsAbout": ["AI Development", "FastAPI", "Claude API", "Automation"]
+**CSS für das Modal — zum bestehenden Theme passend:**
+```css
+.mint-success-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  animation: fadeIn 0.3s ease;
 }
-</script>
+
+.mint-success-modal {
+  background: linear-gradient(135deg, #0a1f1a 0%, #0d2b24 100%);
+  border: 1px solid rgba(212, 160, 23, 0.4);
+  border-radius: 16px;
+  padding: 40px;
+  max-width: 480px;
+  width: 90%;
+  text-align: center;
+  box-shadow: 0 0 60px rgba(212, 160, 23, 0.2);
+  animation: slideUp 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.mint-success-emoji {
+  font-size: 4rem;
+  margin-bottom: 16px;
+}
+
+.mint-success-title {
+  font-family: inherit;
+  font-size: 1.8rem;
+  color: #D4A017;
+  margin-bottom: 8px;
+  letter-spacing: 0.05em;
+}
+
+.mint-success-sub {
+  color: rgba(255,255,255,0.6);
+  font-size: 0.9rem;
+  margin-bottom: 32px;
+}
+
+.share-btn-x {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #000;
+  color: #fff;
+  border: 1px solid rgba(255,255,255,0.2);
+  padding: 12px 24px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: all 0.2s;
+  margin-bottom: 12px;
+  width: 100%;
+  justify-content: center;
+}
+
+.share-btn-x:hover {
+  background: #1a1a1a;
+  border-color: rgba(255,255,255,0.4);
+  transform: translateY(-2px);
+}
+
+.magic-eden-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: transparent;
+  color: #D4A017;
+  border: 1px solid rgba(212, 160, 23, 0.4);
+  padding: 12px 24px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-size: 0.95rem;
+  transition: all 0.2s;
+  margin-bottom: 12px;
+  width: 100%;
+  justify-content: center;
+}
+
+.magic-eden-btn:hover {
+  background: rgba(212, 160, 23, 0.1);
+  border-color: rgba(212, 160, 23, 0.7);
+}
+
+.close-modal-btn {
+  background: none;
+  border: none;
+  color: rgba(255,255,255,0.3);
+  font-size: 0.85rem;
+  cursor: pointer;
+  margin-top: 8px;
+  padding: 8px;
+  transition: color 0.2s;
+}
+
+.close-modal-btn:hover { color: rgba(255,255,255,0.7); }
+
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes slideUp { from { transform: translateY(30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
 ```
 
-### SEO: sitemap.xml
-**Datei:** `sitemap.xml` → im Root-Verzeichnis neu erstellen
+**JavaScript für das Modal:**
+```javascript
+function showMintSuccessModal(mintNumber) {
+  const tweetText = encodeURIComponent(
+    `Just minted Banana Artworks Genesis 🍌 One of 101 original on-chain assets. Zero AI. 100% handmade. #BananaArtworks #Solana #NFT\nhttps://banana-artworks.com`
+  );
+  
+  const overlay = document.createElement('div');
+  overlay.className = 'mint-success-overlay';
+  overlay.innerHTML = `
+    <div class="mint-success-modal">
+      <div class="mint-success-emoji">🍌</div>
+      <h2 class="mint-success-title">GENESIS MINTED!</h2>
+      <p class="mint-success-sub">You are now part of Banana Artworks history.<br>101 unique. On-chain. Forever.</p>
+      <a href="https://twitter.com/intent/tweet?text=${tweetText}" 
+         target="_blank" 
+         class="share-btn-x">
+        ✕ Share on X
+      </a>
+      <a href="https://magiceden.io/marketplace/banana_artworks" 
+         target="_blank" 
+         class="magic-eden-btn">
+        View on Magic Eden
+      </a>
+      <button class="close-modal-btn" onclick="this.closest('.mint-success-overlay').remove()">
+        Close
+      </button>
+    </div>
+  `;
+  
+  overlay.addEventListener('click', (e) => {
+    if (e.target === overlay) overlay.remove();
+  });
+  
+  document.body.appendChild(overlay);
+}
+```
+
+---
+
+### TASK 2: NFT Card Hover-Effekte
+**Ziel:** Die NFT-Cards in der Gallery sollen beim Hover eine Premium-Reaktion zeigen.
+
+**Anweisung für Claude Code:**
+Finde die CSS-Klasse der NFT-Cards in der Gallery-Section. Füge folgende Hover-Effekte hinzu:
+
+```css
+/* Zur bestehenden NFT-Card CSS hinzufügen */
+.nft-card {
+  transition: all 0.35s cubic-bezier(0.23, 1, 0.32, 1);
+  cursor: pointer;
+}
+
+.nft-card:hover {
+  transform: translateY(-8px) scale(1.03);
+  box-shadow: 
+    0 0 25px rgba(212, 160, 23, 0.25),
+    0 20px 50px rgba(0, 0, 0, 0.5);
+  border-color: rgba(212, 160, 23, 0.5);
+  z-index: 10;
+}
+
+.nft-card img {
+  transition: transform 0.35s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.nft-card:hover img {
+  transform: scale(1.05);
+}
+```
+
+---
+
+### TASK 3: sitemap.xml erstellen
+**Ziel:** Google kann die Seite vollständig indexieren.
+
+**Anweisung für Claude Code:**
+Erstelle eine neue Datei `sitemap.xml` im Root-Verzeichnis des Projekts:
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -61,15 +232,14 @@
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
-  <url>
-    <loc>https://banana-artworks.com/portfolio</loc>
-    <priority>0.8</priority>
-  </url>
 </urlset>
 ```
 
-### SEO: robots.txt
-**Datei:** `robots.txt` → im Root-Verzeichnis neu erstellen
+---
+
+### TASK 4: robots.txt erstellen
+**Anweisung für Claude Code:**
+Erstelle eine neue Datei `robots.txt` im Root-Verzeichnis:
 
 ```
 User-agent: *
@@ -77,274 +247,230 @@ Allow: /
 Sitemap: https://banana-artworks.com/sitemap.xml
 ```
 
-### SEO: Google Search Console Verification
-**Datei:** `index.html` → in `<head>` einfügen
-> Code zuerst manuell holen unter: https://search.google.com/search-console
-
-```html
-<meta name="google-site-verification" content="DEIN_CODE_HIER">
-```
-
 ---
 
-### Hero: Availability Badge + Dual CTA
-**Datei:** `index.html` → Hero-Section ersetzen
+### TASK 5: Alt-Texte auf allen NFT-Bildern
+**Ziel:** SEO und Accessibility verbessern.
 
+**Anweisung für Claude Code:**
+Finde alle `<img>` Tags der NFT-Gallery. Füge bei jedem Bild ein `alt` Attribut, `loading="lazy"` und `width`/`height` hinzu.
+
+Format: `alt="Banana Artworks Genesis #001 — [kurze Beschreibung], Solana NFT"`
+
+Beispiel:
 ```html
-<section class="hero">
-  <div class="availability-banner">
-    <span class="pulse-dot"></span>
-    <strong>Verfügbar ab sofort</strong> — Noch <strong>2 Projektslots</strong> im April frei
-  </div>
+<!-- Vorher -->
+<img src="assets/1.png">
 
-  <h1 class="hero-title">AI Solutions Builder</h1>
-  <p class="hero-sub">
-    Ich baue KI-Systeme, die Arbeit abnehmen —<br>
-    kein Bullshit, nur funktionierende Produkte.
-  </p>
-
-  <div class="cta-group">
-    <a href="https://upwork.com/freelancers/~banana-artworks"
-       class="btn-primary"
-       target="_blank">
-      🚀 Jetzt auf Upwork kontaktieren
-    </a>
-    <a href="#portfolio" class="btn-ghost">
-      Projekte ansehen ↓
-    </a>
-  </div>
-
-  <div class="trust-bar">
-    <span>⚡ FastAPI</span>
-    <span>🤖 Claude API</span>
-    <span>🐍 Python</span>
-    <span>🔧 Automatisierung</span>
-  </div>
-</section>
-```
-
----
-
-### Security: .gitignore prüfen
-**Datei:** `.gitignore` → folgende Einträge müssen vorhanden sein
-
-```
-.env
-.env.local
-*.env
-__pycache__/
-*.pyc
+<!-- Nachher -->
+<img src="assets/1.png" 
+     alt="Banana Artworks Genesis #001 — Chrome-metallische Banane, Solana NFT"
+     loading="lazy"
+     width="500" 
+     height="500">
 ```
 
 ---
 
 ## 🟠 PRIORITÄT 2 — Nächste Woche
 
-### CSS: Typografie
-**Datei:** `style.css` → Orbitron nur für Headlines, Inter für Fließtext
+### TASK 6: Mobile Optimierung prüfen
+**Anweisung für Claude Code:**
+Prüfe ob die 4 Counter-Boxen (MINTED / TOTAL SUPPLY / REMAINING / MINT PRICE) auf Mobile korrekt dargestellt werden. Auf Smartphones unter 480px Breite sollen sie in einem 2×2 Grid angeordnet sein, nicht in einer Reihe.
 
 ```css
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Inter:wght@300;400;500&display=swap');
-
-body { font-family: 'Inter', sans-serif; font-weight: 300; }
-h1, h2, .brand { font-family: 'Orbitron', monospace; }
-```
-
-### CSS: Animierte Hero-Headline
-**Datei:** `style.css` → hinzufügen
-
-```css
-.hero-title {
-  background: linear-gradient(90deg, #F5C842, #00E5FF, #F5C842);
-  background-size: 200% auto;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: shine 4s linear infinite;
-}
-
-@keyframes shine {
-  to { background-position: 200% center; }
+@media (max-width: 480px) {
+  .stats-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+  
+  .stat-number {
+    font-size: 1.5rem;
+  }
+  
+  .mint-btn {
+    width: 100%;
+    padding: 16px;
+    font-size: 1rem;
+  }
 }
 ```
 
-### CSS: Pulse-Dot für Availability Badge
-**Datei:** `style.css` → hinzufügen
+---
+
+### TASK 7: NFT Lightbox — Klick auf NFT öffnet Vollbild
+**Ziel:** User können einzelne NFTs in voller Größe betrachten.
+
+**Anweisung für Claude Code:**
+Füge eine einfache Lightbox hinzu. Wenn ein User auf ein NFT-Bild klickt, öffnet sich ein Modal mit dem Bild in voller Größe, dem Namen (z.B. "Genesis #001") und einem Close-Button.
+
+```javascript
+function openLightbox(imgSrc, nftName) {
+  const lightbox = document.createElement('div');
+  lightbox.className = 'lightbox-overlay';
+  lightbox.innerHTML = `
+    <div class="lightbox-content">
+      <img src="${imgSrc}" alt="${nftName}" class="lightbox-img">
+      <p class="lightbox-title">${nftName}</p>
+      <button class="lightbox-close" onclick="this.closest('.lightbox-overlay').remove()">✕</button>
+    </div>
+  `;
+  lightbox.addEventListener('click', (e) => {
+    if (e.target === lightbox) lightbox.remove();
+  });
+  document.body.appendChild(lightbox);
+}
+```
 
 ```css
-.availability-banner {
-  display: inline-flex;
+.lightbox-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.95);
+  display: flex;
   align-items: center;
-  gap: 8px;
-  padding: 8px 16px;
-  background: rgba(0, 255, 100, 0.1);
-  border: 1px solid rgba(0, 255, 100, 0.3);
-  border-radius: 100px;
-  font-size: 0.875rem;
+  justify-content: center;
+  z-index: 9999;
+  cursor: zoom-out;
 }
 
-.pulse-dot {
-  width: 8px;
-  height: 8px;
-  background: #00FF64;
-  border-radius: 50%;
-  display: inline-block;
-  animation: pulse 2s infinite;
+.lightbox-content {
+  position: relative;
+  max-width: 90vw;
+  max-height: 90vh;
+  text-align: center;
 }
 
-@keyframes pulse {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.5; transform: scale(1.5); }
+.lightbox-img {
+  max-width: 100%;
+  max-height: 80vh;
+  object-fit: contain;
+  border: 1px solid rgba(212, 160, 23, 0.3);
+  border-radius: 8px;
 }
+
+.lightbox-title {
+  color: #D4A017;
+  margin-top: 12px;
+  font-size: 1rem;
+  letter-spacing: 0.1em;
+}
+
+.lightbox-close {
+  position: absolute;
+  top: -40px;
+  right: 0;
+  background: none;
+  border: none;
+  color: rgba(255,255,255,0.6);
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 8px;
+  transition: color 0.2s;
+}
+
+.lightbox-close:hover { color: #fff; }
 ```
 
-### CSS: Premium Glassmorphism Cards
-**Datei:** `style.css` → bestehendes `.card` ersetzen
+---
+
+### TASK 8: Mint Button Pulse-Animation wenn Wallet verbunden
+**Ziel:** Wenn die Wallet connected ist, pulsiert der Mint-Button subtil → visueller Sog.
+
+**Anweisung für Claude Code:**
+Finde die Stelle im JavaScript wo die Wallet erfolgreich verbunden wird (`onlyIfTrusted` oder nach `connectWallet()`). Füge dort die Klasse `wallet-connected` zum Mint-Button hinzu.
 
 ```css
-:root {
-  --banana-gold: #F5C842;
-  --cyber-cyan: #00E5FF;
-  --deep-void: #050810;
+@keyframes mintGlow {
+  0%, 100% { 
+    box-shadow: 0 0 0 0 rgba(0, 229, 200, 0.4);
+  }
+  50% { 
+    box-shadow: 0 0 0 12px rgba(0, 229, 200, 0);
+  }
 }
 
-.card {
-  background: linear-gradient(
-    135deg,
-    rgba(245, 200, 66, 0.05) 0%,
-    rgba(0, 229, 255, 0.03) 100%
-  );
-  backdrop-filter: blur(20px) saturate(180%);
-  border: 1px solid rgba(245, 200, 66, 0.15);
-  border-radius: 16px;
-  box-shadow:
-    0 0 0 1px rgba(0, 229, 255, 0.05),
-    0 20px 60px -10px rgba(0, 0, 0, 0.7),
-    inset 0 1px 0 rgba(245, 200, 66, 0.1);
-  transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
-}
-
-.card:hover {
-  border-color: rgba(245, 200, 66, 0.4);
-  box-shadow:
-    0 0 30px rgba(245, 200, 66, 0.15),
-    0 0 80px rgba(0, 229, 255, 0.05),
-    0 30px 80px -15px rgba(0, 0, 0, 0.8);
-  transform: translateY(-4px);
+.mint-btn.wallet-connected {
+  animation: mintGlow 2s infinite;
 }
 ```
-
-### CSS: Mobile-Fixes
-**Datei:** `style.css` → hinzufügen
-
-```css
-@media (max-width: 768px) {
-  .card { backdrop-filter: blur(8px); }
-  h1 { font-size: clamp(1.5rem, 6vw, 3rem); }
-  .hero-title { letter-spacing: 0.05em; }
-}
-```
-
-### HTML: Trust Section
-**Datei:** `index.html` → direkt nach der Hero-Section einfügen
-
-```html
-<section class="trust-section">
-  <div class="proof-grid">
-    <div class="proof-card">
-      <span class="proof-icon">🏗️</span>
-      <span class="proof-number">3</span>
-      <span class="proof-label">Live Projekte gebaut</span>
-    </div>
-    <div class="proof-card">
-      <span class="proof-icon">🤖</span>
-      <span class="proof-number">50K+</span>
-      <span class="proof-label">Claude API Tokens verarbeitet</span>
-    </div>
-    <div class="proof-card">
-      <span class="proof-icon">⚡</span>
-      <span class="proof-number">24h</span>
-      <span class="proof-label">Antwortzeit garantiert</span>
-    </div>
-  </div>
-  <div class="verify-bar">
-    <a href="https://github.com/banana-artworks" class="verify-link">
-      github.com/banana-artworks ✓
-    </a>
-  </div>
-</section>
-```
-
-### HTML: Font-Preload Performance
-**Datei:** `index.html` → in `<head>` einfügen
-
-```html
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Inter:wght@300;400&display=swap">
-```
-
-### Analytics einbinden
-- [ ] Plausible oder Google Analytics Script in `index.html` `<head>` einfügen
 
 ---
 
 ## 🟢 PRIORITÄT 3 — Wenn Zeit ist
 
-### JS: Cursor Trail Micro-Animation
-**Datei:** `main.js` → hinzufügen
+### TASK 9: Fehler-Handling verbessern
+**Anweisung für Claude Code:**
+Stelle sicher dass alle möglichen Fehler beim Minting eine klare, benutzerfreundliche Meldung zeigen:
 
 ```javascript
-const canvas = document.getElementById('cursor-trail');
-const ctx = canvas.getContext('2d');
-const particles = [];
-
-document.addEventListener('mousemove', (e) => {
-  particles.push({
-    x: e.clientX,
-    y: e.clientY,
-    life: 1.0,
-    size: Math.random() * 4 + 1,
-    color: Math.random() > 0.5 ? '#F5C842' : '#00E5FF'
-  });
-});
-
-function animateTrail() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  particles.forEach((p, i) => {
-    p.life -= 0.04;
-    p.y -= 0.5;
-    if (p.life <= 0) { particles.splice(i, 1); return; }
-    ctx.globalAlpha = p.life;
-    ctx.fillStyle = p.color;
-    ctx.beginPath();
-    ctx.arc(p.x, p.y, p.size * p.life, 0, Math.PI * 2);
-    ctx.fill();
-  });
-  ctx.globalAlpha = 1;
-  requestAnimationFrame(animateTrail);
+function showMintError(errorCode) {
+  const messages = {
+    'USER_REJECTED': '❌ Transaktion abgebrochen. Bitte bestätige in deinem Wallet.',
+    'INSUFFICIENT_FUNDS': '❌ Nicht genug SOL. Du brauchst mindestens 0.25 SOL + Gas.',
+    'SOLD_OUT': '❌ Sold out! Alle 101 NFTs sind geminted.',
+    'WALLET_NOT_CONNECTED': '⚠️ Bitte verbinde zuerst deine Phantom Wallet.',
+    'DEFAULT': '❌ Fehler beim Minting. Bitte versuche es erneut.'
+  };
+  
+  const msg = messages[errorCode] || messages['DEFAULT'];
+  
+  // Zeige Fehlermeldung unter dem Mint-Button
+  const errorDiv = document.getElementById('mint-error') || createErrorDiv();
+  errorDiv.textContent = msg;
+  errorDiv.style.display = 'block';
+  
+  setTimeout(() => { errorDiv.style.display = 'none'; }, 5000);
 }
-animateTrail();
 ```
-
-> Canvas-Element in `index.html` vor `</body>` einfügen:
-> ```html
-> <canvas id="cursor-trail" style="position:fixed;top:0;left:0;pointer-events:none;z-index:9999;width:100%;height:100%;"></canvas>
-> ```
-
-### Bilder optimieren
-- [ ] Alle Bilder als `.webp` exportieren
-- [ ] `loading="lazy"` auf alle `<img>` Tags setzen
-- [ ] `width` und `height` Attribute auf allen `<img>` Tags setzen
-
-### Blog-Sektion
-- [ ] Artikel schreiben: *"Wie ich eine KI-Plattform in 72 Stunden gebaut habe"* → Long-tail SEO für DACH
 
 ---
 
-## ✅ NACH DER UMSETZUNG — Manuelle Schritte
+### TASK 10: Bilder zu WebP konvertieren (Performance)
+**Anweisung für Claude Code:**
+Prüfe ob Python und Pillow verfügbar sind. Konvertiere alle PNG-Dateien im `/assets/` Ordner zu WebP Format für schnellere Ladezeiten. Behalte die Originale.
 
-1. Öffne https://search.google.com/search-console
-2. Property hinzufügen: `banana-artworks.com`
-3. Verification-Code kopieren → in `index.html` eintragen (Priorität 1, letzter Task)
-4. Seite deployen
-5. In Search Console: Sitemap einreichen → `banana-artworks.com/sitemap.xml`
-6. URL-Prüfung starten → Indexierung beantragen
+```python
+from PIL import Image
+import os
+
+assets_dir = './assets'
+for filename in os.listdir(assets_dir):
+    if filename.endswith('.png'):
+        img_path = os.path.join(assets_dir, filename)
+        webp_path = img_path.replace('.png', '.webp')
+        if not os.path.exists(webp_path):
+            img = Image.open(img_path)
+            img.save(webp_path, 'WebP', quality=85)
+            print(f"Converted: {filename} → {filename.replace('.png', '.webp')}")
+```
+
+---
+
+## 📋 NACH DER UMSETZUNG — Manuelle Schritte
+
+1. **Deploy:** `git add . && git commit -m "feat: share modal, hover effects, SEO fixes" && git push`
+2. **Vercel:** Auto-Deploy läuft nach Push
+3. **Google Search Console:** 
+   - https://search.google.com/search-console aufrufen
+   - Property `banana-artworks.com` hinzufügen
+   - Sitemap einreichen: `banana-artworks.com/sitemap.xml`
+4. **X/Twitter erster Post** nach erfolgreichem Test
+
+---
+
+## 🎯 ANWEISUNG FÜR CLAUDE CODE — START
+
+```
+Du bist mein Senior Developer für das Projekt banana-artworks.com.
+Das ist eine Solana NFT Minting Page mit Phantom Wallet, Candy Machine 
+und einer Gallery mit 101 NFT Assets.
+
+Lies zuerst alle Projektdateien (index.html, CSS, JS).
+Dann arbeite diese TODO.md Schritt für Schritt ab — 
+beginne mit PRIORITÄT 1, TASK 1 (Share Modal nach Mint).
+
+Zeige mir vor jeder Änderung was du vorhast.
+Warte auf meine Bestätigung bevor du schreibst.
+```
